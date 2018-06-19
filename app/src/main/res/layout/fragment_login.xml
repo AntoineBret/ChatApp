@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.chatapp.ipme.chatapp.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
+    <TextView
+        android:id="@+id/tvLogDescribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log"/>
+
+    <EditText
+        android:id="@+id/inputLog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your log"/>
+
+    <TextView
+        android:id="@+id/tvPasswordDescribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"/>
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your password"/>
+
+    <Button
+        android:id="@+id/buttonLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect"/>
+
+</LinearLayout>

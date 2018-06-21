@@ -11,15 +11,6 @@ public class Message {
     private List<Object> messages = null;
     private Integer createdAt;
 
-    public static Message parse(JSONObject object) {
-        Message message = new Message();
-        message.id =  object.optInt("id");
-        message.pseudo = object.optString("pseudo");
-        message.messages = (List<Object>) object.optJSONObject("messages");
-        message.createdAt = object.optInt("createdAt");
-        return message;
-    }
-
     public Integer getId() {
         return id;
     }

@@ -12,6 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
+import com.chatapp.ipme.chatapp.model.User;
+import com.chatapp.ipme.chatapp.remote.ApiClient;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class LogInFragment extends Fragment {
 
@@ -25,12 +33,14 @@ public class LogInFragment extends Fragment {
     private EditText inputLog;
     private EditText inputPassword;
     private Button buttonLog;
+    private String log;
+    private String password;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        toolbar = rootView.findViewById(R.id.toolbar);
         toolbar.setTitle("");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
@@ -39,6 +49,9 @@ public class LogInFragment extends Fragment {
         inputLog = rootView.findViewById(R.id.inputLog);
         inputPassword = rootView.findViewById(R.id.inputPassword);
         buttonLog = rootView.findViewById(R.id.buttonLog);
+
+        log = inputLog.getText().toString();
+        password = inputPassword.getText().toString();
 
         return rootView;
     }
@@ -52,8 +65,29 @@ public class LogInFragment extends Fragment {
         buttonLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment f = ContactFragment.newInstance();
-                getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
+                ApiClient.getInstance()
+                        .createUser(log, password)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<User>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                            }
+
+                            @Override
+                            public void onNext(User value) {
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                Fragment f = ContactFragment.newInstance();
+                                getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
+                            }
+                        });
             }
         });
     }

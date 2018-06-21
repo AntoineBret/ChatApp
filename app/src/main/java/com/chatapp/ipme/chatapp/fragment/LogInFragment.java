@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
+import com.chatapp.ipme.chatapp.remote.ApiEndpointInterface;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,8 +34,8 @@ public class LogInFragment extends Fragment {
     private EditText inputLog;
     private EditText inputPassword;
     private Button buttonLog;
-    private String log;
-    private String password;
+    private static String log;
+    private static String password;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,9 +51,6 @@ public class LogInFragment extends Fragment {
         inputPassword = rootView.findViewById(R.id.inputPassword);
         buttonLog = rootView.findViewById(R.id.buttonLog);
 
-        log = inputLog.getText().toString();
-        password = inputPassword.getText().toString();
-
         return rootView;
     }
 
@@ -61,34 +59,40 @@ public class LogInFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         toolbar.setTitle("Login");
+        log = inputLog.getText().toString();
+        password = inputPassword.getText().toString();
 
         buttonLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApiClient.getInstance()
-                        .createUser(log, password)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<User>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-                            }
-
-                            @Override
-                            public void onNext(User value) {
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                            }
-
-                            @Override
-                            public void onComplete() {
-                                Fragment f = ContactFragment.newInstance();
-                                getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
-                            }
-                        });
+                loginUser();
             }
         });
+    }
+
+    private void loginUser() {
+        ApiEndpointInterface apiInterface = ApiClient.getClient().create(ApiEndpointInterface.class);
+        apiInterface.createUser(log, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<User>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(User user) {
+                        Fragment f = ContactFragment.newInstance();
+                        getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 }

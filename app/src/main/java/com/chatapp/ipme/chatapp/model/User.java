@@ -12,9 +12,9 @@ public class User {
     @Expose
     private String password;
 
-    @SerializedName("pseudo")
+    @SerializedName("username")
     @Expose
-    private String pseudo;
+    private String username;
 
     public String getPassword() {
         return password;
@@ -24,11 +24,19 @@ public class User {
         this.password = password;
     }
 
-    public String getPseudo() {
-        return pseudo;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "{\n" +
+                "\t\"username\": \"" + username + "\",\n" +
+                "\t\"password\": \"" + password + "\"\n" +
+                "}";
     }
 }

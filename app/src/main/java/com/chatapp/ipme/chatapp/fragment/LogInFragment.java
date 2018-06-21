@@ -21,6 +21,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static android.content.ContentValues.TAG;
+import static android.util.Config.LOGD;
+
 
 public class LogInFragment extends Fragment {
 

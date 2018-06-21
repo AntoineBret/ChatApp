@@ -1,54 +1,40 @@
 package com.chatapp.ipme.chatapp.remote;
 
-import com.chatapp.ipme.chatapp.model.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.chatapp.ipme.chatapp.constant.Const.BASE_URL;
+
 public class ApiClient {
 
-    private static ApiClient instance;
-    private ApiEndpointInterface apiEndpointInterface;
-    private static String URL = "http://192.168.1.54:8080/";
-    private static String token = "";
+    private static Retrofit retrofit = null;
 
-    private ApiClient() {
+    public static Retrofit getClient() {
 
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request newRequest  = chain.request().newBuilder()
-                        .addHeader("Authorization", token)
-                        .build();
-                return chain.proceed(newRequest);
-            }
-        }).build();
+        if (retrofit == null) {
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient okHttpClient = builder.addInterceptor(interceptor).build();
 
-        final Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
-                .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .build();
-        apiEndpointInterface = retrofit.create(ApiEndpointInterface.class);
-    }
-
-    public static ApiClient getInstance() {
-        if (instance == null) {
-            instance = new ApiClient();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .client(okHttpClient)
+                    .build();
         }
-        return instance;
-    }
-
-    public Observable<User> createUser(String pseudo, String password) {
-        return apiEndpointInterface.createUser(pseudo, password);
+        return retrofit;
     }
 }
+
+
+

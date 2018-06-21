@@ -4,12 +4,14 @@ import com.chatapp.ipme.chatapp.model.User;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface ApiEndpointInterface {
 
-    @POST("/users")
-    Observable<User> createUser(@Field("password") String password,
-                                @Field("pseudo") String pseudo);
+    @FormUrlEncoded
+    @POST("/users/register")
+    Observable<User> createUser(@Field("username") String username,
+                                @Field("password") String password);
 
 }

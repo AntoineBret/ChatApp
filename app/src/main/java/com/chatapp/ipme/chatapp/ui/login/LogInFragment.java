@@ -1,5 +1,7 @@
 package com.chatapp.ipme.chatapp.ui.login;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndpointInterface;
 import com.chatapp.ipme.chatapp.ui.contact.ContactFragment;
+import com.chatapp.ipme.chatapp.ui.contact.ContactViewModel;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,6 +44,8 @@ public class LogInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+
+        ViewModel viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
         toolbar = rootView.findViewById(R.id.toolbar);
         toolbar.setTitle("");

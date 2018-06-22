@@ -1,5 +1,8 @@
 package com.chatapp.ipme.chatapp.ui.contact;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -35,6 +38,8 @@ public class ContactFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contact, container, false);
+
+        ViewModel viewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
 
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         toolbar.setTitle("");

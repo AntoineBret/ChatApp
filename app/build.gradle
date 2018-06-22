@@ -53,5 +53,11 @@ android {
 
         //httplogger
         implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+        //Architecture Components
+        def archCompVersion = '1.1.1'
+        implementation "android.arch.lifecycle:runtime:$archCompVersion"
+        implementation "android.arch.lifecycle:extensions:$archCompVersion"
+        implementation "android.arch.lifecycle:reactivestreams:$archCompVersion"
     }
 }

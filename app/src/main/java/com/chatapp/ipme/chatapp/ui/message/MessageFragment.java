@@ -1,5 +1,7 @@
-package com.chatapp.ipme.chatapp.ui.chat;
+package com.chatapp.ipme.chatapp.ui.message;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,14 +13,15 @@ import android.widget.EditText;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Message;
+import com.chatapp.ipme.chatapp.ui.contact.ContactViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatFragment extends Fragment {
+public class MessageFragment extends Fragment {
 
-    public static ChatFragment newInstance() {
-        return new ChatFragment();
+    public static MessageFragment newInstance() {
+        return new MessageFragment();
     }
 
     private RecyclerView recyclerView;
@@ -35,7 +38,9 @@ public class ChatFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_chat, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_message, container, false);
+
+        ViewModel viewModel = ViewModelProviders.of(this).get(MessageViewModel.class);
 
         messageInput = rootView.findViewById(R.id.messageInput);
 

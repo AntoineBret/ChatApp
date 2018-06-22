@@ -1,4 +1,4 @@
-package com.chatapp.ipme.chatapp.fragment;
+package com.chatapp.ipme.chatapp.ui.room;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
+import com.chatapp.ipme.chatapp.ui.chat.ChatFragment;
 
 public class SelectUsersFragment extends Fragment {
 

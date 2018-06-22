@@ -1,4 +1,4 @@
-package com.chatapp.ipme.chatapp.fragment;
+package com.chatapp.ipme.chatapp.ui.chat;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.adapter.MessageAdapter;
 import com.chatapp.ipme.chatapp.model.Message;
 
 import java.util.ArrayList;

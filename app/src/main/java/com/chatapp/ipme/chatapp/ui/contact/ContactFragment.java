@@ -1,4 +1,4 @@
-package com.chatapp.ipme.chatapp.fragment;
+package com.chatapp.ipme.chatapp.ui.contact;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.adapter.ContactAdapter;
+import com.chatapp.ipme.chatapp.ui.room.SelectUsersFragment;
 import com.chatapp.ipme.chatapp.model.Message;
 
 import java.util.ArrayList;

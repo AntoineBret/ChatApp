@@ -1,4 +1,4 @@
-package com.chatapp.ipme.chatapp.fragment;
+package com.chatapp.ipme.chatapp.ui.login;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,14 +15,12 @@ import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndpointInterface;
+import com.chatapp.ipme.chatapp.ui.contact.ContactFragment;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static android.content.ContentValues.TAG;
-import static android.util.Config.LOGD;
 
 
 public class LogInFragment extends Fragment {

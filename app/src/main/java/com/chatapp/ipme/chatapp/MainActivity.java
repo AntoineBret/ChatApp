@@ -3,11 +3,8 @@ package com.chatapp.ipme.chatapp;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
-import com.chatapp.ipme.chatapp.fragment.ChatFragment;
-import com.chatapp.ipme.chatapp.fragment.ContactFragment;
-import com.chatapp.ipme.chatapp.fragment.LogInFragment;
+import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
 
 public class MainActivity extends AppCompatActivity {
 

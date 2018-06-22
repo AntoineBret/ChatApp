@@ -39,7 +39,10 @@ public class ContactFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contact, container, false);
 
-        ViewModel viewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
+        ContactViewModel model = ViewModelProviders.of(this).get(ContactViewModel.class);
+        model.getUsers().observe(this, users -> {
+            // update UI
+        });
 
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         toolbar.setTitle("");

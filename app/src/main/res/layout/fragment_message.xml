@@ -6,7 +6,7 @@
     android:clipToPadding="false"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="com.chatapp.ipme.chatapp.MainActivity">
+    tools:context="com.chatapp.ipme.chatapp.HomeActivity">
 
 
     <android.support.v7.widget.RecyclerView

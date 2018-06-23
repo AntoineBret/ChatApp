@@ -3,40 +3,52 @@ package com.chatapp.ipme.chatapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class User {
 
-    public User(String log, String password) {
-    }
+  @SerializedName("id")
+  @Expose
+  private Integer id;
 
-    @SerializedName("password")
-    @Expose
-    private String password;
+  @SerializedName("username")
+  @Expose
+  private String username;
 
-    @SerializedName("username")
-    @Expose
-    private String username;
+  @SerializedName("createdAt")
+  @Expose
+  private Date createdAt;
 
-    public String getPassword() {
-        return password;
-    }
+  public User() {
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public User(Integer id, String username, Date createdAt) {
+    this.id = id;
+    this.username = username;
+    this.createdAt = createdAt;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    @Override
-    public String toString() {
-        return "{\n" +
-                "\t\"username\": \"" + username + "\",\n" +
-                "\t\"password\": \"" + password + "\"\n" +
-                "}";
-    }
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
 }

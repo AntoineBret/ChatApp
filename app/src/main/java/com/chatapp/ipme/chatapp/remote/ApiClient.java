@@ -1,17 +1,12 @@
 package com.chatapp.ipme.chatapp.remote;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.chatapp.ipme.chatapp.constant.Const.BASE_URL;
+import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
 
 public class ApiClient {
 

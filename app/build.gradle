@@ -60,4 +60,8 @@ android {
         implementation "android.arch.lifecycle:extensions:$archCompVersion"
         implementation "android.arch.lifecycle:reactivestreams:$archCompVersion"
     }
+  compileOptions {
+    targetCompatibility 1.8
+    sourceCompatibility 1.8
+  }
 }

@@ -1,5 +1,7 @@
 package com.chatapp.ipme.chatapp.ui.login;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -10,15 +12,16 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Login;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
-import com.chatapp.ipme.chatapp.ui.contact.ContactFragment;
 import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
+import com.chatapp.ipme.chatapp.utils.AnimationManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import io.reactivex.Observer;
@@ -37,42 +40,95 @@ public class LogInFragment extends Fragment {
 
   private AlertDialogManager alert = new AlertDialogManager();
   private SessionManager session;
+  private FrameLayout frameLayout;
+  private ViewModel viewModel;
+  private View rootView;
+  private AnimatorSet flip;
 
-  private EditText inputLog;
-  private EditText inputPassword;
-  private Button buttonLogIn;
-  private static String log;
-  private static String password;
+  private String signInLog;
+  private String signInPassword;
+  private String logInLog;
+  private String logInPassword;
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_login, container, false);
-
-    ViewModel viewModel = ViewModelProviders.of(this).get(LogInViewModel.class);
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    viewModel = ViewModelProviders.of(this).get(LogInViewModel.class);
     session = new SessionManager(getContext());
 
     getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
       WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-    inputLog = rootView.findViewById(R.id.inputLog);
-    inputPassword = rootView.findViewById(R.id.inputPassword);
-    Toast.makeText(getContext(), "Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+    flip = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.flip);
+  }
 
-    buttonLogIn = rootView.findViewById(R.id.buttonLog);
-    buttonLogIn.setOnClickListener(view -> {
-      loginUser();
-    });
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    rootView = inflater.inflate(R.layout.fragment_login, container, false);
+
+    frameLayout = rootView.findViewById(R.id.login_frame_container);
+    frameLayout.removeAllViews();
+    LayoutInflater.from(getContext()).inflate(R.layout.welcome_cardview, frameLayout, true);
+    firstConnectionFrame();
+
     return rootView;
   }
 
-  //todo
+  //First connection Accept Terms and Conditions
+  private void firstConnectionFrame() {
+    Button buttonTermServiceAgree = rootView.findViewById(R.id.buttonTermServiceAgree);
+    buttonTermServiceAgree.setOnClickListener(view -> {
+      loginUser();
+    });
+  }
+
+  //Create account
+  private void signInUser() {
+    AnimationManager.frameTransition(frameLayout, flip);
+    LayoutInflater.from(getContext()).inflate(R.layout.signin_cardview, frameLayout, true);
+
+    Button buttonCreate = rootView.findViewById(R.id.buttonCreate);
+    TextView tvAlreadyAccount = rootView.findViewById(R.id.tvAlreadyAccount);
+    EditText inputUsernameCreate = rootView.findViewById(R.id.inputUsernameCreate);
+    EditText inputPasswordCreate = rootView.findViewById(R.id.inputPasswordCreate);
+
+    signInLog = inputUsernameCreate.getText().toString();
+    signInPassword = inputPasswordCreate.getText().toString();
+
+    buttonCreate.setOnClickListener(view -> {
+      createAccount();
+    });
+
+    tvAlreadyAccount.setOnClickListener(v -> {
+      loginUser();
+    });
+  }
+
+  //Connect with existing account
   private void loginUser() {
-    log = inputLog.getText().toString();
-    password = inputPassword.getText().toString();
+    AnimationManager.frameTransition(frameLayout, flip);
+    LayoutInflater.from(getContext()).inflate(R.layout.login_cardview, frameLayout, true);
 
+    Button buttonLogIn = rootView.findViewById(R.id.buttonLog);
+    TextView tvNoAccount = rootView.findViewById(R.id.tvNoAccount);
+    EditText inputLog = rootView.findViewById(R.id.inputLog);
+    EditText inputPassword = rootView.findViewById(R.id.inputPassword);
+
+    logInLog = inputLog.getText().toString();
+    logInPassword = inputPassword.getText().toString();
+
+    buttonLogIn.setOnClickListener(view -> {
+      connectAccount();
+    });
+
+    tvNoAccount.setOnClickListener(v -> {
+      signInUser();
+    });
+  }
+
+  private void connectAccount() {
     ApiEndPointInterface apiInterface = ApiClient.getClient().create(ApiEndPointInterface.class);
-
-    apiInterface.createUser(log, password)
+    apiInterface.createUser(logInLog, logInPassword)
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new Observer<Login>() {
@@ -82,9 +138,46 @@ public class LogInFragment extends Fragment {
 
         @Override
         public void onNext(Login user) {
-          if (log.trim().length() > 0 && password.trim().length() > 0) {
-            if (log.equals(log) && password.equals(password)) {
-              session.createLoginSession(log, password);
+          if (logInLog.trim().length() > 0 && logInPassword.trim().length() > 0) {
+            if (logInLog.equals(logInLog) && logInPassword.equals(logInPassword)) {
+              session.createLoginSession(logInLog, logInPassword);
+              Fragment f = RoomFragment.newInstance();
+              getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
+            } else {
+              alert.showAlertDialog(getContext(), "Login failed..", "Username/Password is incorrect", false);
+            }
+          } else {
+            alert.showAlertDialog(getContext(), "Login failed..", "Please enter username and password", false);
+          }
+        }
+
+        @Override
+        public void onError(Throwable t) {
+          alert.showAlertDialog(getContext(), "java.net.ConnectException:", "Failed to connect to" + BASE_URL, false);
+        }
+
+        @Override
+        public void onComplete() {
+        }
+      });
+  }
+
+  private void createAccount() {
+    //todo : improve logic duplicate
+    ApiEndPointInterface apiInterface = ApiClient.getClient().create(ApiEndPointInterface.class);
+    apiInterface.createUser(signInLog, signInPassword)
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Observer<Login>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+        }
+
+        @Override
+        public void onNext(Login user) {
+          if (signInLog.trim().length() > 0 && signInPassword.trim().length() > 0) {
+            if (signInLog.equals(signInLog) && signInPassword.equals(signInPassword)) {
+              session.createLoginSession(signInLog, signInPassword);
               Fragment f = RoomFragment.newInstance();
               getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
             } else {

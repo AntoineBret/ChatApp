@@ -36,7 +36,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(ContactAdapter.ViewHolder holder, final int i) {
         holder.setIsRecyclable(false);
         final Message message = messageList.get(i);
-   
     }
 
     @Override

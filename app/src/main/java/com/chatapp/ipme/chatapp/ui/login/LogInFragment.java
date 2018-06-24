@@ -21,7 +21,6 @@ import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
-import com.chatapp.ipme.chatapp.utils.AnimationManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import io.reactivex.Observer;
@@ -30,6 +29,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
+import static com.chatapp.ipme.chatapp.utils.AnimationManager.frameTransition;
 
 
 public class LogInFragment extends Fragment {
@@ -65,10 +65,11 @@ public class LogInFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     rootView = inflater.inflate(R.layout.fragment_login, container, false);
-
     frameLayout = rootView.findViewById(R.id.login_frame_container);
-    frameLayout.removeAllViews();
+
+    frameTransition(frameLayout, flip);
     LayoutInflater.from(getContext()).inflate(R.layout.welcome_cardview, frameLayout, true);
+    
     firstConnectionFrame();
 
     return rootView;
@@ -84,7 +85,7 @@ public class LogInFragment extends Fragment {
 
   //Create account
   private void signInUser() {
-    AnimationManager.frameTransition(frameLayout, flip);
+    frameTransition(frameLayout, flip);
     LayoutInflater.from(getContext()).inflate(R.layout.signin_cardview, frameLayout, true);
 
     Button buttonCreate = rootView.findViewById(R.id.buttonCreate);
@@ -106,7 +107,7 @@ public class LogInFragment extends Fragment {
 
   //Connect with existing account
   private void loginUser() {
-    AnimationManager.frameTransition(frameLayout, flip);
+    frameTransition(frameLayout, flip);
     LayoutInflater.from(getContext()).inflate(R.layout.login_cardview, frameLayout, true);
 
     Button buttonLogIn = rootView.findViewById(R.id.buttonLog);

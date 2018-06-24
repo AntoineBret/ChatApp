@@ -1,4 +1,27 @@
 <resources>
   <string name="app_name">ChatApp</string>
+
+  //Menu settings
   <string name="settings">Paramètres</string>
+
+  //welcome_cardview.xml
+  <string name="welcome">Bienvenue sur Chatapp</string>
+  <string name="termsOfServiceDesc">Appuyez sur "Accepter et continuer" pour accepter les conditions d\'utilisation et la politique de confidentialité de Chatapp.</string>
+  <string name="agree">Accepter et continuer</string>
+
+  //login_cardview.xml
+  <string name="noAccount">Pas encore de compte ?</string>
+  <string name="logDescribe">Log</string>
+  <string name="passwordDescribe">Password</string>
+  <string name="buttonSignin">Login</string>
+  <string name="loginDesc">S\'identifier</string>
+
+
+  //signin_cardview.xml
+  <string name="alreadyAccount">Déjà un compte ?</string>
+  <string name="userCreateDescribe">Create user</string>
+  <string name="passwordCreateDescribe">Create password</string>
+  <string name="buttonCreate">Sign in</string>
+  <string name="signinDesc">Créer un compte</string>
+
 </resources>

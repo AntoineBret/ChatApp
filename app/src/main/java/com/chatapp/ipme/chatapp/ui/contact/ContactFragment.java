@@ -62,7 +62,7 @@ public class ContactFragment extends android.support.v4.app.Fragment {
   @Override
   public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    
+
     toolbar.setTitle("Contact");
     toolbar.setTitleTextColor(getResources().getColor(R.color.white));
   }

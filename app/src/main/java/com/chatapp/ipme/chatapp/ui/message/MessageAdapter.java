@@ -28,7 +28,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public MessageAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         this.context = viewGroup.getContext();
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_chat, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_message, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -55,13 +55,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public TextView createdAt;
 
         public ViewHolder(View view) {
-
             super(view);
 
-            id = (TextView) view.findViewById(R.id.chat_id);
-            pseudo = (TextView) view.findViewById(R.id.chat_pseudo);
-            messages = (TextView) view.findViewById(R.id.chat_content);
-            createdAt = (TextView) view.findViewById(R.id.chat_date);
+            id = view.findViewById(R.id.message_id);
+            pseudo = view.findViewById(R.id.message_pseudo);
+            messages = view.findViewById(R.id.message_content);
+            createdAt = view.findViewById(R.id.message_date);
         }
     }
 }

@@ -1,20 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@drawable/material"
+  android:clipToPadding="false"
+  android:focusableInTouchMode="true"
   android:orientation="vertical"
-  android:padding="10dip">
+  tools:context="com.chatapp.ipme.chatapp.HomeActivity">
 
   <TextView
-    android:id="@+id/displayUsername"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:singleLine="true"
-    android:layout_marginTop="40dip"
-    android:layout_marginBottom="10dip"/>
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="40dp"
+    android:gravity="center"
+    android:text="Settings"
+    android:textColor="@color/white"
+    android:textSize="30dp" />
 
-  <Button android:id="@+id/buttonLogOut"
-    android:layout_width="fill_parent"
+  <android.support.v7.widget.CardView
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Logout"/>
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:layout_marginBottom="50dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="50dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:text="Currently connect with"
+        android:textColor="@color/custom"
+        android:textSize="20dp" />
+
+      <TextView
+        android:id="@+id/displayUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:textColor="@color/custom" />
+
+      <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+          android:id="@+id/buttonLogOut"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/button_roundcorner_shape"
+          android:text="Logout"
+          android:textColor="@color/white" />
+
+      </RelativeLayout>
+
+    </LinearLayout>
+
+  </android.support.v7.widget.CardView>
 
 </LinearLayout>

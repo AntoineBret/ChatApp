@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.chatapp.ipme.chatapp.model.Login;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.contact.ContactFragment;
+import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
@@ -49,6 +51,9 @@ public class LogInFragment extends Fragment {
     ViewModel viewModel = ViewModelProviders.of(this).get(LogInViewModel.class);
     session = new SessionManager(getContext());
 
+    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+      WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
     inputLog = rootView.findViewById(R.id.inputLog);
     inputPassword = rootView.findViewById(R.id.inputPassword);
     Toast.makeText(getContext(), "Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
@@ -80,7 +85,7 @@ public class LogInFragment extends Fragment {
           if (log.trim().length() > 0 && password.trim().length() > 0) {
             if (log.equals(log) && password.equals(password)) {
               session.createLoginSession(log, password);
-              Fragment f = ContactFragment.newInstance();
+              Fragment f = RoomFragment.newInstance();
               getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
             } else {
               alert.showAlertDialog(getContext(), "Login failed..", "Username/Password is incorrect", false);
@@ -92,7 +97,7 @@ public class LogInFragment extends Fragment {
 
         @Override
         public void onError(Throwable t) {
-          alert.showAlertDialog(getContext(), "java.net.ConnectException:", "Failed to connect to"+BASE_URL, false);
+          alert.showAlertDialog(getContext(), "java.net.ConnectException:", "Failed to connect to" + BASE_URL, false);
         }
 
         @Override

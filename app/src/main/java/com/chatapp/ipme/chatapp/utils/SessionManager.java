@@ -18,8 +18,8 @@ public class SessionManager {
   private int PRIVATE_MODE = 0;
   private static final String PREF_NAME = "ChatAppPref";
   private static final String IS_LOGIN = "IsLoggedIn";
-  public static final String KEY_NAME = "name";
-  public static final String KEY_PASSWORD = "password";
+  public static final String KEY_NAME = "Account";
+  public static final String KEY_PASSWORD = "Password";
 
 
   public SessionManager(Context context) {

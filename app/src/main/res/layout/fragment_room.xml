@@ -8,11 +8,28 @@
   android:orientation="vertical"
   tools:context="com.chatapp.ipme.chatapp.HomeActivity">
 
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary" />
+
   <android.support.v7.widget.RecyclerView
     android:id="@+id/room_recyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="2"
-    android:divider="#fff" />
+    android:divider="@color/white" />
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/contactsFab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end|bottom"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:src="@drawable/ic_add_room" />
 
 </LinearLayout>

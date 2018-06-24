@@ -53,8 +53,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
             super(view);
 
-            id = (TextView) view.findViewById(R.id.chat_id);
-            pseudo = (TextView) view.findViewById(R.id.chat_pseudo);
+            id = (TextView) view.findViewById(R.id.message_id);
+            pseudo = (TextView) view.findViewById(R.id.message_pseudo);
         }
     }
 }

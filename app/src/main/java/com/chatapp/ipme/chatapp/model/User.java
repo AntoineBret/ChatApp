@@ -7,33 +7,20 @@ import java.util.Date;
 
 public class User {
 
-  @SerializedName("id")
-  @Expose
-  private Integer id;
+  public User() {
+  }
 
   @SerializedName("username")
   @Expose
   private String username;
 
-  @SerializedName("createdAt")
+  @SerializedName("password")
   @Expose
-  private Date createdAt;
+  private String password;
 
-  public User() {
-  }
-
-  public User(Integer id, String username, Date createdAt) {
-    this.id = id;
+  public User(String username, String password) {
     this.username = username;
-    this.createdAt = createdAt;
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
+    this.password = password;
   }
 
   public String getUsername() {
@@ -44,11 +31,11 @@ public class User {
     this.username = username;
   }
 
-  public Date getCreatedAt() {
-    return createdAt;
+  public String getPassword() {
+    return password;
   }
 
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
+  public void setPassword(String password) {
+    this.password = password;
   }
 }

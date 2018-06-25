@@ -23,6 +23,8 @@ import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
+import java.util.HashMap;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -45,6 +47,8 @@ public class LogInFragment extends Fragment {
   private View rootView;
   private AnimatorSet flip;
 
+  private EditText inputLog;
+  private EditText inputPassword;
   private String signInLog;
   private String signInPassword;
   private String logInLog;
@@ -69,7 +73,7 @@ public class LogInFragment extends Fragment {
 
     frameTransition(frameLayout, flip);
     LayoutInflater.from(getContext()).inflate(R.layout.welcome_cardview, frameLayout, true);
-    
+
     firstConnectionFrame();
 
     return rootView;
@@ -112,11 +116,8 @@ public class LogInFragment extends Fragment {
 
     Button buttonLogIn = rootView.findViewById(R.id.buttonLog);
     TextView tvNoAccount = rootView.findViewById(R.id.tvNoAccount);
-    EditText inputLog = rootView.findViewById(R.id.inputLog);
-    EditText inputPassword = rootView.findViewById(R.id.inputPassword);
-
-    logInLog = inputLog.getText().toString();
-    logInPassword = inputPassword.getText().toString();
+    inputLog = rootView.findViewById(R.id.inputLog);
+    inputPassword = rootView.findViewById(R.id.inputPassword);
 
     buttonLogIn.setOnClickListener(view -> {
       connectAccount();
@@ -128,8 +129,14 @@ public class LogInFragment extends Fragment {
   }
 
   private void connectAccount() {
+    logInLog = inputLog.getText().toString();
+    logInPassword = inputPassword.getText().toString();
     ApiEndPointInterface apiInterface = ApiClient.getClient().create(ApiEndPointInterface.class);
-    apiInterface.createUser(logInLog, logInPassword)
+    HashMap<String, String> map = new HashMap<>();
+    map.put("username", logInLog);
+    map.put("password", logInPassword);
+    apiInterface.loginUser(map)
+
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new Observer<Login>() {
@@ -164,39 +171,7 @@ public class LogInFragment extends Fragment {
   }
 
   private void createAccount() {
-    //todo : improve logic duplicate
-    ApiEndPointInterface apiInterface = ApiClient.getClient().create(ApiEndPointInterface.class);
-    apiInterface.createUser(signInLog, signInPassword)
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new Observer<Login>() {
-        @Override
-        public void onSubscribe(Disposable d) {
-        }
 
-        @Override
-        public void onNext(Login user) {
-          if (signInLog.trim().length() > 0 && signInPassword.trim().length() > 0) {
-            if (signInLog.equals(signInLog) && signInPassword.equals(signInPassword)) {
-              session.createLoginSession(signInLog, signInPassword);
-              Fragment f = RoomFragment.newInstance();
-              getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
-            } else {
-              alert.showAlertDialog(getContext(), "Login failed..", "Username/Password is incorrect", false);
-            }
-          } else {
-            alert.showAlertDialog(getContext(), "Login failed..", "Please enter username and password", false);
-          }
-        }
-
-        @Override
-        public void onError(Throwable t) {
-          alert.showAlertDialog(getContext(), "java.net.ConnectException:", "Failed to connect to" + BASE_URL, false);
-        }
-
-        @Override
-        public void onComplete() {
-        }
-      });
+    //todo
   }
 }

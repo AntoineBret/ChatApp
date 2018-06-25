@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import com.chatapp.ipme.chatapp.model.Login;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
-import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 
 public class HomeActivity extends AppCompatActivity {
 

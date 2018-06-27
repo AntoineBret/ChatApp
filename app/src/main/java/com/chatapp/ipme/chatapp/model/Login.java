@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Login {
 
-    public Login(String log, String password) {
+    public Login() {
     }
 
     @SerializedName("password")
@@ -32,11 +32,4 @@ public class Login {
         this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "{\n" +
-                "\t\"username\": \"" + username + "\",\n" +
-                "\t\"password\": \"" + password + "\"\n" +
-                "}";
-    }
 }

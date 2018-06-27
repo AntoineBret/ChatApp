@@ -38,8 +38,8 @@
       android:layout_gravity="center"
       android:background="@drawable/circle_imageview_shape"
       android:paddingBottom="10dp"
-      android:paddingTop="10dp" />
-      <!-- android:src="@drawable/app_logo" /> -->
+      android:paddingTop="10dp"
+      android:src="@drawable/app_logo" />
 
     <TextView
       android:id="@+id/termServiceDesc"

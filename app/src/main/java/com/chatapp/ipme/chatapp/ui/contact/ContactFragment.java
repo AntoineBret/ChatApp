@@ -68,27 +68,6 @@ public class ContactFragment extends android.support.v4.app.Fragment {
   }
 
   private void initializeContact() {
-    ApiEndPointInterface apiInterface = ApiClient.getClient().create(ApiEndPointInterface.class);
-    apiInterface.getUsers(/*todo*/)
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new Observer<List<User>>() {
-        @Override
-        public void onSubscribe(Disposable d) {
-        }
-
-        @Override
-        public void onNext(List<User> value) {
-        }
-
-
-        @Override
-        public void onError(Throwable t) {
-        }
-
-        @Override
-        public void onComplete() {
-        }
-      });
+    //todo
   }
 }

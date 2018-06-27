@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
+import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -14,7 +16,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         if (savedInstanceState == null) {
-            Fragment f = LogInFragment.newInstance();
+            Fragment f = RoomFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
         }
     }

@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Cardview desc -->
         <TextView
             android:id="@+id/signinDesc"
             android:layout_width="match_parent"
@@ -31,23 +32,12 @@
             android:textColor="@color/custom"
             android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/tvUserCreateDescribe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/userCreateDescribe"
-            android:textColor="@color/custom"
-            android:textSize="20dp" />
-
+        <!-- Username -->
         <EditText
             android:id="@+id/inputUsernameCreate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your username"
+            android:hint="@string/inputUsernameCreateHint"
             android:inputType="text"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
@@ -57,24 +47,72 @@
             android:textColor="@color/custom"
             android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/tvPasswordCreateDescribe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/passwordCreateDescribe"
-            android:textColor="@color/custom"
-            android:textSize="20dp" />
-
+        <!-- Password & password confirm-->
         <EditText
             android:id="@+id/inputPasswordCreate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your password"
+            android:hint="@string/inputPasswordCreateHint"
             android:inputType="textPassword"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:textColor="@color/custom"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/inputConfirmPasswordCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inputConfirmPasswordCreateHint"
+            android:inputType="textPassword"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:textColor="@color/custom"
+            android:textSize="15dp" />
+
+        <!-- Firstname -->
+        <EditText
+            android:id="@+id/inputFirstNameCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inputFirstNameCreateHnt"
+            android:inputType="text"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:textColor="@color/custom"
+            android:textSize="15dp" />
+
+        <!-- Lastname -->
+        <EditText
+            android:id="@+id/inputLastNameCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inputLastNameCreateHint"
+            android:inputType="text"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:textColor="@color/custom"
+            android:textSize="15dp" />
+
+        <!-- Birthdate date -->
+        <EditText
+            android:id="@+id/birthdayDateLastNameCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/birthdayDateLastNameCreateHint"
+            android:inputType="date"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"

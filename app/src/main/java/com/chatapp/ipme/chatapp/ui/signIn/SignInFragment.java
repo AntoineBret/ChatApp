@@ -3,7 +3,6 @@ package com.chatapp.ipme.chatapp.ui.signIn;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,20 +16,18 @@ import com.chatapp.ipme.chatapp.model.Signin;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
-import com.chatapp.ipme.chatapp.ui.login.LogInViewModel;
 import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
+import com.chatapp.ipme.chatapp.utils.ErrorManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
+import okhttp3.Interceptor;
 
 public class SignInFragment extends Fragment {
 
@@ -72,7 +69,6 @@ public class SignInFragment extends Fragment {
         session = new SessionManager(getContext());
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_signin, container, false);
@@ -90,19 +86,56 @@ public class SignInFragment extends Fragment {
         buttonCreate.setOnClickListener(view -> {
             createAccount();
         });
-
         tvAlreadyAccount.setOnClickListener(v -> {
             Fragment f = LogInFragment.newInstance();
-            getFragmentManager().beginTransaction().replace(R.id.login_frame_container, f).addToBackStack(null).commit();
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                            R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+                    .replace(R.id.login_frame_container, f)
+                    .addToBackStack(null)
+                    .commit();
         });
 
         return rootView;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void createAccount() {
+        initSigninForm();
+        apiInterface = ApiClient
+                .getClient()
+                .create(ApiEndPointInterface.class);
 
+        if (!(signInPassword.equals(signInConfirmPassword))) {
+            alert.showAlertDialog(getContext(), "Password error", "Please enter same password", false);
+        }
+        if (signInPassword.length() < 8) {
+            alert.showAlertDialog(getContext(), "Password error", "Your password must have more than 8 character", false);
+        } else {
+            apiInterface.signinUser(createAccountMAp)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new ErrorManager<Signin>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                        }
+
+                        @Override
+                        public void onNext(Signin value) {
+                            Fragment f = RoomFragment.newInstance();
+                            getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+    }
+
+    private void initSigninForm() {
         signInLog = inputUsernameCreate.getText().toString();
         signInPassword = inputPasswordCreate.getText().toString();
         signInConfirmPassword = inputConfirmPasswordCreate.getText().toString();
@@ -115,44 +148,5 @@ public class SignInFragment extends Fragment {
         createAccountMAp.put("firstName", signInFirstName);
         createAccountMAp.put("lastName", signInLastName);
         createAccountMAp.put("birthdayDate", signInBirthdayDate);
-    }
-
-    private void createAccount() {
-        apiInterface = ApiClient.getClient().create(ApiEndPointInterface.class);
-
-        if (!(signInPassword.equals(signInConfirmPassword))) {
-            alert.showAlertDialog(getContext(), "Password error", "Please enter same password", false);
-        }
-        if (signInPassword.length() < 8) {
-            alert.showAlertDialog(getContext(), "Password error", "Your password must have more than 8 character", false);
-        } else {
-            apiInterface.signinUser(createAccountMAp)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Signin>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(Signin value) {
-                            Fragment f = RoomFragment.newInstance();
-                            getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            if (e instanceof ConnectException) {
-                                alert.showAlertDialog(getContext(), "java.net.ConnectException:", "Failed to connect to" + BASE_URL, false);
-                            }
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
-        }
     }
 }

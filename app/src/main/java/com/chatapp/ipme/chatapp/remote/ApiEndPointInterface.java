@@ -23,7 +23,7 @@ public interface ApiEndPointInterface {
     @Headers({Constants.CONTENT_TYPE})
     Observable<Login> loginUser(@Body HashMap<String, String> map);
 
-    @POST("/users/register")
+    @POST("/register")
     @Headers({Constants.CONTENT_TYPE})
     Observable<Signin> signinUser(@Body HashMap<String, String> map);
 

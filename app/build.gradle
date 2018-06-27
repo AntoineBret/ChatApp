@@ -58,13 +58,13 @@ android {
         implementation "android.arch.lifecycle:runtime:$archCompVersion"
         implementation "android.arch.lifecycle:extensions:$archCompVersion"
         implementation "android.arch.lifecycle:reactivestreams:$archCompVersion"
+
+        //Timber
+        implementation 'com.jakewharton.timber:timber:4.7.0'
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
     buildToolsVersion '28.0.0'
-}
-
-dependencies {
 }

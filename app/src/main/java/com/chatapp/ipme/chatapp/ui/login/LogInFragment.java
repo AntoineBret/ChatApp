@@ -67,8 +67,6 @@ public class LogInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-        LayoutInflater.from(getContext()).inflate(R.layout.login_cardview, frameLayout, true);
-
         Button buttonLogIn = rootView.findViewById(R.id.buttonLog);
         TextView tvNoAccount = rootView.findViewById(R.id.tvNoAccount);
 
@@ -81,7 +79,14 @@ public class LogInFragment extends Fragment {
 
         tvNoAccount.setOnClickListener(v -> {
             Fragment f = SignInFragment.newInstance();
-            getFragmentManager().beginTransaction().replace(R.id.login_frame_container, f).addToBackStack(null).commit();
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                            R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+                    .replace(R.id.login_frame_container, f)
+                    .addToBackStack(null)
+                    .commit();
         });
 
         return rootView;

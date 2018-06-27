@@ -11,10 +11,16 @@ import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
 public class ApiClient {
 
     private static Retrofit retrofit = null;
+    private static TokenManager tokenManager = null;
 
     public static Retrofit getClient() {
 
         if (retrofit == null) {
+
+            OkHttpClient client = new OkHttpClient();
+
+            client.interceptors().add(new TokenInterceptor(tokenManager));
+
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

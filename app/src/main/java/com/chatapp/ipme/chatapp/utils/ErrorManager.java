@@ -1,10 +1,13 @@
 package com.chatapp.ipme.chatapp.utils;
 
+import java.net.ConnectException;
+
 import io.reactivex.Observer;
 import timber.log.Timber;
 
 import static com.chatapp.ipme.chatapp.remote.Constants.httpcodes.ERROR_UNKNOWN;
 import static com.chatapp.ipme.chatapp.remote.Constants.httpcodes.MESSAGE_BAD_REQUEST;
+import static com.chatapp.ipme.chatapp.remote.Constants.httpcodes.MESSAGE_CONNECT_EXCEPTION;
 import static com.chatapp.ipme.chatapp.remote.Constants.httpcodes.MESSAGE_FORBITTEN;
 import static com.chatapp.ipme.chatapp.remote.Constants.httpcodes.MESSAGE_NOT_FOUND;
 import static com.chatapp.ipme.chatapp.remote.Constants.httpcodes.MESSAGE_SERVER_ERROR;
@@ -17,6 +20,7 @@ import static com.chatapp.ipme.chatapp.remote.Constants.httpcodes.STATUS_UNAUTHO
 
 public abstract class ErrorManager<T> implements Observer<T> {
 
+    AlertDialogManager alert;
     @Override
     public void onError(Throwable e) {
         if (NetworkUtil.isHttpStatusCode(e, STATUS_BAD_REQUEST)) {
@@ -29,6 +33,8 @@ public abstract class ErrorManager<T> implements Observer<T> {
             Timber.e(MESSAGE_NOT_FOUND);
         } else if (NetworkUtil.isHttpStatusCode(e, STATUS_SERVER_ERROR)) {
             Timber.e(MESSAGE_SERVER_ERROR);
+        } else if (e instanceof ConnectException) {
+            Timber.e(MESSAGE_CONNECT_EXCEPTION);
         } else Timber.e(ERROR_UNKNOWN);
     }
 }

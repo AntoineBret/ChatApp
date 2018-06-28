@@ -23,11 +23,9 @@ import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.HashMap;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Interceptor;
 
 public class SignInFragment extends Fragment {
 
@@ -35,7 +33,7 @@ public class SignInFragment extends Fragment {
         return new SignInFragment();
     }
 
-    private HashMap<String, String> createAccountMAp = new HashMap<>();
+    private HashMap<String, String> createAccountMap = new HashMap<>();
 
     private AlertDialogManager alert = new AlertDialogManager();
     private ApiEndPointInterface apiInterface;
@@ -113,7 +111,7 @@ public class SignInFragment extends Fragment {
         if (signInPassword.length() < 8) {
             alert.showAlertDialog(getContext(), "Password error", "Your password must have more than 8 character", false);
         } else {
-            apiInterface.signinUser(createAccountMAp)
+            apiInterface.signinUser(createAccountMap)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new ErrorManager<Signin>() {
@@ -143,10 +141,10 @@ public class SignInFragment extends Fragment {
         signInLastName = inputLastNameCreate.getText().toString();
         signInBirthdayDate = inputBirthdayDateCreate.getText().toString();
 
-        createAccountMAp.put("username", signInLog);
-        createAccountMAp.put("password", signInPassword);
-        createAccountMAp.put("firstName", signInFirstName);
-        createAccountMAp.put("lastName", signInLastName);
-        createAccountMAp.put("birthdayDate", signInBirthdayDate);
+        createAccountMap.put("username", signInLog);
+        createAccountMap.put("password", signInPassword);
+        createAccountMap.put("firstName", signInFirstName);
+        createAccountMap.put("lastName", signInLastName);
+        createAccountMap.put("birthdayDate", signInBirthdayDate);
     }
 }

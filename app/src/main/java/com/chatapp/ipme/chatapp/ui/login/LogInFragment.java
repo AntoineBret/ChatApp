@@ -19,20 +19,16 @@ import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Login;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
-import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 import com.chatapp.ipme.chatapp.ui.signIn.SignInFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
+import com.chatapp.ipme.chatapp.utils.ErrorManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
 
 public class LogInFragment extends Fragment {
 
@@ -40,6 +36,7 @@ public class LogInFragment extends Fragment {
         return new LogInFragment();
     }
 
+    private HashMap<String, String> loginAccountMap = new HashMap<>();
     private AlertDialogManager alert = new AlertDialogManager();
     private ApiEndPointInterface apiInterface;
     private SessionManager session;
@@ -93,18 +90,15 @@ public class LogInFragment extends Fragment {
     }
 
     private void connectAccount() {
-        logInLog = inputLog.getText().toString();
-        logInPassword = inputPassword.getText().toString();
+        initLogin();
+        apiInterface = ApiClient
+                .getClient()
+                .create(ApiEndPointInterface.class);
 
-        HashMap<String, String> map = new HashMap<>();
-        map.put("username", logInLog);
-        map.put("password", logInPassword);
-
-        apiInterface = ApiClient.getClient().create(ApiEndPointInterface.class);
-        apiInterface.loginUser(map)
+        apiInterface.loginUser(loginAccountMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Login>() {
+                .subscribe(new ErrorManager<Login>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
@@ -114,22 +108,8 @@ public class LogInFragment extends Fragment {
                         if (logInLog.trim().length() > 0 && logInPassword.trim().length() > 0) {
                             if (logInLog.equals(logInLog) && logInPassword.equals(logInPassword)) {
                                 session.createLoginSession(logInLog, logInPassword);
-
-                                Intent intent = new Intent (getContext(), HomeActivity.class);
-                                Fragment f = RoomFragment.newInstance();
-                                getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
-                            } else {
-                                alert.showAlertDialog(getContext(), "Login failed..", "Username/Password is incorrect", false);
+                                Intent intent = new Intent(getContext(), HomeActivity.class);
                             }
-                        } else {
-                            alert.showAlertDialog(getContext(), "Login failed..", "Please enter username and password", false);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        if (t instanceof ConnectException) {
-                            alert.showAlertDialog(getContext(), "java.net.ConnectException:", "Failed to connect to" + BASE_URL, false);
                         }
                     }
 
@@ -137,5 +117,13 @@ public class LogInFragment extends Fragment {
                     public void onComplete() {
                     }
                 });
+    }
+
+    private void initLogin(){
+        logInLog = inputLog.getText().toString();
+        logInPassword = inputPassword.getText().toString();
+
+        loginAccountMap.put("username", logInLog);
+        loginAccountMap.put("password", logInPassword);
     }
 }

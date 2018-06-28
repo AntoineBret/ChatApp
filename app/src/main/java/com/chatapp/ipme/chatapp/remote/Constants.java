@@ -1,5 +1,9 @@
 package com.chatapp.ipme.chatapp.remote;
 
+import com.chatapp.ipme.chatapp.api.BaseUrl;
+
+import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
+
 public class Constants {
     public static final String CONTENT_TYPE = "Content-Type: application/json;charset=UTF-8";
     public static final String AUTHORIZATION = "Authorization: Bearer ";
@@ -7,9 +11,6 @@ public class Constants {
     public interface httpcodes{
         int STATUS_OK = 200;
         String MESSAGE_STATUS_OK = "Query successfully processed : 200";
-
-//        int STATUS_CREATED = 201;
-//        String MESSAGE_STATUS_CREATED = "";
 
         int STATUS_NO_CONTENT= 204;
         String MESSAGE_NO_CONTENT = "";
@@ -30,5 +31,7 @@ public class Constants {
         String MESSAGE_SERVER_ERROR = "Server Error : 500 error";
 
         String ERROR_UNKNOWN = "Error not hold : unknown error";
+
+        String MESSAGE_CONNECT_EXCEPTION = "Failed to connect to " + BASE_URL;
     }
 }

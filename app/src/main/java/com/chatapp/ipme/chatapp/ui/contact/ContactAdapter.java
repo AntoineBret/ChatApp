@@ -8,20 +8,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.Message;
+import com.chatapp.ipme.chatapp.model.Contact;
 
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
 
     private Context context;
-    public List<Message> messageList;
+    public List<Contact> contactList;
     private LayoutInflater inflater = null;
 
 
-    public ContactAdapter(Context context, List<Message> messageList) {
+    public ContactAdapter(Context context, List<Contact> contactList) {
         this.context = context;
-        this.messageList = messageList;
+        this.contactList = contactList;
         inflater = LayoutInflater.from(context);
     }
 
@@ -35,25 +35,23 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @Override
     public void onBindViewHolder(ContactAdapter.ViewHolder holder, final int i) {
         holder.setIsRecyclable(false);
-        final Message message = messageList.get(i);
+        final Contact contact = contactList.get(i);
     }
 
     @Override
     public int getItemCount() {
-        return messageList.size();
+        return contactList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView id;
         public TextView pseudo;
 
         public ViewHolder(View view) {
 
             super(view);
 
-            id = (TextView) view.findViewById(R.id.message_id);
-            pseudo = (TextView) view.findViewById(R.id.message_pseudo);
+            pseudo = (TextView) view.findViewById(R.id.contact_pseudo);
         }
     }
 }

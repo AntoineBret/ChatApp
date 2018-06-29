@@ -1,5 +1,7 @@
 package com.chatapp.ipme.chatapp.remote;
 
+import com.chatapp.ipme.chatapp.api.Constants;
+import com.chatapp.ipme.chatapp.model.Contact;
 import com.chatapp.ipme.chatapp.model.Login;
 import com.chatapp.ipme.chatapp.model.Message;
 import com.chatapp.ipme.chatapp.model.Room;
@@ -24,13 +26,12 @@ public interface ApiEndPointInterface {
     Observable<Login> loginUser(@Body HashMap<String, String> map);
 
     @POST("/register")
-    @Headers({Constants.CONTENT_TYPE})
+    @Headers({ Constants.CONTENT_TYPE })
     Observable<Signin> signinUser(@Body HashMap<String, String> map);
 
+    @GET("/api/users")
+    Observable<Contact> getContact(@Query("username") String username);
 
-    //todo
-
-    //Messages
 
     @POST("/messages")
     Observable<Message> createMessage(@Field("id") Integer id,
@@ -48,11 +49,11 @@ public interface ApiEndPointInterface {
                                 @Field("users") List users,
                                 @Field("messages") List messages);
 
-    @GET("users")
-    Observable<Room> getRoom(@Query("id") Integer id,
-                             @Query("name") String name,
-                             @Query("sizeMax") Integer sizeMax,
-                             @Query("language") String language,
-                             @Query("users") List users,
-                             @Query("messages") List messages);
+//    @GET("users")
+//    Observable<Room> getRoom(@Query("id") Integer id,
+//                             @Query("name") String name,
+//                             @Query("sizeMax") Integer sizeMax,
+//                             @Query("language") String language,
+//                             @Query("users") List users,
+//                             @Query("messages") List messages);
 }

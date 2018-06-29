@@ -10,15 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
+import com.chatapp.ipme.chatapp.model.Contact;
 import com.chatapp.ipme.chatapp.model.Message;
-import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
+import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -27,47 +27,73 @@ import io.reactivex.schedulers.Schedulers;
 public class ContactFragment extends android.support.v4.app.Fragment {
 
 
-  public static ContactFragment newInstance() {
-    return new ContactFragment();
-  }
 
-  private Toolbar toolbar;
-  private RecyclerView recyclerView;
-  private ContactAdapter adapter;
-  private List<Message> messageList = new ArrayList<>();
+    public static ContactFragment newInstance() {
+        return new ContactFragment();
+    }
+    private String username;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_contact, container, false);
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private ContactAdapter adapter;
+    private List<Contact> contactList = new ArrayList<>();
+    private ApiEndPointInterface apiInterface;
 
-    ContactViewModel model = ViewModelProviders.of(this).get(ContactViewModel.class);
-    model.getUsers().observe(this, users -> {
-    });
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_contact, container, false);
 
-    toolbar = rootView.findViewById(R.id.toolbar);
-    toolbar.setTitle("");
-    ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ContactViewModel model = ViewModelProviders.of(this).get(ContactViewModel.class);
+        model.getUsers().observe(this, users -> {
+        });
 
-    recyclerView = rootView.findViewById(R.id.contact_recyclerView);
-    recyclerView.setHasFixedSize(true);
+        toolbar = rootView.findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-    initializeContact();
+        recyclerView = rootView.findViewById(R.id.contact_recyclerView);
+        recyclerView.setHasFixedSize(true);
 
-    adapter = new ContactAdapter(getContext(), messageList);
-    recyclerView.setAdapter(adapter);
+        initializeContact();
 
-    return rootView;
-  }
+        adapter = new ContactAdapter(getContext(), contactList);
+        recyclerView.setAdapter(adapter);
 
-  @Override
-  public void onViewCreated(View view, Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
+        return rootView;
+    }
 
-    toolbar.setTitle("Contact");
-    toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-  }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-  private void initializeContact() {
-    //todo
-  }
+        toolbar.setTitle("Contact");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+    }
+
+    private void initializeContact() {
+        //todo
+        apiInterface = ApiClient
+                .getClient()
+                .create(ApiEndPointInterface.class);
+
+        apiInterface.getContact(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ErrorManager<Contact>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Contact value) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

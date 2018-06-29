@@ -57,8 +57,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public ViewHolder(View view) {
             super(view);
 
-            id = view.findViewById(R.id.message_id);
-            pseudo = view.findViewById(R.id.message_pseudo);
+            id = view.findViewById(R.id.contact_id);
+            pseudo = view.findViewById(R.id.contact_pseudo);
             messages = view.findViewById(R.id.message_content);
             createdAt = view.findViewById(R.id.message_date);
         }

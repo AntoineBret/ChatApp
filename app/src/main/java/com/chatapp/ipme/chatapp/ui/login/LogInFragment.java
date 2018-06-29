@@ -1,6 +1,5 @@
 package com.chatapp.ipme.chatapp.ui.login;
 
-import android.animation.AnimatorSet;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -43,7 +42,6 @@ public class LogInFragment extends Fragment {
     private FrameLayout frameLayout;
     private ViewModel viewModel;
     private View rootView;
-    private AnimatorSet flip;
 
     // Login variable declaration
     private EditText inputLog;
@@ -101,14 +99,17 @@ public class LogInFragment extends Fragment {
                 .subscribe(new ErrorManager<Login>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override
                     public void onNext(Login user) {
+                        String token = user.getToken();
                         if (logInLog.trim().length() > 0 && logInPassword.trim().length() > 0) {
                             if (logInLog.equals(logInLog) && logInPassword.equals(logInPassword)) {
-                                session.createLoginSession(logInLog, logInPassword);
+                                session.createLoginSession(logInLog, logInPassword, token);
                                 Intent intent = new Intent(getContext(), HomeActivity.class);
+                                startActivity(intent);
                             }
                         }
                     }
@@ -119,7 +120,7 @@ public class LogInFragment extends Fragment {
                 });
     }
 
-    private void initLogin(){
+    private void initLogin() {
         logInLog = inputLog.getText().toString();
         logInPassword = inputPassword.getText().toString();
 

@@ -20,14 +20,18 @@ public class ApiClient {
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient okHttpClient = builder.addInterceptor(interceptor).build();
+            client = builder
+                    .addInterceptor(interceptor)
+                    .addInterceptor(new HeaderIntercepter())
+                    .build();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(okHttpClient)
+                    .client(client)
                     .build();
         }
         return retrofit;

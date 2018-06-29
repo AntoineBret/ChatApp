@@ -22,12 +22,6 @@
         android:paddingTop="5dp">
 
         <TextView
-            android:id="@+id/contact_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white" />
-
-        <TextView
             android:id="@+id/contact_pseudo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

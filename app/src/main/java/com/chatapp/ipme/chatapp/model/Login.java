@@ -16,6 +16,16 @@ public class Login {
     @Expose
     private String username;
 
+    @SerializedName("token")
+    @Expose
+    private String token;
+
+    public Login(String password, String username, String token) {
+        this.password = password;
+        this.username = username;
+        this.token = token;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -32,4 +42,11 @@ public class Login {
         this.username = username;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

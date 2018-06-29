@@ -1,12 +1,9 @@
-package com.chatapp.ipme.chatapp.remote;
-
-import com.chatapp.ipme.chatapp.api.BaseUrl;
+package com.chatapp.ipme.chatapp.api;
 
 import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
 
 public class Constants {
     public static final String CONTENT_TYPE = "Content-Type: application/json;charset=UTF-8";
-    public static final String AUTHORIZATION = "Authorization: Bearer ";
 
     public interface httpcodes{
         int STATUS_OK = 200;

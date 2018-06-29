@@ -1,6 +1,8 @@
 package com.chatapp.ipme.chatapp.ui.firstConnection;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ public class FirstConnectionFragment extends Fragment {
     }
 
     private Button buttonTermServiceAgree;
+    public static String COMPLETED_TERMS_OF_SERVICE;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,17 @@ public class FirstConnectionFragment extends Fragment {
                     .replace(R.id.login_frame_container, f)
                     .addToBackStack(null)
                     .commit();
+
+            onFinishFragment();
         });
         return rootView;
+    }
+
+    private void onFinishFragment() {
+        SharedPreferences.Editor sharedPreferencesEditor =
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        sharedPreferencesEditor.putBoolean(
+                COMPLETED_TERMS_OF_SERVICE, true);
+        sharedPreferencesEditor.apply();
     }
 }

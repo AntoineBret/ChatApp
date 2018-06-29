@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +124,8 @@ public class SignInFragment extends Fragment {
                         public void onNext(Signin value) {
                             Fragment f = RoomFragment.newInstance();
                             getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
+
+                            Log.d("test", value.toString());
                         }
 
                         @Override

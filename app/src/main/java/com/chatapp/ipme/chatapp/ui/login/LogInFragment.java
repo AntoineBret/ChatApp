@@ -18,7 +18,7 @@ import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Login;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
-import com.chatapp.ipme.chatapp.ui.signIn.SignInFragment;
+import com.chatapp.ipme.chatapp.ui.signUp.SignUpFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
@@ -73,7 +73,7 @@ public class LogInFragment extends Fragment {
         });
 
         tvNoAccount.setOnClickListener(v -> {
-            Fragment f = SignInFragment.newInstance();
+            Fragment f = SignUpFragment.newInstance();
             getFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(
@@ -106,11 +106,9 @@ public class LogInFragment extends Fragment {
                     public void onNext(Login user) {
                         String token = user.getToken();
                         if (logInLog.trim().length() > 0 && logInPassword.trim().length() > 0) {
-                            if (logInLog.equals(logInLog) && logInPassword.equals(logInPassword)) {
                                 session.createLoginSession(logInLog, logInPassword, token);
                                 Intent intent = new Intent(getContext(), HomeActivity.class);
                                 startActivity(intent);
-                            }
                         }
                     }
 

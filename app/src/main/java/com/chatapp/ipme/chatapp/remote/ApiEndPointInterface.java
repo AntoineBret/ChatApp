@@ -5,7 +5,7 @@ import com.chatapp.ipme.chatapp.model.Contact;
 import com.chatapp.ipme.chatapp.model.Login;
 import com.chatapp.ipme.chatapp.model.Message;
 import com.chatapp.ipme.chatapp.model.Room;
-import com.chatapp.ipme.chatapp.model.Signin;
+import com.chatapp.ipme.chatapp.model.SignUp;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public interface ApiEndPointInterface {
 
     @POST("/register")
     @Headers({ Constants.CONTENT_TYPE })
-    Observable<Signin> signinUser(@Body HashMap<String, String> map);
+    Observable<SignUp> signupUser(@Body HashMap<String, String> map);
 
     @GET("/api/users")
     Observable<Contact> getContact(@Query("username") String username);

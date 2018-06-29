@@ -1,4 +1,4 @@
-package com.chatapp.ipme.chatapp.ui.signIn;
+package com.chatapp.ipme.chatapp.ui.signUp;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.HomeActivity;
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.Signin;
+import com.chatapp.ipme.chatapp.model.SignUp;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
@@ -28,10 +28,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SignInFragment extends Fragment {
+public class SignUpFragment extends Fragment {
 
-    public static SignInFragment newInstance() {
-        return new SignInFragment();
+    public static SignUpFragment newInstance() {
+        return new SignUpFragment();
     }
 
     private HashMap<String, String> createAccountMap = new HashMap<>();
@@ -46,12 +46,12 @@ public class SignInFragment extends Fragment {
     private TextView tvAlreadyAccount;
 
     //Variables
-    private String signInLog;
-    private String signInPassword;
-    private String signInConfirmPassword;
-    private String signInFirstName;
-    private String signInLastName;
-    private String signInBirthdayDate;
+    private String signUpLog;
+    private String signUpPassword;
+    private String signUpConfirmPassword;
+    private String signUpFirstName;
+    private String signUpLastName;
+    private String signUpBirthdayDate;
 
     private EditText inputUsernameCreate;
     private EditText inputPasswordCreate;
@@ -64,13 +64,13 @@ public class SignInFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = ViewModelProviders.of(this).get(SignInViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
         session = new SessionManager(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_signin, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
 
         buttonCreate = rootView.findViewById(R.id.buttonCreate);
         tvAlreadyAccount = rootView.findViewById(R.id.tvAlreadyAccount);
@@ -101,33 +101,33 @@ public class SignInFragment extends Fragment {
     }
 
     private void createAccount() {
-        initSigninForm();
+        initSignupForm();
         apiInterface = ApiClient
                 .getClient()
                 .create(ApiEndPointInterface.class);
 
-        if (!(signInPassword.equals(signInConfirmPassword))) {
+        if (!(signUpPassword.equals(signUpConfirmPassword))) {
             alert.showAlertDialog(getContext(), "Password error", "Please enter same password", false);
         }
-        if (signInLog.length() < 4) {
+        if (signUpLog.length() < 4) {
             alert.showAlertDialog(getContext(), "Username error", "Your username must have more than 4 character", false);
         }
-        if (signInPassword.length() < 8) {
+        if (signUpPassword.length() < 8) {
             alert.showAlertDialog(getContext(), "Password error", "Your password must have more than 8 character", false);
         } else {
-            apiInterface.signinUser(createAccountMap)
+            apiInterface.signupUser(createAccountMap)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new ErrorManager<Signin>() {
+                    .subscribe(new ErrorManager<SignUp>() {
                         @Override
                         public void onSubscribe(Disposable d) {
                         }
 
                         @Override
-                        public void onNext(Signin value) {
+                        public void onNext(SignUp value) {
                             String token = value.getToken();
-                            if (signInLog.trim().length() > 0 && signInPassword.trim().length() > 0) {
-                                session.createLoginSession(signInLog, signInPassword, token);
+                            if (signUpLog.trim().length() > 0 && signUpPassword.trim().length() > 0) {
+                                session.createLoginSession(signUpLog, signUpPassword, token);
                                 Intent intent = new Intent(getContext(), HomeActivity.class);
                                 startActivity(intent);
                             }
@@ -141,18 +141,18 @@ public class SignInFragment extends Fragment {
         }
     }
 
-    private void initSigninForm() {
-        signInLog = inputUsernameCreate.getText().toString();
-        signInPassword = inputPasswordCreate.getText().toString();
-        signInConfirmPassword = inputConfirmPasswordCreate.getText().toString();
-        signInFirstName = inputFirstNameCreate.getText().toString();
-        signInLastName = inputLastNameCreate.getText().toString();
-        signInBirthdayDate = inputBirthdayDateCreate.getText().toString();
+    private void initSignupForm() {
+        signUpLog = inputUsernameCreate.getText().toString();
+        signUpPassword = inputPasswordCreate.getText().toString();
+        signUpConfirmPassword = inputConfirmPasswordCreate.getText().toString();
+        signUpFirstName = inputFirstNameCreate.getText().toString();
+        signUpLastName = inputLastNameCreate.getText().toString();
+        signUpBirthdayDate = inputBirthdayDateCreate.getText().toString();
 
-        createAccountMap.put("username", signInLog);
-        createAccountMap.put("password", signInPassword);
-        createAccountMap.put("firstName", signInFirstName);
-        createAccountMap.put("lastName", signInLastName);
-        createAccountMap.put("birthdayDate", signInBirthdayDate);
+        createAccountMap.put("username", signUpLog);
+        createAccountMap.put("password", signUpPassword);
+        createAccountMap.put("firstName", signUpFirstName);
+        createAccountMap.put("lastName", signUpLastName);
+        createAccountMap.put("birthdayDate", signUpBirthdayDate);
     }
 }

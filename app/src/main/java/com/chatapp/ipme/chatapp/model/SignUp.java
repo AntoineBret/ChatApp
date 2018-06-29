@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Signin {
+public class SignUp {
 
-    public Signin() {
+    public SignUp() {
     }
 
     @SerializedName("password")
@@ -30,12 +30,17 @@ public class Signin {
     @Expose
     private Date birthdayDate;
 
-    public Signin(String password, String username, String firstName, String lastName, Date birthdayDate) {
+    @SerializedName("token")
+    @Expose
+    private String token;
+
+    public SignUp(String password, String username, String firstName, String lastName, Date birthdayDate) {
         this.password = password;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdayDate = birthdayDate;
+        this.token = token;
     }
 
     public String getPassword() {
@@ -76,5 +81,13 @@ public class Signin {
 
     public void setBirthdayDate(Date birthdayDate) {
         this.birthdayDate = birthdayDate;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -2,9 +2,9 @@ package com.chatapp.ipme.chatapp.ui.signIn;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.chatapp.ipme.chatapp.HomeActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Signin;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
-import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
@@ -109,6 +109,9 @@ public class SignInFragment extends Fragment {
         if (!(signInPassword.equals(signInConfirmPassword))) {
             alert.showAlertDialog(getContext(), "Password error", "Please enter same password", false);
         }
+        if (signInLog.length() < 4) {
+            alert.showAlertDialog(getContext(), "Username error", "Your username must have more than 4 character", false);
+        }
         if (signInPassword.length() < 8) {
             alert.showAlertDialog(getContext(), "Password error", "Your password must have more than 8 character", false);
         } else {
@@ -122,10 +125,12 @@ public class SignInFragment extends Fragment {
 
                         @Override
                         public void onNext(Signin value) {
-                            Fragment f = RoomFragment.newInstance();
-                            getFragmentManager().beginTransaction().replace(R.id.frame_container, f).addToBackStack(null).commit();
-
-                            Log.d("test", value.toString());
+                            String token = value.getToken();
+                            if (signInLog.trim().length() > 0 && signInPassword.trim().length() > 0) {
+                                session.createLoginSession(signInLog, signInPassword, token);
+                                Intent intent = new Intent(getContext(), HomeActivity.class);
+                                startActivity(intent);
+                            }
                         }
 
                         @Override

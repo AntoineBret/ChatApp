@@ -2,7 +2,9 @@ package com.chatapp.ipme.chatapp.ui.contact;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -11,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Contact;
-import com.chatapp.ipme.chatapp.model.Message;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
@@ -24,15 +25,13 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class ContactFragment extends android.support.v4.app.Fragment {
-
-
+public class ContactFragment extends Fragment {
 
     public static ContactFragment newInstance() {
         return new ContactFragment();
     }
-    private String username;
 
+    private String username;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
@@ -54,10 +53,14 @@ public class ContactFragment extends android.support.v4.app.Fragment {
         recyclerView = rootView.findViewById(R.id.contact_recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        initializeContact();
-
+        contactList = new ArrayList<>();
         adapter = new ContactAdapter(getContext(), contactList);
+
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+
+        initializeContact();
 
         return rootView;
     }

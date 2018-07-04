@@ -18,8 +18,6 @@
 
 
     //signin_cardview.xml
-
-
     <!-- Username -->
     <string name="inputUsernameCreateHint">Entrez votre pseudo</string>
     <!-- Password -->
@@ -36,5 +34,9 @@
     <!-- Desc -->
     <string name="alreadyAccount">Déjà un compte ?</string>
     <string name="signinDesc">Créer un compte</string>
+
+    <!-- HomeViewPager -->
+    <string name="room_fragment_title">Discussions</string>
+    <string name="profile_fragment_title">Profil</string>
 
 </resources>

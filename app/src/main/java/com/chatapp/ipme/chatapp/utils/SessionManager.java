@@ -36,18 +36,6 @@ public class SessionManager {
         editor.commit();
     }
 
-    public void checkLogin() {
-        if (!this.isLoggedIn()) {
-            Fragment f = LogInFragment.newInstance();
-            ((HomeActivity) _context)
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_container, f)
-                    .addToBackStack(null)
-                    .commit();
-        }
-    }
-
     public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<>();
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
@@ -64,7 +52,7 @@ public class SessionManager {
         ((HomeActivity) _context)
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_container, f)
+                .replace(R.id.login_frame_container, f)
                 .addToBackStack(null)
                 .commit();
     }

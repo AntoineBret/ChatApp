@@ -19,8 +19,8 @@ import static com.chatapp.ipme.chatapp.api.Constants.httpcodes.STATUS_SERVER_ERR
 import static com.chatapp.ipme.chatapp.api.Constants.httpcodes.STATUS_UNAUTHORIZED;
 
 public abstract class ErrorManager<T> implements Observer<T> {
+    private AlertDialogManager alert;
 
-    AlertDialogManager alert;
     @Override
     public void onError(Throwable e) {
         if (NetworkUtil.isHttpStatusCode(e, STATUS_BAD_REQUEST)) {

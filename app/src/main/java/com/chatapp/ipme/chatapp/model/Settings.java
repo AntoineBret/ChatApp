@@ -1,33 +1,31 @@
 package com.chatapp.ipme.chatapp.model;
 
-import android.widget.ImageView;
-
 public class Settings {
 
-    private ImageView settingsThumbnail;
-    private String settingsTitle;
+  public Settings() {
+  }
 
-    public Settings(int cover, String settingsTitle) {
-    }
+  public String settingsTitle;
+  public int settingsThumbnail;
 
-    public Settings(ImageView settingsThumbnail, String settingsTitle) {
-        this.settingsThumbnail = settingsThumbnail;
-        this.settingsTitle = settingsTitle;
-    }
+  public Settings(String settingsTitle, int settingsThumbnail) {
+    this.settingsTitle = settingsTitle;
+    this.settingsThumbnail = settingsThumbnail;
+  }
 
-    public ImageView getSettingsThumbnail() {
-        return settingsThumbnail;
-    }
+  public String getSettingsTitle() {
+    return settingsTitle;
+  }
 
-    public void setSettingsThumbnail(ImageView settingsThumbnail) {
-        this.settingsThumbnail = settingsThumbnail;
-    }
+  public void setSettingsTitle(String settingsTitle) {
+    this.settingsTitle = settingsTitle;
+  }
 
-    public String getSettingsTitle() {
-        return settingsTitle;
-    }
+  public int getSettingsThumbnail() {
+    return settingsThumbnail;
+  }
 
-    public void setSettingsTitle(String settingsTitle) {
-        this.settingsTitle = settingsTitle;
-    }
+  public void setSettingsThumbnail(int settingsThumbnail) {
+    this.settingsThumbnail = settingsThumbnail;
+  }
 }

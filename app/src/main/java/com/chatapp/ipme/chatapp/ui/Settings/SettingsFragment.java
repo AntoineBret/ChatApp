@@ -6,82 +6,112 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
 import com.chatapp.ipme.chatapp.model.Settings;
 import com.chatapp.ipme.chatapp.ui.logout.LogOutFragment;
+import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SettingsFragment extends Fragment {
 
-    private Toolbar toolbar;
-    private RecyclerView recyclerView;
-    private SettingsAdapter adapter;
-    private List<Settings> settingsList;
+  private Toolbar toolbar;
+  private RecyclerView recyclerView;
+  private SettingsAdapter adapter;
+  private List<Settings> settingsList;
+  private SessionManager session;
+  private ImageView displayThumbnail;
+  private TextView displayUsername;
+
+  public static SettingsFragment newInstance() {
+    return new SettingsFragment();
+  }
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    session = new SessionManager(getContext());
+  }
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+
+    toolbar = rootView.findViewById(R.id.toolbar);
+    toolbar.setTitle(R.string.parameter_toolbar);
+    toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+
+    displayThumbnail = rootView.findViewById(R.id.displayThumbnail);
+    displayUsername = rootView.findViewById(R.id.displayUsername);
+
+    getUserLogDetails();
+
+    settingsList = new ArrayList<>();
+
+    recyclerView = rootView.findViewById(R.id.settings_recyclerView);
+    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+    recyclerView.setHasFixedSize(true);
+
+    adapter = new SettingsAdapter(getContext(), settingsList);
+    recyclerView.setAdapter(adapter);
+
+    initializeSettings();
+
+    recyclerView.addOnItemTouchListener(
+      new RecyclerItemClickListener(getContext(), (view, position) -> {
+        switch (position) {
+          case 0:
+            Fragment f = LogOutFragment.newInstance();
+            getFragmentManager()
+              .beginTransaction()
+              .replace(R.id.parameter_frame_container, f)
+              .addToBackStack(null)
+              .commit();
+            break;
+          case 2:
+            session = new SessionManager(getContext());
+            session.logoutUser();
+            break;
+        }
+      }));
 
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
-    }
+    return rootView;
+  }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+  private void initializeSettings() {
+    int[] covers = new int[]{
+      R.drawable.ic_notification,
+      R.drawable.ic_account,
+      R.drawable.ic_disconect,
+    };
 
-        toolbar = rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.parameter_toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+    settingsList.add(new Settings("Notifications //todo", covers[0]));
+    settingsList.add(new Settings("Compte //todo", covers[1]));
+    settingsList.add(new Settings("Déconnexion", covers[2]));
 
-        recyclerView = rootView.findViewById(R.id.settings_recyclerView);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setHasFixedSize(true);
+    adapter.notifyDataSetChanged();
+  }
 
-        settingsList = new ArrayList<>();
-        initializeSettings();
-        adapter = new SettingsAdapter(getContext(), settingsList);
-
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
-
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), (view, position) -> {
-                    switch (position) {
-                        case 0:
-                            Fragment f = LogOutFragment.newInstance();
-                            getFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.parameter_frame_container, f)
-                                    .addToBackStack(null)
-                                    .commit();
-                            break;
-                        case 1:
-                            Fragment y = LogOutFragment.newInstance();
-                            getFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.parameter_frame_container, y)
-                                    .addToBackStack(null)
-                                    .commit();
-                            break;
-                    }
-                }));
-
-
-        return rootView;
-    }
-
-    private void initializeSettings() {
-        int[] covers = new int[]{
-                R.drawable.ic_account,
-                R.drawable.ic_disconect,};
-
-        settingsList.add(new Settings(covers[0], "LogOut"));
-        settingsList.add(new Settings(covers[1], "test2"));
-    }
+  private void getUserLogDetails() {
+    Toast.makeText(getContext(), "Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+    HashMap<String, String> user = session.getUserDetails();
+    String name = user.get(SessionManager.KEY_NAME);
+    if (name == null) {
+      displayUsername.setText("Aucun utilisateur log");
+    } else
+      displayUsername.setText(Html.fromHtml("Name: <b>" + name + "</b>"));
+  }
 }

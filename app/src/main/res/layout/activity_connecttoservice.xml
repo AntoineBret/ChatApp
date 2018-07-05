@@ -9,7 +9,12 @@
     android:orientation="vertical"
     tools:context="com.chatapp.ipme.chatapp.HomeActivity">
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/login_frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+      <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -21,10 +26,6 @@
         android:textColor="@color/white"
         android:textSize="30dp"/>
 
-    <FrameLayout
-        android:id="@+id/login_frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
     </FrameLayout>
 
 </LinearLayout>

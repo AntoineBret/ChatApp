@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.HomeActivity;
 import com.chatapp.ipme.chatapp.R;
@@ -22,11 +23,14 @@ import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.chatapp.ipme.chatapp.api.Constants.httpcodes.MESSAGE_CONNECT_EXCEPTION;
 
 public class SignUpFragment extends Fragment {
 
@@ -132,6 +136,13 @@ public class SignUpFragment extends Fragment {
                                 startActivity(intent);
                             }
                         }
+
+                      @Override
+                      public void onError(Throwable e) {
+                        if (e instanceof ConnectException) {
+                          Toast.makeText(getContext(), MESSAGE_CONNECT_EXCEPTION, Toast.LENGTH_LONG).show();
+                        }
+                      }
 
                         @Override
                         public void onComplete() {

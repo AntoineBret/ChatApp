@@ -1,5 +1,7 @@
 package com.chatapp.ipme.chatapp.utils;
 
+import android.widget.Toast;
+
 import java.net.ConnectException;
 
 import io.reactivex.Observer;

@@ -106,7 +106,6 @@ public class SettingsFragment extends Fragment {
   }
 
   private void getUserLogDetails() {
-    Toast.makeText(getContext(), "Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
     HashMap<String, String> user = session.getUserDetails();
     String name = user.get(SessionManager.KEY_NAME);
     if (name == null) {

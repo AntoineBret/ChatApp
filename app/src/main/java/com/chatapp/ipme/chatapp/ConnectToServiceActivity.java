@@ -16,41 +16,38 @@ import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 public class ConnectToServiceActivity extends AppCompatActivity {
 
-  private FrameLayout frameLayout;
-  private Intent intent;
+    private FrameLayout frameLayout;
+    private Intent intent;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_connecttoservice);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_connecttoservice);
 
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-      WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-    frameLayout = findViewById(R.id.login_frame_container);
+        frameLayout = findViewById(R.id.login_frame_container);
 
-    if (!sharedPreferences.getBoolean(FirstConnectionFragment.COMPLETED_TERMS_OF_SERVICE, false)) {
-      // The user hasn't seen the FirstConnectionFragment yet, so show it
-      Fragment f = FirstConnectionFragment.newInstance();
-      getSupportFragmentManager()
-        .beginTransaction()
-        .replace(R.id.login_frame_container, f)
-        .addToBackStack(null)
-        .commit();
-    } else if (SessionManager.KEY_TOKEN != null) {
-      // Code to run if token return null
-      Fragment f = LogInFragment.newInstance();
-      getSupportFragmentManager()
-        .beginTransaction()
-        .replace(R.id.login_frame_container, f)
-        .addToBackStack(null)
-        .commit();
-    } else
-      if (intent == null) {
-        intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+        if (!sharedPreferences.getBoolean(FirstConnectionFragment.COMPLETED_TERMS_OF_SERVICE, false)) {
+            // The user hasn't seen the FirstConnectionFragment yet, so show it
+            Fragment f = FirstConnectionFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.login_frame_container, f)
+                    .commit();
+        } else if (SessionManager.KEY_TOKEN != null) {
+            // Code to run if token return null
+            Fragment f = LogInFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.login_frame_container, f)
+                    .commit();
+        } else if (intent == null) {
+            intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+        }
     }
-  }
 }

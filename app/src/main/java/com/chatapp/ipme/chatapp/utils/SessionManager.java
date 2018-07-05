@@ -1,12 +1,10 @@
 package com.chatapp.ipme.chatapp.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
 
-import com.chatapp.ipme.chatapp.HomeActivity;
-import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
+import com.chatapp.ipme.chatapp.ConnectToServiceActivity;
 
 import java.util.HashMap;
 
@@ -48,13 +46,9 @@ public class SessionManager {
     public void logoutUser() {
         editor.clear();
         editor.commit();
-        Fragment f = LogInFragment.newInstance();
-        ((HomeActivity) _context)
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.login_frame_container, f)
-                .addToBackStack(null)
-                .commit();
+        Intent intent = new Intent(_context, ConnectToServiceActivity.class);
+        _context.startActivity(intent);
+
     }
 
     public boolean isLoggedIn() {

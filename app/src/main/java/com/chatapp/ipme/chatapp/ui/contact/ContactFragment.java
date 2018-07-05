@@ -2,7 +2,6 @@ package com.chatapp.ipme.chatapp.ui.contact;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +12,10 @@ import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Contact;
+import com.chatapp.ipme.chatapp.model.Message;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
+import com.chatapp.ipme.chatapp.ui.room.RoomAdapter;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class ContactFragment extends Fragment {
+public class ContactFragment extends android.support.v4.app.Fragment {
 
     public static ContactFragment newInstance() {
         return new ContactFragment();

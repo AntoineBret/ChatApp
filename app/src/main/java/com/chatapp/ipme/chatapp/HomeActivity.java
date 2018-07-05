@@ -1,26 +1,23 @@
 package com.chatapp.ipme.chatapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.chatapp.ipme.chatapp.adapter.HomeViewPagerAdapter;
-import com.chatapp.ipme.chatapp.ui.logout.LogOutFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Menu menu;
     private Toolbar toolbar;
-    private FrameLayout frameLayout;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private HomeViewPagerAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +31,6 @@ public class HomeActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.home_tablayout);
         viewPager = findViewById(R.id.home_viewpager);
-
-        frameLayout = findViewById(R.id.home_frame_container);
 
         adapter = new HomeViewPagerAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
@@ -52,11 +47,8 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_option:
-                Fragment f = LogOutFragment.newInstance();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.home_frame_container, f)
-                        .addToBackStack(null).commit();
+                Intent intent = new Intent(this, ParameterActivity.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

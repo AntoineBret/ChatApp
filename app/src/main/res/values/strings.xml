@@ -39,4 +39,10 @@
     <string name="room_fragment_title">Discussions</string>
     <string name="profile_fragment_title">Profil</string>
 
+    <!-- Contact Activity -->
+    <string name="contact_toolbar">Contact</string>
+
+    <!-- Parameter Activity -->
+    <string name="parameter_toolbar">Paramètres</string>
+
 </resources>

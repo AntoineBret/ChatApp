@@ -1,6 +1,7 @@
 package com.chatapp.ipme.chatapp.ui.room;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chatapp.ipme.chatapp.ContactActivity;
+import com.chatapp.ipme.chatapp.HomeActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
@@ -55,12 +58,8 @@ public class RoomFragment extends Fragment {
 
         floatingActionButton = rootView.findViewById(R.id.contactsFab);
         floatingActionButton.setOnClickListener(view -> {
-            Fragment f = ContactFragment.newInstance();
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.home_frame_container, f)
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(getContext(), ContactActivity.class);
+            startActivity(intent);
         });
 
         // initializeRoom();

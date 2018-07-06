@@ -38,7 +38,7 @@ public class ConnectToServiceActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.login_frame_container, f)
                     .commit();
-        } else if (SessionManager.KEY_NAME != null) {
+        } else if (SessionManager.KEY_TOKEN == null) {
             // Code to run if token return null
             Fragment f = LogInFragment.newInstance();
             getSupportFragmentManager()

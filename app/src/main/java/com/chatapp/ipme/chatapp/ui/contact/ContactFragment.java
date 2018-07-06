@@ -12,10 +12,8 @@ import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Contact;
-import com.chatapp.ipme.chatapp.model.Message;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
-import com.chatapp.ipme.chatapp.ui.room.RoomAdapter;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.util.ArrayList;
@@ -76,11 +74,11 @@ public class ContactFragment extends android.support.v4.app.Fragment {
 
     private void initializeContact() {
         //todo
-        apiInterface = ApiClient
+        apiInterface = new ApiClient(getContext())
                 .getClient()
                 .create(ApiEndPointInterface.class);
 
-        apiInterface.getContact(username)
+        apiInterface.getContacts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ErrorManager<Contact>() {

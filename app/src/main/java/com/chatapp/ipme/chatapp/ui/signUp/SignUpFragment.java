@@ -106,7 +106,7 @@ public class SignUpFragment extends Fragment {
 
     private void createAccount() {
         initSignupForm();
-        apiInterface = ApiClient
+        apiInterface = new ApiClient(getContext())
                 .getClient()
                 .create(ApiEndPointInterface.class);
 

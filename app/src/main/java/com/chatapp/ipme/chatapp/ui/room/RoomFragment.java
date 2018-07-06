@@ -69,7 +69,7 @@ public class RoomFragment extends Fragment {
 
     private void initializeRoom() {
         //todo
-        apiInterface = ApiClient
+        apiInterface = new ApiClient(getContext())
                 .getClient()
                 .create(ApiEndPointInterface.class);
     }

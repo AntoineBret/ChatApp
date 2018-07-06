@@ -93,7 +93,7 @@ public class LogInFragment extends Fragment {
 
   private void connectAccount() {
     initLogin();
-    apiInterface = ApiClient
+    apiInterface = new ApiClient(getContext())
       .getClient()
       .create(ApiEndPointInterface.class);
 
@@ -132,7 +132,6 @@ public class LogInFragment extends Fragment {
   private void initLogin() {
     logInLog = inputLog.getText().toString();
     logInPassword = inputPassword.getText().toString();
-
     loginAccountMap.put("username", logInLog);
     loginAccountMap.put("password", logInPassword);
   }

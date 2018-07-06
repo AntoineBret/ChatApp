@@ -1,5 +1,9 @@
 package com.chatapp.ipme.chatapp.remote;
 
+import android.content.Context;
+
+import com.chatapp.ipme.chatapp.utils.SessionManager;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -11,8 +15,16 @@ import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
 public class ApiClient {
 
     private static Retrofit retrofit = null;
+    private Context context = null;
 
-    public static Retrofit getClient() {
+    public ApiClient(Context context) {
+        setContext(context);
+    }
+
+    public ApiClient() {
+    }
+
+    public Retrofit getClient() {
 
         if (retrofit == null) {
 
@@ -24,7 +36,7 @@ public class ApiClient {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             client = builder
                     .addInterceptor(interceptor)
-                    .addInterceptor(new HeaderIntercepter())
+                    .addInterceptor(new HeaderIntercepter(new SessionManager(context)))
                     .build();
 
             retrofit = new Retrofit.Builder()
@@ -35,6 +47,15 @@ public class ApiClient {
                     .build();
         }
         return retrofit;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public ApiClient setContext(Context context) {
+        this.context = context;
+        return this;
     }
 }
 

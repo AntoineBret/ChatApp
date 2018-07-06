@@ -30,7 +30,7 @@ public interface ApiEndPointInterface {
     Observable<SignUp> signupUser(@Body HashMap<String, String> map);
 
     @GET("/api/users")
-    Observable<Contact> getContact(@Query("username") String username);
+    Observable<Contact> getContacts();
 
 
     @POST("/messages")

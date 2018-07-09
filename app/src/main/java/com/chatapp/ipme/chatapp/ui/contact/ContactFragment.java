@@ -17,8 +17,10 @@ import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -34,7 +36,7 @@ public class ContactFragment extends android.support.v4.app.Fragment {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
-    private List<Contact> contactList = new ArrayList<>();
+    private List<Contact> contactList;
     private ApiEndPointInterface apiInterface;
 
     @Override
@@ -81,14 +83,21 @@ public class ContactFragment extends android.support.v4.app.Fragment {
         apiInterface.getContacts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ErrorManager<Contact>() {
+                .subscribe(new Observer<List<Contact>>() {
+
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Contact value) {
+                    public void onNext(List<Contact> contactList) {
+                        adapter.setData(contactList);
+                    }
+
+
+                    @Override
+                    public void onError(Throwable e) {
 
                     }
 

@@ -17,6 +17,7 @@ import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiEndPointInterface {
@@ -26,12 +27,11 @@ public interface ApiEndPointInterface {
     Observable<Login> loginUser(@Body HashMap<String, String> map);
 
     @POST("/register")
-    @Headers({ Constants.CONTENT_TYPE })
+    @Headers({Constants.CONTENT_TYPE})
     Observable<SignUp> signupUser(@Body HashMap<String, String> map);
 
-    @GET("/api/users")
-    Observable<Contact> getContacts();
-
+    @GET("/api/users/")
+    Observable<List<Contact>> getContacts();
 
     @POST("/messages")
     Observable<Message> createMessage(@Field("id") Integer id,

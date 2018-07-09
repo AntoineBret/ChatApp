@@ -43,6 +43,6 @@ public abstract class ErrorManager<T> implements Observer<T> {
         } else if (e instanceof ConnectException) {
             return MESSAGE_CONNECT_EXCEPTION;
         } else
-            return ERROR_UNKNOWN;
+            return e.toString();
     }
 }

@@ -4,22 +4,22 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.chatapp.ipme.chatapp.model.User;
+import com.chatapp.ipme.chatapp.model.Contact;
 
 import java.util.List;
 
 public class ContactViewModel extends ViewModel {
-  private MutableLiveData<List<User>> users;
+  private MutableLiveData<List<Contact>> contacts;
 
-  public LiveData<List<User>> getUsers() {
-    if (users == null) {
-      users = new MutableLiveData<>();
-      loadUsers();
+  public LiveData<List<Contact>> getUsers() {
+    if (contacts == null) {
+        contacts = new MutableLiveData<>();
+      loadContacts();
     }
-    return users;
+    return contacts;
   }
 
-  private void loadUsers() {
+  private void loadContacts() {
   }
 }
 

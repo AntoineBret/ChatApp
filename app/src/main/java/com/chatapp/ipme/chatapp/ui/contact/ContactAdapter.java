@@ -24,6 +24,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         this.contactList = contactList;
         inflater = LayoutInflater.from(context);
     }
+    
+    public void setData(List<Contact> contactList) {
+        this.contactList = contactList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public ContactAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -35,7 +40,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @Override
     public void onBindViewHolder(ContactAdapter.ViewHolder holder, final int i) {
         holder.setIsRecyclable(false);
-        final Contact contact = contactList.get(i);
+        Contact contact = contactList.get(i);
+        holder
+                .username
+                .setText(contact.getUsername());
     }
 
     @Override
@@ -45,13 +53,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView pseudo;
+        public TextView username;
 
         public ViewHolder(View view) {
-
             super(view);
-
-            pseudo = (TextView) view.findViewById(R.id.contact_pseudo);
+            username = (TextView) view.findViewById(R.id.user_title);
         }
     }
 }

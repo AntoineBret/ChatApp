@@ -32,7 +32,6 @@ public class SettingsFragment extends Fragment {
     private SessionManager session;
     private ImageView displayThumbnail;
     private TextView displayUsername;
-    private  TextView displayToken;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -54,8 +53,6 @@ public class SettingsFragment extends Fragment {
 
         displayThumbnail = rootView.findViewById(R.id.settingsThumbnail);
         displayUsername = rootView.findViewById(R.id.settingsUsername);
-        //clear for prod
-        displayToken = rootView.findViewById(R.id.settingsToken);
 
         getUserLogDetails();
 
@@ -102,14 +99,6 @@ public class SettingsFragment extends Fragment {
     private void getUserLogDetails() {
         Map<String, String> user = session.getUserDetails();
         String name = user.get(SessionManager.KEY_NAME);
-        //clear for prod
-        String token = user.get(SessionManager.KEY_TOKEN);
-
-        if (token == null) {
-            displayToken.setText("Aucun token");
-        } else
-            displayToken.setText(Html.fromHtml("Token: <b>" + token + "</b>"));
-
 
         if (name == null) {
             displayUsername.setText("Aucun utilisateur log");

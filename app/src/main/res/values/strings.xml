@@ -42,6 +42,10 @@
     <!-- Contact Activity -->
     <string name="contact_toolbar">Contact</string>
 
+    <!-- Contact Fragment -->
+    <string name="newGroupTitle">Nouveau groupe</string>
+    <string name="newContactTitle">Nouveau contact</string>
+
     <!-- Parameter Activity -->
     <string name="parameter_toolbar">Paramètres</string>
 

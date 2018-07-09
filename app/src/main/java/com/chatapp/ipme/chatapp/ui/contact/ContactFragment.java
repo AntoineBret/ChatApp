@@ -2,6 +2,7 @@ package com.chatapp.ipme.chatapp.ui.contact;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,15 +10,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.R;
+import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
 import com.chatapp.ipme.chatapp.model.Contact;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
-import com.chatapp.ipme.chatapp.utils.ErrorManager;
+import com.chatapp.ipme.chatapp.ui.newContact.NewContactFragment;
+import com.chatapp.ipme.chatapp.ui.newGroup.NewGroupFragment;
+import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -32,12 +37,13 @@ public class ContactFragment extends android.support.v4.app.Fragment {
         return new ContactFragment();
     }
 
-    private String username;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
     private List<Contact> contactList;
     private ApiEndPointInterface apiInterface;
+    private RelativeLayout groupContainer;
+    private RelativeLayout contactContainer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +69,41 @@ public class ContactFragment extends android.support.v4.app.Fragment {
 
         initializeContact();
 
+        //Add new group
+        groupContainer = rootView.findViewById(R.id.rl_container_group);
+        groupContainer.setOnClickListener(view -> {
+            Fragment newGroup = NewGroupFragment.newInstance();
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contact_frame_container, newGroup)
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        //Add new User
+        contactContainer = rootView.findViewById(R.id.rl_container_contact);
+        contactContainer.setOnClickListener(view -> {
+            Fragment newContact = NewContactFragment.newInstance();
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contact_frame_container, newContact)
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        //Create room
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), (view, position) -> {
+//                    Toast.makeText(view.getContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+                    //todo : passer en bundle le string "username" pour pouvoir créer une room 
+                    Fragment room = RoomFragment.newInstance();
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.contact_frame_container, room)
+                            .addToBackStack(null)
+                            .commit();
+                }));
+
         return rootView;
     }
 
@@ -75,7 +116,6 @@ public class ContactFragment extends android.support.v4.app.Fragment {
     }
 
     private void initializeContact() {
-        //todo
         apiInterface = new ApiClient(getContext())
                 .getClient()
                 .create(ApiEndPointInterface.class);

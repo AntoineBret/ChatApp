@@ -14,7 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -30,23 +30,14 @@
             android:padding="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/test_thumbnail" />
-        android:id="@+id/settingsToken"
 
         <TextView
             android:id="@+id/settingsUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/settingsThumbnail"
-            android:paddingLeft="15dp"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/settingsToken"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/settingsThumbnail"
-            android:layout_below="@+id/settingsUsername"
+            android:layout_toRightOf="@+id/settings_thumbnail"
             android:paddingLeft="15dp"
             android:textColor="@color/black"
             android:textSize="18sp" />

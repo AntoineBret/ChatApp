@@ -14,6 +14,70 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/rl_container_group"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
+
+        <ImageView
+            android:id="@+id/newGroupThumbnail"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="start"
+            android:layout_margin="20dp"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_new_group" />
+
+        <TextView
+            android:id="@+id/newGroupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/newGroupThumbnail"
+            android:layout_toRightOf="@+id/newGroupThumbnail"
+            android:paddingLeft="15dp"
+            android:text="@string/newGroupTitle"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/rl_container_contact"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
+
+        <ImageView
+            android:id="@+id/newContactThumbnail"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="start"
+            android:layout_margin="20dp"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_new_contact" />
+
+        <TextView
+            android:id="@+id/newContactTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/newContactTitle"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/newContactThumbnail"
+            android:layout_toRightOf="@+id/newContactThumbnail"
+            android:paddingLeft="15dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contact_recyclerView"
         android:layout_width="match_parent"

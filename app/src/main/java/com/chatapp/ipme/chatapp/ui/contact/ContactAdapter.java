@@ -24,7 +24,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         this.contactList = contactList;
         inflater = LayoutInflater.from(context);
     }
-    
+
     public void setData(List<Contact> contactList) {
         this.contactList = contactList;
         notifyDataSetChanged();

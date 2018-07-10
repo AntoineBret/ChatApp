@@ -11,16 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
 import com.chatapp.ipme.chatapp.model.Contact;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.newContact.NewContactFragment;
 import com.chatapp.ipme.chatapp.ui.newGroup.NewGroupFragment;
-import com.chatapp.ipme.chatapp.ui.room.RoomFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,19 +87,6 @@ public class ContactFragment extends android.support.v4.app.Fragment {
                     .addToBackStack(null)
                     .commit();
         });
-
-        //Create room
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), (view, position) -> {
-//                    Toast.makeText(view.getContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
-                    //todo : passer en bundle le string "username" pour pouvoir créer une room 
-                    Fragment room = RoomFragment.newInstance();
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.contact_frame_container, room)
-                            .addToBackStack(null)
-                            .commit();
-                }));
 
         return rootView;
     }

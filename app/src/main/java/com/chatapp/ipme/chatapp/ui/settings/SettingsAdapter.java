@@ -1,4 +1,4 @@
-package com.chatapp.ipme.chatapp.ui.Settings;
+package com.chatapp.ipme.chatapp.ui.settings;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

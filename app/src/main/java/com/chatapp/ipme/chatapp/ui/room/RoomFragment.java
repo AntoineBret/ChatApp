@@ -15,12 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.ContactActivity;
-import com.chatapp.ipme.chatapp.HomeActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
-import com.chatapp.ipme.chatapp.ui.contact.ContactFragment;
 
 import java.util.ArrayList;
 import java.util.List;

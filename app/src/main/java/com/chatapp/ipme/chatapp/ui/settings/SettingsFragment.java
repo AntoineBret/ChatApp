@@ -1,4 +1,4 @@
-package com.chatapp.ipme.chatapp.ui.Settings;
+package com.chatapp.ipme.chatapp.ui.settings;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +19,6 @@ import com.chatapp.ipme.chatapp.model.Settings;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

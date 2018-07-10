@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
-import com.chatapp.ipme.chatapp.ui.Settings.SettingsFragment;
+import com.chatapp.ipme.chatapp.ui.settings.SettingsFragment;
 
 public class ParameterActivity extends AppCompatActivity {
 

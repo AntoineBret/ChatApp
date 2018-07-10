@@ -5,41 +5,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.ContactActivity;
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.Room;
+import com.chatapp.ipme.chatapp.model.DisplayRoom;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomFragment extends Fragment {
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-    public static RoomFragment newInstance() {
-        return new RoomFragment();
+public class RoomListFragment extends Fragment {
+
+    public static RoomListFragment newInstance() {
+        return new RoomListFragment();
     }
 
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
-    private RoomAdapter adapter;
-    private List<Room> roomList;
+    private RoomListAdapter adapter;
+    private List<DisplayRoom> displayRoomList;
     private ApiEndPointInterface apiInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_room, container, false);
 
-        RoomViewModel model = ViewModelProviders.of(this).get(RoomViewModel.class);
+        RoomListViewModel model = ViewModelProviders.of(this).get(RoomListViewModel.class);
         model.getRooms().observe(this, rooms -> {
         });
 
@@ -47,8 +50,8 @@ public class RoomFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setHasFixedSize(true);
 
-        roomList = new ArrayList<>();
-        adapter = new RoomAdapter(getContext(), roomList);
+        displayRoomList = new ArrayList<>();
+        adapter = new RoomListAdapter(getContext(), displayRoomList);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
@@ -60,15 +63,40 @@ public class RoomFragment extends Fragment {
             startActivity(intent);
         });
 
-        // initializeRoom();
-
+        initializeRoomListData();
         return rootView;
     }
 
-    private void initializeRoom() {
-        //todo
+    private void initializeRoomListData() {
         apiInterface = new ApiClient(getContext())
                 .getClient()
                 .create(ApiEndPointInterface.class);
+
+        apiInterface.getRooms()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<DisplayRoom>>() {
+
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<DisplayRoom> displayRoomList) {
+                        adapter.setData(displayRoomList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

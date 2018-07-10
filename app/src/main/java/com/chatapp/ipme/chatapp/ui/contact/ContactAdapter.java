@@ -1,6 +1,7 @@
 package com.chatapp.ipme.chatapp.ui.contact;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
+import com.chatapp.ipme.chatapp.RoomActivity;
 import com.chatapp.ipme.chatapp.model.Contact;
 import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
 
@@ -50,18 +52,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         holder.username.setOnClickListener(v -> {
             String item = (contact.getUsername());
-
-            Fragment roomDetails = RoomDetailsFragment.newInstance();
+            Intent roomIntent = new Intent(context, RoomActivity.class);
             //send selected "username" to next fragment
-            Bundle arguments = new Bundle();
-            arguments.putString("user_name", item);
-            roomDetails.setArguments(arguments);
-
-            ((AppCompatActivity) context).getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.contact_frame_container, roomDetails)
-                    .addToBackStack(null)
-                    .commit();
+            roomIntent.putExtra("user_name", item);
+            context.startActivity(roomIntent);
         });
     }
 

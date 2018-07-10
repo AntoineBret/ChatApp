@@ -23,47 +23,15 @@
       android:gravity="center"
       android:orientation="vertical">
 
-      <RelativeLayout
-        android:id="@+id/rl_room_thumbnail"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:gravity="center">
-
-        <ImageView
-          android:id="@+id/room_thumbnail"
-          android:layout_width="60dp"
-          android:layout_height="60dp"
-          android:background="@drawable/circle_imageview_shape"
-          android:paddingBottom="4dp"
-          android:paddingLeft="4dp"
-          android:paddingRight="4dp"
-          android:paddingTop="4dp"
-          android:scaleType="fitCenter" />
-
-      </RelativeLayout>
-
       <TextView
         android:id="@+id/room_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/rl_room_thumbnail"
-        android:layout_toRightOf="@+id/rl_room_thumbnail"
         android:paddingBottom="5dp"
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
         android:textColor="@color/custom"
         android:textSize="16dp" />
-
-      <TextView
-        android:id="@+id/room_subtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/room_title"
-        android:layout_toEndOf="@+id/rl_room_thumbnail"
-        android:paddingLeft="15dp"
-        android:textColor="@color/custom"
-        android:textSize="14dp" />
 
     </RelativeLayout>
 

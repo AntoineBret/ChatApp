@@ -4,16 +4,16 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.chatapp.ipme.chatapp.model.Room;
+import com.chatapp.ipme.chatapp.model.DisplayRoom;
 
 import java.util.List;
 
 
-public class RoomViewModel extends ViewModel {
+public class RoomListViewModel extends ViewModel {
 
-  private MutableLiveData<List<Room>> rooms;
+  private MutableLiveData<List<DisplayRoom>> rooms;
 
-  public LiveData<List<Room>> getRooms() {
+  public LiveData<List<DisplayRoom>> getRooms() {
     if (rooms == null) {
       rooms = new MutableLiveData<>();
       loadRooms();

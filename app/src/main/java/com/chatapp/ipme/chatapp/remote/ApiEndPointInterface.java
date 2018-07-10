@@ -2,58 +2,42 @@ package com.chatapp.ipme.chatapp.remote;
 
 import com.chatapp.ipme.chatapp.api.Constants;
 import com.chatapp.ipme.chatapp.model.Contact;
+import com.chatapp.ipme.chatapp.model.CreateRoom;
 import com.chatapp.ipme.chatapp.model.Login;
-import com.chatapp.ipme.chatapp.model.Message;
-import com.chatapp.ipme.chatapp.model.Room;
+import com.chatapp.ipme.chatapp.model.DisplayRoom;
 import com.chatapp.ipme.chatapp.model.SignUp;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiEndPointInterface {
 
+    //log to service
     @POST("/login")
     @Headers({Constants.CONTENT_TYPE})
     Observable<Login> loginUser(@Body HashMap<String, String> map);
 
+    //register to service
     @POST("/register")
     @Headers({Constants.CONTENT_TYPE})
     Observable<SignUp> signupUser(@Body HashMap<String, String> map);
 
+    //get all users register on service
     @GET("/api/users/")
     Observable<List<Contact>> getContacts();
 
-    @POST("/messages")
-    Observable<Message> createMessage(@Field("id") Integer id,
-                                      @Field("content") String content,
-                                      @Field("createdAt") Date createdAt);
+    //get all rooms of connected user
+    @GET("/api/user/rooms")
+    Observable<List<DisplayRoom>> getRooms();
 
-    @GET("messages")
-    Observable<Message> getMessage(@Query("id") Integer id,
-                                   @Query("content") String content,
-                                   @Query("createdAt") Date createdAt);
-    //Room
+    //create rooms with one user
+    @POST("/api/rooms")
+    Observable<CreateRoom> createNewRoom(@Body HashMap<String, String> map);
 
-    @POST("/rooms")
-    Observable<Room> createRoom(@Field("name") String name,
-                                @Field("users") List users,
-                                @Field("messages") List messages);
-
-//    @GET("users")
-//    Observable<Room> getRoom(@Query("id") Integer id,
-//                             @Query("name") String name,
-//                             @Query("sizeMax") Integer sizeMax,
-//                             @Query("language") String language,
-//                             @Query("users") List users,
-//                             @Query("messages") List messages);
 }

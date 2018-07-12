@@ -28,11 +28,10 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-    public void createLoginSession(String name, String password, String id, String token) {
+    public void createLoginSession(String name, String password, String token) {
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_NAME, name);
         editor.putString(KEY_PASSWORD, password);
-        editor.putString(KEY_ID, id);
         editor.putString(KEY_TOKEN, token);
         editor.apply();
         editor.commit();
@@ -42,7 +41,6 @@ public class SessionManager {
         Map<String, String> user = new HashMap<>();
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
         user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
-        user.put(KEY_ID, pref.getString(KEY_ID, null));
         user.put(KEY_TOKEN, pref.getString(KEY_TOKEN, null));
 
         return user;
@@ -52,7 +50,6 @@ public class SessionManager {
         editor.putBoolean(IS_LOGIN, false);
         editor.remove(KEY_NAME);
         editor.remove(KEY_PASSWORD);
-        editor.remove(KEY_ID);
         editor.remove(KEY_TOKEN);
         editor.apply();
         editor.commit();

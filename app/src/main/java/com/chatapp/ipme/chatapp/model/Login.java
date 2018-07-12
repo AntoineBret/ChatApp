@@ -16,11 +16,6 @@ public class Login {
     @Expose
     private String username;
 
-//    @SerializedName("id")
-//    @Expose
-//    private String token;
-//    To finish : handle user ID when login or SignUp for create user room >
-
     @SerializedName("token")
     @Expose
     private String token;

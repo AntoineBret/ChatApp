@@ -21,5 +21,6 @@
     <activity android:name=".HomeActivity" />
     <activity android:name=".ContactActivity" />
     <activity android:name=".ParameterActivity" />
+    <activity android:name=".RoomActivity" />
   </application>
 </manifest>

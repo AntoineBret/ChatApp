@@ -13,7 +13,6 @@ import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -36,12 +35,12 @@ public class RoomActivity extends AppCompatActivity {
 
         frameLayout = findViewById(R.id.room_frame_container);
 
+        initializeDataBeforeCreateRoom();
+
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(interlocutorUsername);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-
-        initializeDataBeforeCreateRoom();
 
         createRoom();
     }
@@ -52,7 +51,7 @@ public class RoomActivity extends AppCompatActivity {
         //get interlocutor username
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            interlocutorUsername= extras.getString("user_name");
+            interlocutorUsername = extras.getString("user_name");
         }
 
         //get interlocutor ID
@@ -62,9 +61,7 @@ public class RoomActivity extends AppCompatActivity {
 
 
         //get ID of user currently connected
-        //todo : check if KEY_NAME is needed
-        Map<String, String> user = session.getUserDetails();
-        String name = user.get(SessionManager.KEY_NAME);
+
     }
 
     private void createRoom() {

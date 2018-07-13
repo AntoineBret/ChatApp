@@ -130,8 +130,11 @@ public class SignUpFragment extends Fragment {
                         @Override
                         public void onNext(SignUp value) {
                             String token = value.getToken();
+                            String id = value.getId();
+
                             if (signUpLog.trim().length() > 0 && signUpPassword.trim().length() > 0) {
-                                session.createLoginSession(signUpLog, signUpPassword, token);
+                                //handle ID on OkHttp: <-- 200 response for create session manager
+                                session.createLoginSession(signUpLog, signUpPassword, token, id);
                                 Intent intent = new Intent(getContext(), HomeActivity.class);
                                 startActivity(intent);
                             }

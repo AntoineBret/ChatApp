@@ -7,6 +7,13 @@ public class CreateRoom {
 
     private String name;
     private String users;
+    private Integer id;
+
+    public CreateRoom(String name, String users, Integer id) {
+        this.name = name;
+        this.users = users;
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -23,6 +30,15 @@ public class CreateRoom {
 
     public CreateRoom setUsers(String users) {
         this.users = users;
+        return this;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public CreateRoom setId(Integer id) {
+        this.id = id;
         return this;
     }
 }

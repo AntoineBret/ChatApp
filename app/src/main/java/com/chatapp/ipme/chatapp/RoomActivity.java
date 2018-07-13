@@ -13,6 +13,7 @@ import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,6 +28,7 @@ public class RoomActivity extends AppCompatActivity {
     private ApiEndPointInterface apiInterface;
     private Toolbar toolbar;
     private String interlocutorUsername;
+    private String interlocutorID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,25 +54,29 @@ public class RoomActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             interlocutorUsername = extras.getString("user_name");
+//            interlocutorID = extras.getString("user_id");
         }
-
-        //get interlocutor ID
-        //todo
 
         //get data of user currently log
 
 
         //get ID of user currently connected
-
+//        if (SessionManager.KEY_ID != null) {
+//            Map<String, String> user = session.getUserDetails();
+//            String id = user.get(SessionManager.KEY_ID);
+//        }else{
+//            //todo récupérer l'ID avec une methode get
+//        }
     }
 
     private void createRoom() {
+        //todo : check if " " value of hashmap are correct for the api call
         //room name
         createRoomMap.put("name", interlocutorUsername);
         //interlocutor name
-        createRoomMap.put("users", interlocutorUsername);
+        createRoomMap.put("users1", interlocutorUsername);
         //currently logged user
-        createRoomMap.put("user_name", interlocutorUsername);
+//        createRoomMap.put("users2",interlocutorID);
 
         apiInterface = new ApiClient(this)
                 .getClient()
@@ -87,7 +93,14 @@ public class RoomActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(CreateRoom createRoom) {
+                       //todo send room ID after created, with Bundle argument to roomDetails
+                       Integer roomID = createRoom.getId();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("room_id", roomID);
                         Fragment roomDetails = RoomDetailsFragment.newInstance();
+                        roomDetails.setArguments(bundle);
+
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.contact_frame_container, roomDetails)

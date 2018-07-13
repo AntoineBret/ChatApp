@@ -33,6 +33,9 @@ public class RoomDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_roomdetails, container, false);
 
+        //recover room ID for send data
+        Integer roomID = getArguments().getInt("room_id");
+
         recyclerView = rootView.findViewById(R.id.roomdetails_recyclerView);
         recyclerView.setHasFixedSize(true);
 

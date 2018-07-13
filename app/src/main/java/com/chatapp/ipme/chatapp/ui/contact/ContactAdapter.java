@@ -2,9 +2,6 @@ package com.chatapp.ipme.chatapp.ui.contact;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,25 +10,24 @@ import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.RoomActivity;
-import com.chatapp.ipme.chatapp.model.Contact;
-import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
+import com.chatapp.ipme.chatapp.model.User;
 
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
 
     private Context context;
-    public List<Contact> contactList;
+    public List<User> userList;
     private LayoutInflater inflater = null;
 
-    public ContactAdapter(Context context, List<Contact> contactList) {
+    public ContactAdapter(Context context, List<User> userList) {
         this.context = context;
-        this.contactList = contactList;
+        this.userList = userList;
         inflater = LayoutInflater.from(context);
     }
 
-    public void setData(List<Contact> contactList) {
-        this.contactList = contactList;
+    public void setData(List<User> userList) {
+        this.userList = userList;
         notifyDataSetChanged();
     }
 
@@ -45,23 +41,24 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @Override
     public void onBindViewHolder(ContactAdapter.ViewHolder holder, final int i) {
         holder.setIsRecyclable(false);
-        Contact contact = contactList.get(i);
+        User user = userList.get(i);
         holder
                 .username
-                .setText(contact.getUsername());
+                .setText(user.getUsername());
 
         holder.username.setOnClickListener(v -> {
-            String item = (contact.getUsername());
+            String displayUsername = (user.getUsername());
+
             Intent roomIntent = new Intent(context, RoomActivity.class);
             //send selected "username" to next fragment
-            roomIntent.putExtra("user_name", item);
+            roomIntent.putExtra("user_name", displayUsername);
             context.startActivity(roomIntent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return contactList.size();
+        return userList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

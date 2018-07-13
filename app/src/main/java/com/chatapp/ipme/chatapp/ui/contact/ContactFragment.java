@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.Contact;
+import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.newContact.NewContactFragment;
@@ -30,6 +30,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ContactFragment extends android.support.v4.app.Fragment {
 
+    public ContactFragment() {
+    }
+
     public static ContactFragment newInstance() {
         return new ContactFragment();
     }
@@ -37,7 +40,7 @@ public class ContactFragment extends android.support.v4.app.Fragment {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private ContactAdapter adapter;
-    private List<Contact> contactList;
+    private List<User> userList;
     private ApiEndPointInterface apiInterface;
     private RelativeLayout groupContainer;
     private RelativeLayout contactContainer;
@@ -57,8 +60,8 @@ public class ContactFragment extends android.support.v4.app.Fragment {
         recyclerView = rootView.findViewById(R.id.contact_recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        contactList = new ArrayList<>();
-        adapter = new ContactAdapter(getContext(), contactList);
+        userList = new ArrayList<>();
+        adapter = new ContactAdapter(getContext(), userList);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
@@ -107,7 +110,7 @@ public class ContactFragment extends android.support.v4.app.Fragment {
         apiInterface.getContacts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Contact>>() {
+                .subscribe(new Observer<List<User>>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -115,8 +118,8 @@ public class ContactFragment extends android.support.v4.app.Fragment {
                     }
 
                     @Override
-                    public void onNext(List<Contact> contactList) {
-                        adapter.setData(contactList);
+                    public void onNext(List<User> userList) {
+                        adapter.setData(userList);
                     }
 
 

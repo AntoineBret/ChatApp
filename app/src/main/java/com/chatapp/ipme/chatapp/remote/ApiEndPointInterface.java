@@ -1,11 +1,10 @@
 package com.chatapp.ipme.chatapp.remote;
 
 import com.chatapp.ipme.chatapp.api.Constants;
-import com.chatapp.ipme.chatapp.model.Contact;
 import com.chatapp.ipme.chatapp.model.CreateRoom;
-import com.chatapp.ipme.chatapp.model.Login;
 import com.chatapp.ipme.chatapp.model.DisplayRoom;
 import com.chatapp.ipme.chatapp.model.SignUp;
+import com.chatapp.ipme.chatapp.model.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,7 @@ public interface ApiEndPointInterface {
     //log to service
     @POST("/login")
     @Headers({Constants.CONTENT_TYPE})
-    Observable<Login> loginUser(@Body HashMap<String, String> map);
+    Observable<User> loginUser(@Body HashMap<String, String> map);
 
     //register to service
     @POST("/register")
@@ -30,7 +29,7 @@ public interface ApiEndPointInterface {
 
     //get all users register on service
     @GET("/api/users/")
-    Observable<List<Contact>> getContacts();
+    Observable<List<User>> getContacts();
 
     //get all rooms of connected user
     @GET("/api/user/rooms")

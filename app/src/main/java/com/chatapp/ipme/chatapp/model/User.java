@@ -5,75 +5,87 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    public User() {
-    }
+  public User() {
+  }
 
-    @SerializedName("password")
-    @Expose
-    private String password;
+  @SerializedName("id")
+  @Expose
+  private Integer ID;
 
-    @SerializedName("username")
-    @Expose
-    private String username;
+  @SerializedName("username")
+  @Expose
+  private String username;
 
-    @SerializedName("token")
-    @Expose
-    private String token;
+  @SerializedName("password")
+  @Expose
+  private String password;
 
-    @SerializedName("id")
-    @Expose
-    private String ID;
+  @SerializedName("firstName")
+  @Expose
+  private String firstname;
 
-    public User(String password, String username, String token, String ID) {
-        this.password = password;
-        this.username = username;
-        this.token = token;
-        this.ID = ID;
-    }
+  @SerializedName("lastName")
+  @Expose
+  private String lastname;
 
-    public String getPassword() {
-        return password;
-    }
+  @SerializedName("email")
+  @Expose
+  private String email;
 
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
+  public User(Integer ID, String username, String password, String firstname, String lastname, String email) {
+    this.ID = ID;
+    this.username = username;
+    this.password = password;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.email = email;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public Integer getID() {
+    return ID;
+  }
 
-    public User setUsername(String username) {
-        this.username = username;
-        return this;
-    }
+  public void setID(Integer ID) {
+    this.ID = ID;
+  }
 
-    public String getToken() {
-        return token;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public User setToken(String token) {
-        this.token = token;
-        return this;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-    public String getID() {
-        return ID;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public User setID(String ID) {
-        this.ID = ID;
-        return this;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", token='" + token + '\'' +
-                ", ID='" + ID + '\'' +
-                '}';
-    }
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
 }

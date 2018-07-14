@@ -8,22 +8,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.DisplayRoom;
+import com.chatapp.ipme.chatapp.model.Room;
 
 import java.util.List;
 
 public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHolder> {
 
   private Context context;
-  public List<DisplayRoom> displayRoomList;
+  public List<Room> roomList;
 
-  public RoomListAdapter(Context context, List<DisplayRoom> displayRoomList) {
+  public RoomListAdapter(Context context, List<Room> roomList) {
     this.context = context;
-    this.displayRoomList = displayRoomList;
+    this.roomList = roomList;
   }
 
-  public void setData(List<DisplayRoom> displayRoomList) {
-    this.displayRoomList = displayRoomList;
+  public void setData(List<Room> roomList) {
+    this.roomList = roomList;
     notifyDataSetChanged();
   }
 
@@ -36,13 +36,13 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
 
   @Override
   public void onBindViewHolder(RoomListAdapter.ViewHolder holder, int position) {
-    DisplayRoom displayRoom = displayRoomList.get(position);
-    holder.room_title.setText(displayRoom.getName());
+    Room room = roomList.get(position);
+    holder.room_title.setText(room.getName());
   }
 
   @Override
   public int getItemCount() {
-    return displayRoomList.size();
+    return roomList.size();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {

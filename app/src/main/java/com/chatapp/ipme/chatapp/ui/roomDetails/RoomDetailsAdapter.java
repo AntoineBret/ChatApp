@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.DisplayRoom;
+import com.chatapp.ipme.chatapp.model.Room;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ import java.util.List;
 public class RoomDetailsAdapter extends RecyclerView.Adapter<RoomDetailsAdapter.ViewHolder> {
 
   private Context context;
-  public List<DisplayRoom> displayRoomList;
+  public List<Room> roomList;
   private LayoutInflater inflater = null;
 
 
-  public RoomDetailsAdapter(Context context, List<DisplayRoom> displayRoomList) {
+  public RoomDetailsAdapter(Context context, List<Room> roomList) {
     this.context = context;
-    this.displayRoomList = displayRoomList;
+    this.roomList = roomList;
     inflater = LayoutInflater.from(context);
   }
 
@@ -35,13 +35,13 @@ public class RoomDetailsAdapter extends RecyclerView.Adapter<RoomDetailsAdapter.
   @Override
   public void onBindViewHolder(RoomDetailsAdapter.ViewHolder holder, final int i) {
     holder.setIsRecyclable(false);
-    final DisplayRoom displayRoom = displayRoomList.get(i);
+    final Room room = roomList.get(i);
 
   }
 
   @Override
   public int getItemCount() {
-    return displayRoomList.size();
+    return roomList.size();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {

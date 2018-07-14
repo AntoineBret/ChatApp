@@ -1,15 +1,15 @@
 package com.chatapp.ipme.chatapp.model;
 
-public class CreateRoom {
+public class Room {
 
-    public CreateRoom() {
+    public Room() {
     }
 
     private String name;
     private String users;
     private Integer id;
 
-    public CreateRoom(String name, String users, Integer id) {
+    public Room(String name, String users, Integer id) {
         this.name = name;
         this.users = users;
         this.id = id;
@@ -19,7 +19,7 @@ public class CreateRoom {
         return name;
     }
 
-    public CreateRoom setName(String name) {
+    public Room setName(String name) {
         this.name = name;
         return this;
     }
@@ -28,7 +28,7 @@ public class CreateRoom {
         return users;
     }
 
-    public CreateRoom setUsers(String users) {
+    public Room setUsers(String users) {
         this.users = users;
         return this;
     }
@@ -37,7 +37,7 @@ public class CreateRoom {
         return id;
     }
 
-    public CreateRoom setId(Integer id) {
+    public Room setId(Integer id) {
         this.id = id;
         return this;
     }

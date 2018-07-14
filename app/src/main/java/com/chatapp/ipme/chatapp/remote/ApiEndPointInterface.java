@@ -1,15 +1,16 @@
 package com.chatapp.ipme.chatapp.remote;
 
 import com.chatapp.ipme.chatapp.api.Constants;
-import com.chatapp.ipme.chatapp.model.CreateRoom;
-import com.chatapp.ipme.chatapp.model.DisplayRoom;
+import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.model.SignUp;
 import com.chatapp.ipme.chatapp.model.User;
+import com.chatapp.ipme.chatapp.model.UserResponse;
 
 import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -20,7 +21,7 @@ public interface ApiEndPointInterface {
     //log to service
     @POST("/login")
     @Headers({Constants.CONTENT_TYPE})
-    Observable<User> loginUser(@Body HashMap<String, String> map);
+    Observable<Response<UserResponse>> loginUser(@Body HashMap<String, String> map);
 
     //register to service
     @POST("/register")
@@ -33,10 +34,10 @@ public interface ApiEndPointInterface {
 
     //get all rooms of connected user
     @GET("/api/user/rooms")
-    Observable<List<DisplayRoom>> getRooms();
+    Observable<List<Room>> getRooms();
 
     //create rooms with one user
     @POST("/api/rooms")
-    Observable<CreateRoom> createNewRoom(@Body HashMap<String, String> map);
+    Observable<Room> createNewRoom(@Body HashMap<String, String> map);
 
 }

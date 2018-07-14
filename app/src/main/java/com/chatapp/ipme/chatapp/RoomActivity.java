@@ -6,14 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
-import com.chatapp.ipme.chatapp.model.CreateRoom;
+import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -85,16 +84,16 @@ public class RoomActivity extends AppCompatActivity {
         apiInterface.createNewRoom(createRoomMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CreateRoom>() {
+                .subscribe(new Observer<Room>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(CreateRoom createRoom) {
+                    public void onNext(Room room) {
                        //todo send room ID after created, with Bundle argument to roomDetails
-                       Integer roomID = createRoom.getId();
+                       Integer roomID = room.getId();
 
                         Bundle bundle = new Bundle();
                         bundle.putInt("room_id", roomID);

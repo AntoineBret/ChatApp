@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.ContactActivity;
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.DisplayRoom;
+import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 
@@ -35,7 +35,7 @@ public class RoomListFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
     private RoomListAdapter adapter;
-    private List<DisplayRoom> displayRoomList;
+    private List<Room> roomList;
     private ApiEndPointInterface apiInterface;
 
     @Override
@@ -50,8 +50,8 @@ public class RoomListFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setHasFixedSize(true);
 
-        displayRoomList = new ArrayList<>();
-        adapter = new RoomListAdapter(getContext(), displayRoomList);
+        roomList = new ArrayList<>();
+        adapter = new RoomListAdapter(getContext(), roomList);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
@@ -75,7 +75,7 @@ public class RoomListFragment extends Fragment {
         apiInterface.getRooms()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<DisplayRoom>>() {
+                .subscribe(new Observer<List<Room>>() {
 
 
                     @Override
@@ -84,8 +84,8 @@ public class RoomListFragment extends Fragment {
                     }
 
                     @Override
-                    public void onNext(List<DisplayRoom> displayRoomList) {
-                        adapter.setData(displayRoomList);
+                    public void onNext(List<Room> roomList) {
+                        adapter.setData(roomList);
                     }
 
                     @Override

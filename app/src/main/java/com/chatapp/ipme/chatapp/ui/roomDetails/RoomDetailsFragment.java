@@ -1,18 +1,15 @@
 package com.chatapp.ipme.chatapp.ui.roomDetails;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.DisplayRoom;
+import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ public class RoomDetailsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RoomDetailsAdapter adapter;
-    private List<DisplayRoom> displayRoomList = new ArrayList<>();
+    private List<Room> roomList = new ArrayList<>();
     private ApiEndPointInterface apiInterface;
 
     @Override
@@ -39,8 +36,8 @@ public class RoomDetailsFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.roomdetails_recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        displayRoomList = new ArrayList<>();
-        adapter = new RoomDetailsAdapter(getContext(), displayRoomList);
+        roomList = new ArrayList<>();
+        adapter = new RoomDetailsAdapter(getContext(), roomList);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);

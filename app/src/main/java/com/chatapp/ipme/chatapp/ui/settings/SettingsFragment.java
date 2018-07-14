@@ -19,8 +19,8 @@ import com.chatapp.ipme.chatapp.model.Settings;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SettingsFragment extends Fragment {
 
@@ -96,8 +96,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void getUserLogDetails() {
-        Map<String, String> user = session.getUserDetails();
-        String name = user.get(SessionManager.KEY_USERNAME);
+        HashMap<String, Object> user = session.getUserDetails();
+        Object name = user.get(SessionManager.KEY_USERNAME);
 
         if (name == null) {
             displayUsername.setText("Aucun utilisateur log");

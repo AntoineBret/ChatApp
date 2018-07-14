@@ -1,12 +1,9 @@
 package com.chatapp.ipme.chatapp.remote;
 
-import android.util.Log;
-
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -27,8 +24,8 @@ public class HeaderIntercepter implements Interceptor {
         Request.Builder requestBuilder = request.newBuilder()
                 .addHeader("Content-Type", "application/json");
 
-        Map<String, String> user = session.getUserDetails();
-        String token = user.get(SessionManager.KEY_TOKEN);
+        HashMap<String, Object> user = session.getUserDetails();
+        Object token = user.get(SessionManager.KEY_TOKEN);
 
         if (token != null) {
             requestBuilder.addHeader("Authorization", "Bearer " + token);

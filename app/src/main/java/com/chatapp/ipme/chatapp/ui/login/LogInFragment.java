@@ -42,7 +42,6 @@ public class LogInFragment extends Fragment {
   private HashMap<String, String> loginAccountMap = new HashMap<>();
   private AlertDialogManager alert = new AlertDialogManager();
   private ApiEndPointInterface apiInterface;
-  private SessionManager session;
   private ViewModel viewModel;
   private View rootView;
 
@@ -55,7 +54,6 @@ public class LogInFragment extends Fragment {
   private String token;
   private Integer id;
   private String username;
-  private String password;
   private String firstname;
   private String lastname;
   private String email;
@@ -66,7 +64,6 @@ public class LogInFragment extends Fragment {
     super.onCreate(savedInstanceState);
 
     viewModel = ViewModelProviders.of(this).get(LogInViewModel.class);
-    session = new SessionManager(getContext());
   }
 
   //Connect with existing account
@@ -123,19 +120,11 @@ public class LogInFragment extends Fragment {
           lastname = userResponseResponse.body().getUser().getLastname();
           email = userResponseResponse.body().getUser().getEmail();
 
-          //Get log
-          System.out.println("token : " + token);
-          System.out.println("id : " + id);
-          System.out.println("username : " + username);
-          System.out.println("firstname : " + firstname);
-          System.out.println("lastname : " + lastname);
-          System.out.println("email : " + email);
+          createSessionData();
 
-          if (logInLog.trim().length() > 0 && logInPassword.trim().length() > 0) {
-            session.createLoginSession(token, id, username, logInPassword, firstname, lastname, email);
-            Intent intent = new Intent(getContext(), HomeActivity.class);
-            startActivity(intent);
-          }
+          Intent intent = new Intent(getContext(), HomeActivity.class);
+          startActivity(intent);
+
         }
 
         @Override
@@ -156,5 +145,19 @@ public class LogInFragment extends Fragment {
     logInPassword = inputPassword.getText().toString().trim();
     loginAccountMap.put("username", logInLog);
     loginAccountMap.put("password", logInPassword);
+  }
+
+  private boolean createSessionData() {
+    SessionManager sessionManager = new SessionManager(getActivity().getBaseContext());
+    HashMap<String, Object> user = new HashMap<>();
+
+    user.put(SessionManager.KEY_TOKEN, token);
+    user.put(SessionManager.KEY_ID, id);
+    user.put(SessionManager.KEY_USERNAME, username);
+    user.put(SessionManager.KEY_FIRSTNAME, firstname);
+    user.put(SessionManager.KEY_LASTNAME, lastname);
+    user.put(SessionManager.KEY_EMAIL, email);
+
+    return sessionManager.createLoginSession(user);
   }
 }

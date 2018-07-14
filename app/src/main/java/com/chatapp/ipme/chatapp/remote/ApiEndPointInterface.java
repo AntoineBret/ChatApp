@@ -2,7 +2,6 @@ package com.chatapp.ipme.chatapp.remote;
 
 import com.chatapp.ipme.chatapp.api.Constants;
 import com.chatapp.ipme.chatapp.model.Room;
-import com.chatapp.ipme.chatapp.model.SignUp;
 import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.model.UserResponse;
 
@@ -26,7 +25,7 @@ public interface ApiEndPointInterface {
     //register to service
     @POST("/register")
     @Headers({Constants.CONTENT_TYPE})
-    Observable<SignUp> signupUser(@Body HashMap<String, String> map);
+    Observable<Response<UserResponse>> signupUser(@Body HashMap<String, String> map);
 
     //get all users register on service
     @GET("/api/users/")

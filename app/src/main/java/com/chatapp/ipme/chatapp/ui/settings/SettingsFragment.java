@@ -97,7 +97,7 @@ public class SettingsFragment extends Fragment {
 
     private void getUserLogDetails() {
         Map<String, String> user = session.getUserDetails();
-        String name = user.get(SessionManager.KEY_NAME);
+        String name = user.get(SessionManager.KEY_USERNAME);
 
         if (name == null) {
             displayUsername.setText("Aucun utilisateur log");

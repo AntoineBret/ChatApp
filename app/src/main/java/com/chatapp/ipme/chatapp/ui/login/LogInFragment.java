@@ -119,18 +119,23 @@ public class LogInFragment extends Fragment {
           token = userResponseResponse.body().getToken();
           id = userResponseResponse.body().getUser().getID();
           username = userResponseResponse.body().getUser().getUsername();
-          password = userResponseResponse.body().getUser().getPassword();
           firstname = userResponseResponse.body().getUser().getFirstname();
           lastname = userResponseResponse.body().getUser().getLastname();
           email = userResponseResponse.body().getUser().getEmail();
-          System.out.println("token : "+token);
-          System.out.println("id : "+id);
-          System.out.println("username : "+username);
-          System.out.println("password : "+password);
-          System.out.println("firstname : "+firstname);
-          System.out.println("lastname : "+lastname);
-          System.out.println("email : "+email);
-          handleResponse();
+
+          //Get log
+          System.out.println("token : " + token);
+          System.out.println("id : " + id);
+          System.out.println("username : " + username);
+          System.out.println("firstname : " + firstname);
+          System.out.println("lastname : " + lastname);
+          System.out.println("email : " + email);
+
+          if (logInLog.trim().length() > 0 && logInPassword.trim().length() > 0) {
+            session.createLoginSession(token, id, username, logInPassword, firstname, lastname, email);
+            Intent intent = new Intent(getContext(), HomeActivity.class);
+            startActivity(intent);
+          }
         }
 
         @Override
@@ -147,18 +152,9 @@ public class LogInFragment extends Fragment {
   }
 
   private void initLogin() {
-    logInLog = inputLog.getText().toString();
-    logInPassword = inputPassword.getText().toString();
+    logInLog = inputLog.getText().toString().trim();
+    logInPassword = inputPassword.getText().toString().trim();
     loginAccountMap.put("username", logInLog);
     loginAccountMap.put("password", logInPassword);
-  }
-
-  private void handleResponse() {
-
-    if (logInLog.trim().length() > 0 && logInPassword.trim().length() > 0) {
-      session.createLoginSession(logInLog, logInPassword, token, null);
-      Intent intent = new Intent(getContext(), HomeActivity.class);
-      startActivity(intent);
-    }
   }
 }

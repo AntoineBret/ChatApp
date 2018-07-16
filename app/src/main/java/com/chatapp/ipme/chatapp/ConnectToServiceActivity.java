@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 
 import com.chatapp.ipme.chatapp.ui.firstConnection.FirstConnectionFragment;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
-import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 public class ConnectToServiceActivity extends AppCompatActivity {
 

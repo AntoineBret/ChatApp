@@ -1,7 +1,5 @@
 package com.chatapp.ipme.chatapp.remote;
 
-import com.chatapp.ipme.chatapp.utils.SessionManager;
-
 import java.io.IOException;
 import java.util.HashMap;
 

@@ -2,8 +2,6 @@ package com.chatapp.ipme.chatapp.remote;
 
 import android.content.Context;
 
-import com.chatapp.ipme.chatapp.utils.SessionManager;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

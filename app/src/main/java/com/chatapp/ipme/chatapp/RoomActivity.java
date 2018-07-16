@@ -10,7 +10,6 @@ import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
-import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.HashMap;
 
@@ -60,9 +59,9 @@ public class RoomActivity extends AppCompatActivity {
 
 
         //get ID of user currently connected
-//        if (SessionManager.KEY_ID != null) {
+//        if (createLoginSession.KEY_ID != null) {
 //            Map<String, String> user = session.getUserDetails();
-//            String id = user.get(SessionManager.KEY_ID);
+//            String id = user.get(createLoginSession.KEY_ID);
 //        }else{
 //            //todo récupérer l'ID avec une methode get
 //        }

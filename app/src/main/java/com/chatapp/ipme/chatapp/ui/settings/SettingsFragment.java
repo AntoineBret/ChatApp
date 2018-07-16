@@ -15,9 +15,8 @@ import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
-import com.chatapp.ipme.chatapp.api.Constants;
+import com.chatapp.ipme.chatapp.utils.Constants;
 import com.chatapp.ipme.chatapp.model.Settings;
-import com.chatapp.ipme.chatapp.utils.SessionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

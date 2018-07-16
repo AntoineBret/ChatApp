@@ -15,14 +15,13 @@ import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.HomeActivity;
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.api.Constants;
 import com.chatapp.ipme.chatapp.model.UserResponse;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
-import com.chatapp.ipme.chatapp.utils.SessionManager;
+import com.chatapp.ipme.chatapp.session.ISessionCreator;
 
 import java.net.ConnectException;
 import java.util.HashMap;
@@ -32,164 +31,159 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-import static com.chatapp.ipme.chatapp.api.Constants.httpcodes.MESSAGE_CONNECT_EXCEPTION;
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.MESSAGE_CONNECT_EXCEPTION;
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements ISessionCreator {
 
-  public static SignUpFragment newInstance() {
-    return new SignUpFragment();
-  }
-
-  private HashMap<String, String> createAccountMap = new HashMap<>();
-
-  private AlertDialogManager alert = new AlertDialogManager();
-  private ApiEndPointInterface apiInterface;
-  private ViewModel viewModel;
-
-  //onClickListener
-  private Button buttonCreate;
-  private TextView tvAlreadyAccount;
-
-  //Variables
-  private String token;
-  private Integer id;
-  private String username;
-  private String firstname;
-  private String lastname;
-  private String email;
-
-  private String signUpLog;
-  private String signUpPassword;
-  private String signUpConfirmPassword;
-  private String signUpFirstName;
-  private String signUpLastName;
-  private String signUpBirthdayDate;
-
-  private EditText inputUsernameCreate;
-  private EditText inputPasswordCreate;
-  private EditText inputConfirmPasswordCreate;
-  private EditText inputFirstNameCreate;
-  private EditText inputLastNameCreate;
-  private EditText inputBirthdayDateCreate;
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    viewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
-  }
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
-
-    buttonCreate = rootView.findViewById(R.id.buttonCreate);
-    tvAlreadyAccount = rootView.findViewById(R.id.tvAlreadyAccount);
-
-    inputUsernameCreate = rootView.findViewById(R.id.inputUsernameCreate);
-    inputPasswordCreate = rootView.findViewById(R.id.inputPasswordCreate);
-    inputConfirmPasswordCreate = rootView.findViewById(R.id.inputConfirmPasswordCreate);
-    inputFirstNameCreate = rootView.findViewById(R.id.inputFirstNameCreate);
-    inputLastNameCreate = rootView.findViewById(R.id.inputLastNameCreate);
-    inputBirthdayDateCreate = rootView.findViewById(R.id.birthdayDateLastNameCreate);
-
-    buttonCreate.setOnClickListener(view -> createAccount());
-    tvAlreadyAccount.setOnClickListener(v -> {
-      Fragment f = LogInFragment.newInstance();
-      getFragmentManager()
-        .beginTransaction()
-        .setCustomAnimations(
-          R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-          R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-        .replace(R.id.login_frame_container, f)
-        .addToBackStack(null)
-        .commit();
-    });
-
-    return rootView;
-  }
-
-  private void createAccount() {
-    initSignupForm();
-    apiInterface = new ApiClient(getContext())
-      .getClient()
-      .create(ApiEndPointInterface.class);
-
-    if (!(signUpPassword.equals(signUpConfirmPassword))) {
-      alert.showAlertDialog(getContext(), "Password error", "Please enter same password", false);
+    public static SignUpFragment newInstance() {
+        return new SignUpFragment();
     }
-    if (signUpLog.length() < 4) {
-      alert.showAlertDialog(getContext(), "Username error", "Your username must have more than 4 character", false);
+
+    private HashMap<String, String> createAccountMap = new HashMap<>();
+
+    private AlertDialogManager alert = new AlertDialogManager();
+    private ApiEndPointInterface apiInterface;
+    private ViewModel viewModel;
+
+    //onClickListener
+    private Button buttonCreate;
+    private TextView tvAlreadyAccount;
+
+    //Variables
+    private String token;
+    private Integer id;
+    private String username;
+    private String firstname;
+    private String lastname;
+    private String email;
+
+    private String signUpLog;
+    private String signUpPassword;
+    private String signUpConfirmPassword;
+    private String signUpFirstName;
+    private String signUpLastName;
+    private String signUpBirthdayDate;
+
+    private EditText inputUsernameCreate;
+    private EditText inputPasswordCreate;
+    private EditText inputConfirmPasswordCreate;
+    private EditText inputFirstNameCreate;
+    private EditText inputLastNameCreate;
+    private EditText inputBirthdayDateCreate;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        viewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
     }
-    if (signUpPassword.length() < 8) {
-      alert.showAlertDialog(getContext(), "Password error", "Your password must have more than 8 character", false);
-    } else {
-      apiInterface.signupUser(createAccountMap)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new ErrorManager<Response<UserResponse>>() {
-          @Override
-          public void onSubscribe(Disposable d) {
-          }
 
-          @Override
-          public void onNext(Response<UserResponse> userResponseResponse) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
 
-            token = userResponseResponse.body().getToken();
-            id = userResponseResponse.body().getUser().getID();
-            username = userResponseResponse.body().getUser().getUsername();
-            firstname = userResponseResponse.body().getUser().getFirstname();
-            lastname = userResponseResponse.body().getUser().getLastname();
-            email = userResponseResponse.body().getUser().getEmail();
+        buttonCreate = rootView.findViewById(R.id.buttonCreate);
+        tvAlreadyAccount = rootView.findViewById(R.id.tvAlreadyAccount);
 
-            createSessionData();
+        inputUsernameCreate = rootView.findViewById(R.id.inputUsernameCreate);
+        inputPasswordCreate = rootView.findViewById(R.id.inputPasswordCreate);
+        inputConfirmPasswordCreate = rootView.findViewById(R.id.inputConfirmPasswordCreate);
+        inputFirstNameCreate = rootView.findViewById(R.id.inputFirstNameCreate);
+        inputLastNameCreate = rootView.findViewById(R.id.inputLastNameCreate);
+        inputBirthdayDateCreate = rootView.findViewById(R.id.birthdayDateLastNameCreate);
 
-            Intent intent = new Intent(getContext(), HomeActivity.class);
-            startActivity(intent);
-          }
-
-
-          @Override
-          public void onError(Throwable e) {
-            if (e instanceof ConnectException) {
-              Toast.makeText(getContext(), MESSAGE_CONNECT_EXCEPTION, Toast.LENGTH_LONG).show();
-            }
-          }
-
-          @Override
-          public void onComplete() {
-
-          }
+        buttonCreate.setOnClickListener(view -> createAccount());
+        tvAlreadyAccount.setOnClickListener(v -> {
+            Fragment f = LogInFragment.newInstance();
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(
+                            R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                            R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+                    .replace(R.id.login_frame_container, f)
+                    .addToBackStack(null)
+                    .commit();
         });
+
+        return rootView;
     }
-  }
 
-  private void initSignupForm() {
-    signUpLog = inputUsernameCreate.getText().toString();
-    signUpPassword = inputPasswordCreate.getText().toString();
-    signUpConfirmPassword = inputConfirmPasswordCreate.getText().toString();
-    signUpFirstName = inputFirstNameCreate.getText().toString();
-    signUpLastName = inputLastNameCreate.getText().toString();
-    signUpBirthdayDate = inputBirthdayDateCreate.getText().toString();
+    private void createAccount() {
+        initSignupForm();
+        apiInterface = new ApiClient(getContext())
+                .getClient()
+                .create(ApiEndPointInterface.class);
 
-    createAccountMap.put("username", signUpLog);
-    createAccountMap.put("password", signUpPassword);
-    createAccountMap.put("firstName", signUpFirstName);
-    createAccountMap.put("lastName", signUpLastName);
-    createAccountMap.put("birthdayDate", signUpBirthdayDate);
-  }
+        if (!(signUpPassword.equals(signUpConfirmPassword))) {
+            alert.showAlertDialog(getContext(), "Password error", "Please enter same password", false);
+        }
+        if (signUpLog.length() < 4) {
+            alert.showAlertDialog(getContext(), "Username error", "Your username must have more than 4 character", false);
+        }
+        if (signUpPassword.length() < 8) {
+            alert.showAlertDialog(getContext(), "Password error", "Your password must have more than 8 character", false);
+        } else {
+            apiInterface.signupUser(createAccountMap)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new ErrorManager<Response<UserResponse>>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                        }
 
-  private boolean createSessionData() {
-    SessionManager sessionManager = new SessionManager(getActivity().getBaseContext());
-    HashMap<String, Object> user = new HashMap<>();
+                        @Override
+                        public void onNext(Response<UserResponse> userResponseResponse) {
 
-    user.put(Constants.SESSION_KEY_TOKEN, token);
-    user.put(Constants.SESSION_KEY_ID, id);
-    user.put(Constants.SESSION_KEY_USERNAME, username);
-    user.put(Constants.SESSION_KEY_FIRSTNAME, firstname);
-    user.put(Constants.SESSION_KEY_LASTNAME, lastname);
-    user.put(Constants.SESSION_KEY_EMAIL, email);
+                            token = userResponseResponse.body().getToken();
+                            id = userResponseResponse.body().getUser().getID();
+                            username = userResponseResponse.body().getUser().getUsername();
+                            firstname = userResponseResponse.body().getUser().getFirstname();
+                            lastname = userResponseResponse.body().getUser().getLastname();
+                            email = userResponseResponse.body().getUser().getEmail();
 
-    return sessionManager.createLoginSession(user);
-  }
+                            createSessionData(token, id, username, firstname, lastname, email);
+
+                            Intent intent = new Intent(getContext(), HomeActivity.class);
+                            startActivity(intent);
+                        }
+
+
+                        @Override
+                        public void onError(Throwable e) {
+                            if (e instanceof ConnectException) {
+                                Toast.makeText(getContext(), MESSAGE_CONNECT_EXCEPTION, Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+    }
+
+    private void initSignupForm() {
+        signUpLog = inputUsernameCreate.getText().toString();
+        signUpPassword = inputPasswordCreate.getText().toString();
+        signUpConfirmPassword = inputConfirmPasswordCreate.getText().toString();
+        signUpFirstName = inputFirstNameCreate.getText().toString();
+        signUpLastName = inputLastNameCreate.getText().toString();
+        signUpBirthdayDate = inputBirthdayDateCreate.getText().toString();
+
+        createAccountMap.put("username", signUpLog);
+        createAccountMap.put("password", signUpPassword);
+        createAccountMap.put("firstName", signUpFirstName);
+        createAccountMap.put("lastName", signUpLastName);
+        createAccountMap.put("birthdayDate", signUpBirthdayDate);
+    }
+
+//    private void createSessionData() {
+//        SessionManager.putString(SessionKeys.KEY_TOKEN.getKey(), token);
+//        SessionManager.putInt(SessionKeys.KEY_ID.getKey(), id);
+//        SessionManager.putString(SessionKeys.KEY_USERNAME.getKey(), username);
+//        SessionManager.putString(SessionKeys.KEY_FIRSTNAME.getKey(), firstname);
+//        SessionManager.putString(SessionKeys.KEY_LASTNAME.getKey(), lastname);
+//        SessionManager.putString(SessionKeys.KEY_EMAIL.getKey(), email);
+//    }
 }

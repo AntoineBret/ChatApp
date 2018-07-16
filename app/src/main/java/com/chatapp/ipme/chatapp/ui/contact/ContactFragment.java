@@ -80,7 +80,7 @@ public class ContactFragment extends android.support.v4.app.Fragment {
                     .commit();
         });
 
-        //Add new User
+        //Add new createLoginSession
         contactContainer = rootView.findViewById(R.id.rl_container_contact);
         contactContainer.setOnClickListener(view -> {
             Fragment newContact = NewContactFragment.newInstance();

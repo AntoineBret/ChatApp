@@ -1,6 +1,6 @@
 package com.chatapp.ipme.chatapp.remote;
 
-import com.chatapp.ipme.chatapp.api.Constants;
+import com.chatapp.ipme.chatapp.utils.Constants;
 import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.model.UserResponse;

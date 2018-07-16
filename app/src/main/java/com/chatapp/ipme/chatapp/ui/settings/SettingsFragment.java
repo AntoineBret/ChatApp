@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
+import com.chatapp.ipme.chatapp.api.Constants;
 import com.chatapp.ipme.chatapp.model.Settings;
 import com.chatapp.ipme.chatapp.utils.SessionManager;
 
@@ -97,7 +98,7 @@ public class SettingsFragment extends Fragment {
 
     private void getUserLogDetails() {
         HashMap<String, Object> user = session.getUserDetails();
-        Object name = user.get(SessionManager.KEY_USERNAME);
+        Object name = user.get(Constants.SESSION_KEY_USERNAME);
 
         if (name == null) {
             displayUsername.setText("Aucun utilisateur log");

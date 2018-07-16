@@ -5,6 +5,13 @@ import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
 public class Constants {
     public static final String CONTENT_TYPE = "Content-Type: application/json;charset=UTF-8";
 
+    public static final String SESSION_KEY_TOKEN = "TokenKey";
+    public static final String SESSION_KEY_ID = "IdKey";
+    public static final String SESSION_KEY_USERNAME = "UsernameKey";
+    public static final String SESSION_KEY_FIRSTNAME = "FirstnameKey";
+    public static final String SESSION_KEY_LASTNAME = "LastnameKey";
+    public static final String SESSION_KEY_EMAIL = "EmailKey";
+
     public interface httpcodes{
         int STATUS_OK = 200;
         String MESSAGE_STATUS_OK = "Query successfully processed : 200";

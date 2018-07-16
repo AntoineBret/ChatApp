@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.HomeActivity;
 import com.chatapp.ipme.chatapp.R;
+import com.chatapp.ipme.chatapp.api.Constants;
 import com.chatapp.ipme.chatapp.model.UserResponse;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
@@ -151,12 +152,12 @@ public class LogInFragment extends Fragment {
     SessionManager sessionManager = new SessionManager(getActivity().getBaseContext());
     HashMap<String, Object> user = new HashMap<>();
 
-    user.put(SessionManager.KEY_TOKEN, token);
-    user.put(SessionManager.KEY_ID, id);
-    user.put(SessionManager.KEY_USERNAME, username);
-    user.put(SessionManager.KEY_FIRSTNAME, firstname);
-    user.put(SessionManager.KEY_LASTNAME, lastname);
-    user.put(SessionManager.KEY_EMAIL, email);
+    user.put(Constants.SESSION_KEY_TOKEN, token);
+    user.put(Constants.SESSION_KEY_ID, id);
+    user.put(Constants.SESSION_KEY_USERNAME, username);
+    user.put(Constants.SESSION_KEY_FIRSTNAME, firstname);
+    user.put(Constants.SESSION_KEY_LASTNAME, lastname);
+    user.put(Constants.SESSION_KEY_EMAIL, email);
 
     return sessionManager.createLoginSession(user);
   }

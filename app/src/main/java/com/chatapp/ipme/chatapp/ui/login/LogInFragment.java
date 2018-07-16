@@ -18,10 +18,12 @@ import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.UserResponse;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
+import com.chatapp.ipme.chatapp.session.SessionCreator;
+import com.chatapp.ipme.chatapp.session.SessionKeys;
+import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.signUp.SignUpFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
-import com.chatapp.ipme.chatapp.session.ISessionCreator;
 
 import java.net.ConnectException;
 import java.util.HashMap;
@@ -33,126 +35,122 @@ import retrofit2.Response;
 
 import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.MESSAGE_CONNECT_EXCEPTION;
 
-public class LogInFragment extends Fragment implements ISessionCreator {
+public class LogInFragment extends Fragment implements SessionCreator {
 
-    public static LogInFragment newInstance() {
-        return new LogInFragment();
-    }
+  public static LogInFragment newInstance() {
+    return new LogInFragment();
+  }
 
-    private HashMap<String, String> loginAccountMap = new HashMap<>();
-    private AlertDialogManager alert = new AlertDialogManager();
-    private ApiEndPointInterface apiInterface;
-    private ViewModel viewModel;
-    private View rootView;
+  private HashMap<String, String> loginAccountMap = new HashMap<>();
+  private AlertDialogManager alert = new AlertDialogManager();
+  private ApiEndPointInterface apiInterface;
+  private ViewModel viewModel;
+  private View rootView;
 
-    // createLoginSession variable declaration
-    private EditText inputLog;
-    private EditText inputPassword;
-    private String logInLog;
-    private String logInPassword;
+  // createLoginSession variable declaration
+  private EditText inputLog;
+  private EditText inputPassword;
+  private String logInLog;
+  private String logInPassword;
 
-    private String token;
-    private Integer id;
-    private String username;
-    private String firstname;
-    private String lastname;
-    private String email;
+  private String token;
+  private Integer id;
+  private String username;
+  private String firstname;
+  private String lastname;
+  private String email;
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        viewModel = ViewModelProviders.of(this).get(LogInViewModel.class);
-    }
+    viewModel = ViewModelProviders.of(this).get(LogInViewModel.class);
 
-    //Connect with existing account
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_login, container, false);
+    new SessionManager.Builder()
+      .setContext(getContext())
+      .setPrefsName(SessionKeys.PREFS_NAME.getKey())
+      .build();
+  }
 
-        Button buttonLogIn = rootView.findViewById(R.id.buttonLog);
-        TextView tvNoAccount = rootView.findViewById(R.id.tvNoAccount);
+  //Connect with existing account
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-        inputLog = rootView.findViewById(R.id.inputLog);
-        inputPassword = rootView.findViewById(R.id.inputPassword);
+    Button buttonLogIn = rootView.findViewById(R.id.buttonLog);
+    TextView tvNoAccount = rootView.findViewById(R.id.tvNoAccount);
 
-        buttonLogIn.setOnClickListener(view -> {
-            connectAccount();
-        });
+    inputLog = rootView.findViewById(R.id.inputLog);
+    inputPassword = rootView.findViewById(R.id.inputPassword);
 
-        tvNoAccount.setOnClickListener(v -> {
-            Fragment f = SignUpFragment.newInstance();
-            getFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(
-                            R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                            R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-                    .replace(R.id.login_frame_container, f)
-                    .addToBackStack(null)
-                    .commit();
-        });
+    buttonLogIn.setOnClickListener(view -> {
+      connectAccount();
+    });
 
-        return rootView;
-    }
+    tvNoAccount.setOnClickListener(v -> {
+      Fragment f = SignUpFragment.newInstance();
+      getFragmentManager()
+        .beginTransaction()
+        .setCustomAnimations(
+          R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+          R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+        .replace(R.id.login_frame_container, f)
+        .addToBackStack(null)
+        .commit();
+    });
 
-    private void connectAccount() {
-        initLogin();
-        apiInterface = new ApiClient(getContext())
-                .getClient()
-                .create(ApiEndPointInterface.class);
+    return rootView;
+  }
 
-        apiInterface.loginUser(loginAccountMap)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ErrorManager<Response<UserResponse>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+  private void connectAccount() {
+    initLogin();
+    apiInterface = new ApiClient(getContext())
+      .getClient()
+      .create(ApiEndPointInterface.class);
 
-                    @Override
-                    public void onNext(Response<UserResponse> userResponseResponse) {
+    apiInterface.loginUser(loginAccountMap)
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new ErrorManager<Response<UserResponse>>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+        }
 
-                        token = userResponseResponse.body().getToken();
-                        id = userResponseResponse.body().getUser().getID();
-                        username = userResponseResponse.body().getUser().getUsername();
-                        firstname = userResponseResponse.body().getUser().getFirstname();
-                        lastname = userResponseResponse.body().getUser().getLastname();
-                        email = userResponseResponse.body().getUser().getEmail();
+        @Override
+        public void onNext(Response<UserResponse> userResponseResponse) {
 
-                        createSessionData(token, id, username, firstname, lastname, email);
+          token = userResponseResponse.body().getToken();
+          id = userResponseResponse.body().getUser().getID();
+          username = userResponseResponse.body().getUser().getUsername();
+          firstname = userResponseResponse.body().getUser().getFirstname();
+          lastname = userResponseResponse.body().getUser().getLastname();
+          email = userResponseResponse.body().getUser().getEmail();
 
-                        Intent intent = new Intent(getContext(), HomeActivity.class);
-                        startActivity(intent);
+          createSessionData(token, id, username, firstname, lastname, email);
 
-                    }
+          Intent intent = new Intent(getContext(), HomeActivity.class);
+          startActivity(intent);
 
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof ConnectException) {
-                            Toast.makeText(getContext(), MESSAGE_CONNECT_EXCEPTION, Toast.LENGTH_LONG).show();
-                        }
-                    }
+        }
 
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-    }
+        @Override
+        public void onError(Throwable e) {
+          if (e instanceof ConnectException) {
+            Toast.makeText(getContext(), MESSAGE_CONNECT_EXCEPTION, Toast.LENGTH_LONG).show();
+          }
+        }
 
-    private void initLogin() {
-        logInLog = inputLog.getText().toString().trim();
-        logInPassword = inputPassword.getText().toString().trim();
-        loginAccountMap.put("username", logInLog);
-        loginAccountMap.put("password", logInPassword);
-    }
+        @Override
+        public void onComplete() {
+        }
+      });
+  }
 
-//    private void createSessionData() {
-//        SessionManager.putString(SessionKeys.KEY_TOKEN.getKey(), token);
-//        SessionManager.putInt(SessionKeys.KEY_ID.getKey(), id);
-//        SessionManager.putString(SessionKeys.KEY_USERNAME.getKey(), username);
-//        SessionManager.putString(SessionKeys.KEY_FIRSTNAME.getKey(), firstname);
-//        SessionManager.putString(SessionKeys.KEY_LASTNAME.getKey(), lastname);
-//        SessionManager.putString(SessionKeys.KEY_EMAIL.getKey(), email);
-//    }
+  private void initLogin() {
+    logInLog = inputLog.getText().toString().trim();
+    logInPassword = inputPassword.getText().toString().trim();
+    loginAccountMap.put("username", logInLog);
+    loginAccountMap.put("password", logInPassword);
+  }
 }

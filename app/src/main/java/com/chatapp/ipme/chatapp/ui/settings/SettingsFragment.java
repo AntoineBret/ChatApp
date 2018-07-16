@@ -15,93 +15,99 @@ import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
-import com.chatapp.ipme.chatapp.utils.Constants;
 import com.chatapp.ipme.chatapp.model.Settings;
+import com.chatapp.ipme.chatapp.session.SessionKeys;
+import com.chatapp.ipme.chatapp.session.SessionManager;
+import com.chatapp.ipme.chatapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.chatapp.ipme.chatapp.session.SessionKeys.KEY_USERNAME;
+
 public class SettingsFragment extends Fragment {
 
-    private Toolbar toolbar;
-    private RecyclerView recyclerView;
-    private SettingsAdapter adapter;
-    private List<Settings> settingsList;
-    private SessionManager session;
-    private ImageView displayThumbnail;
-    private TextView displayUsername;
+  private Toolbar toolbar;
+  private RecyclerView recyclerView;
+  private SettingsAdapter adapter;
+  private List<Settings> settingsList;
+  private SessionManager session;
+  private ImageView displayThumbnail;
+  private TextView displayUsername;
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
-    }
+  public static SettingsFragment newInstance() {
+    return new SettingsFragment();
+  }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        session = new SessionManager(getContext());
-    }
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    new SessionManager.Builder()
+      .setContext(getContext())
+      .setPrefsName(SessionKeys.PREFS_NAME.getKey())
+      .build();
+  }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        toolbar = rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.parameter_toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+    toolbar = rootView.findViewById(R.id.toolbar);
+    toolbar.setTitle(R.string.parameter_toolbar);
+    toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
-        displayThumbnail = rootView.findViewById(R.id.settingsThumbnail);
-        displayUsername = rootView.findViewById(R.id.settingsUsername);
+    displayThumbnail = rootView.findViewById(R.id.settingsThumbnail);
+    displayUsername = rootView.findViewById(R.id.settingsUsername);
 
-        getUserLogDetails();
+    getUserLogDetails();
 
-        settingsList = new ArrayList<>();
+    settingsList = new ArrayList<>();
 
-        recyclerView = rootView.findViewById(R.id.settings_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setHasFixedSize(true);
+    recyclerView = rootView.findViewById(R.id.settings_recyclerView);
+    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+    recyclerView.setHasFixedSize(true);
 
-        adapter = new SettingsAdapter(getContext(), settingsList);
-        recyclerView.setAdapter(adapter);
+    adapter = new SettingsAdapter(getContext(), settingsList);
+    recyclerView.setAdapter(adapter);
 
-        initializeSettings();
+    initializeSettings();
 
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), (view, position) -> {
-                    switch (position) {
-                        case 2:
-                            session = new SessionManager(getContext());
-                            session.logoutUser();
-                            break;
-                    }
-                }));
+    recyclerView.addOnItemTouchListener(
+      new RecyclerItemClickListener(getContext(), (view, position) -> {
+        switch (position) {
+          case 2:
+//            session = new SessionManager(getContext());
+//            session.logoutUser();
+            break;
+        }
+      }));
 
 
-        return rootView;
-    }
+    return rootView;
+  }
 
-    private void initializeSettings() {
-        int[] covers = new int[]{
-                R.drawable.ic_notification,
-                R.drawable.ic_account,
-                R.drawable.ic_disconect,
-        };
+  private void initializeSettings() {
+    int[] covers = new int[]{
+      R.drawable.ic_notification,
+      R.drawable.ic_account,
+      R.drawable.ic_disconect,
+    };
 
-        settingsList.add(new Settings("Notifications //todo", covers[0]));
-        settingsList.add(new Settings("Compte //todo", covers[1]));
-        settingsList.add(new Settings("Déconnexion", covers[2]));
+    settingsList.add(new Settings("Notifications //todo", covers[0]));
+    settingsList.add(new Settings("Compte //todo", covers[1]));
+    settingsList.add(new Settings("Déconnexion", covers[2]));
 
-        adapter.notifyDataSetChanged();
-    }
+    adapter.notifyDataSetChanged();
+  }
 
-    private void getUserLogDetails() {
-        HashMap<String, Object> user = session.getUserDetails();
-        Object name = user.get(Constants.SESSION_KEY_USERNAME);
+  private void getUserLogDetails() {
 
-        if (name == null) {
-            displayUsername.setText("Aucun utilisateur log");
-        } else
-            displayUsername.setText(Html.fromHtml("Name: <b>" + name + "</b>"));
-    }
+    Object name = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), "");
+    if (name == null) {
+      displayUsername.setText("Aucun utilisateur log");
+    } else
+      displayUsername.setText(Html.fromHtml("Name: <b>" + name + "</b>"));
+  }
 }

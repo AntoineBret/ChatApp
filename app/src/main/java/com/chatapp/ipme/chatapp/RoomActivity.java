@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
+import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
 
 import java.util.HashMap;

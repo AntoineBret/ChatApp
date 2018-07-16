@@ -21,8 +21,3 @@ public enum SessionKeys {
         return key;
     }
 }
-
-//todo: for use
-// SessionManager.putString(SessionKeys.TEST.getKey(), "I'm SessionManager");
-//         helloWorld.setText(SessionManager.getString(SessionKeys.TEST.getKey(), "1"));
-//         Log.d("MainActivity ", "onCreate: "+ SessionManager.getString(SessionKeys.TEST.getKey(), "1"));

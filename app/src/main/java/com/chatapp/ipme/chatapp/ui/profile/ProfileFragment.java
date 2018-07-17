@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Profile;
+import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.session.SessionKeys;
 import com.chatapp.ipme.chatapp.session.SessionManager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
@@ -29,6 +31,14 @@ public class ProfileFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProfileAdapter adapter;
     private List<Profile> profileList;
+
+    //Variables
+    private String username;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private Date birthdayDate;
+    private String password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,8 +73,26 @@ public class ProfileFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        // initializeProfile();
+        initializeProfile();
 
         return rootView;
+    }
+
+    private void initializeProfile() {
+        username = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), null);
+        firstname = SessionManager.getString(SessionKeys.KEY_FIRSTNAME.getKey(), null);
+        lastname = SessionManager.getString(SessionKeys.KEY_LASTNAME.getKey(), null);
+        email = SessionManager.getString(SessionKeys.KEY_EMAIL.getKey(), null);
+//         birthdayDate = SessionManager.getString(SessionKeys.KEY_BIRTHDAY.getKey(), null);
+//         password = SessionManager.getString(SessionKeys.KEY_PASSWORD.getKey(), null);
+
+        profileList.add(new Profile("Username", username));
+        profileList.add(new Profile("Firstname", firstname));
+        profileList.add(new Profile("Lastname", lastname));
+        profileList.add(new Profile("Email", email));
+//        profileList.add(new Profile("Birthday", birthdayDate));
+//        profileList.add(new Profile("Password", password));
+
+        adapter.setData(profileList);
     }
 }

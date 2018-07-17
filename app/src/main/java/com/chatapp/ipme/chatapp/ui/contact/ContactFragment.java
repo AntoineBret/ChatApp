@@ -54,8 +54,8 @@ public class ContactFragment extends android.support.v4.app.Fragment {
         });
 
         toolbar = rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.contact_toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         recyclerView = rootView.findViewById(R.id.contact_recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -92,14 +92,6 @@ public class ContactFragment extends android.support.v4.app.Fragment {
         });
 
         return rootView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        toolbar.setTitle("Contact");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
     }
 
     private void initializeContact() {

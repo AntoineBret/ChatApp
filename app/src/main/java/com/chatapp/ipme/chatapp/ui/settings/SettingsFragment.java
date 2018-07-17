@@ -1,5 +1,6 @@
 package com.chatapp.ipme.chatapp.ui.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -11,20 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chatapp.ipme.chatapp.ConnectToServiceActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
 import com.chatapp.ipme.chatapp.model.Settings;
 import com.chatapp.ipme.chatapp.session.SessionKeys;
 import com.chatapp.ipme.chatapp.session.SessionManager;
-import com.chatapp.ipme.chatapp.utils.Constants;
+import com.chatapp.ipme.chatapp.ui.profile.ProfileFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import static com.chatapp.ipme.chatapp.session.SessionKeys.KEY_USERNAME;
 
 public class SettingsFragment extends Fragment {
 
@@ -32,7 +32,8 @@ public class SettingsFragment extends Fragment {
   private RecyclerView recyclerView;
   private SettingsAdapter adapter;
   private List<Settings> settingsList;
-  private SessionManager session;
+
+  private RelativeLayout displayUserDetails;
   private ImageView displayThumbnail;
   private TextView displayUsername;
 
@@ -43,6 +44,7 @@ public class SettingsFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     new SessionManager.Builder()
       .setContext(getContext())
       .setPrefsName(SessionKeys.PREFS_NAME.getKey())
@@ -62,6 +64,16 @@ public class SettingsFragment extends Fragment {
 
     getUserLogDetails();
 
+      displayUserDetails = rootView.findViewById(R.id.rl_container_userProfile);
+      displayUserDetails.setOnClickListener(view -> {
+          Fragment f = ProfileFragment.newInstance();
+          getFragmentManager()
+                  .beginTransaction()
+                  .replace(R.id.parameter_frame_container, f)
+                  .disallowAddToBackStack()
+                  .commit();
+      });
+
     settingsList = new ArrayList<>();
 
     recyclerView = rootView.findViewById(R.id.settings_recyclerView);
@@ -78,8 +90,9 @@ public class SettingsFragment extends Fragment {
       new RecyclerItemClickListener(getContext(), (view, position) -> {
         switch (position) {
           case 2:
-//            session = new SessionManager(getContext());
-//            session.logoutUser();
+            SessionManager.removeKeys();
+            Intent disconect = new Intent(getContext(), ConnectToServiceActivity.class);
+            startActivity(disconect);
             break;
         }
       }));

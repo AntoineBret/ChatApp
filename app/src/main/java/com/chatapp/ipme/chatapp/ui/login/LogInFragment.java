@@ -41,11 +41,12 @@ public class LogInFragment extends Fragment implements SessionCreator {
     return new LogInFragment();
   }
 
+  //Create HashMap as body for @POST("/login")
   private HashMap<String, String> loginAccountMap = new HashMap<>();
+
   private AlertDialogManager alert = new AlertDialogManager();
   private ApiEndPointInterface apiInterface;
   private ViewModel viewModel;
-  private View rootView;
 
   // createLoginSession variable declaration
   private EditText inputLog;
@@ -76,7 +77,7 @@ public class LogInFragment extends Fragment implements SessionCreator {
   //Connect with existing account
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    rootView = inflater.inflate(R.layout.fragment_login, container, false);
+   View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
     Button buttonLogIn = rootView.findViewById(R.id.buttonLog);
     TextView tvNoAccount = rootView.findViewById(R.id.tvNoAccount);

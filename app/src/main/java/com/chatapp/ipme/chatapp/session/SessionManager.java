@@ -26,6 +26,7 @@ public class SessionManager {
   }
 
   public static String getString(final String key, final String defValue) {
+
     return pref.getString(key, defValue);
   }
 
@@ -92,6 +93,17 @@ public class SessionManager {
     editor.remove(key);
     editor.apply();
   }
+
+    public static void removeKeys() {
+        editor = pref.edit();
+        editor.remove(SessionKeys.KEY_TOKEN.getKey());
+        editor.remove(SessionKeys.KEY_ID.getKey());
+        editor.remove(SessionKeys.KEY_USERNAME.getKey());
+        editor.remove(SessionKeys.KEY_FIRSTNAME.getKey());
+        editor.remove(SessionKeys.KEY_LASTNAME.getKey());
+        editor.remove(SessionKeys.KEY_EMAIL.getKey());
+        editor.apply();
+    }
 
   public final static class Builder {
 

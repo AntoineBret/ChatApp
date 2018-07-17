@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.ui.profile.ProfileFragment;
 import com.chatapp.ipme.chatapp.ui.room.RoomListFragment;
+import com.chatapp.ipme.chatapp.ui.status.StatusFragment;
 
 public class HomeViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -25,7 +25,7 @@ public class HomeViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return RoomListFragment.newInstance();
             case 1:
-                return ProfileFragment.newInstance();
+                return StatusFragment.newInstance();
             default:
                 return null;
         }
@@ -43,7 +43,7 @@ public class HomeViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return context.getString(R.string.room_fragment_title);
             case 1:
-                return context.getString(R.string.profile_fragment_title);
+                return context.getString(R.string.status_fragment_title);
         }
         return null;
     }

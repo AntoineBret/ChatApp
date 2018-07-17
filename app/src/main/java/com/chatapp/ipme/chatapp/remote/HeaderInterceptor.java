@@ -11,27 +11,27 @@ import okhttp3.Response;
 
 public class HeaderInterceptor implements Interceptor {
 
-  private SessionManager session;
+    private SessionManager session;
 
-  public HeaderInterceptor(SessionManager session) {
-    this.session = session;
-  }
-
-  @Override
-  public Response intercept(Chain chain) throws IOException {
-    Request request = chain.request();
-
-    Request.Builder requestBuilder = request.newBuilder()
-      .addHeader("Content-Type", "application/json");
-
-    Object token = SessionManager.getString(SessionKeys.KEY_TOKEN.getKey(), "1");
-
-    if (token != null) {
-      requestBuilder.addHeader("Authorization", "Bearer " + token);
+    public HeaderInterceptor(SessionManager session) {
+        this.session = session;
     }
 
-    Request tokenRequest = requestBuilder.build();
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        Request request = chain.request();
 
-    return chain.proceed(tokenRequest);
-  }
+        Request.Builder requestBuilder = request.newBuilder()
+                .addHeader("Content-Type", "application/json");
+
+        Object token = SessionManager.getString(SessionKeys.KEY_TOKEN.getKey(), null);
+
+        if (token != null) {
+            requestBuilder.addHeader("Authorization", "Bearer " + token);
+        }
+
+        Request tokenRequest = requestBuilder.build();
+
+        return chain.proceed(tokenRequest);
+    }
 }

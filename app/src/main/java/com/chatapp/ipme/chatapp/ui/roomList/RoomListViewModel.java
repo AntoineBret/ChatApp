@@ -1,4 +1,4 @@
-package com.chatapp.ipme.chatapp.ui.room;
+package com.chatapp.ipme.chatapp.ui.roomList;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

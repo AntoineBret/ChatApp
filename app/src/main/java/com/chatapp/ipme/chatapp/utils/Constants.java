@@ -29,6 +29,8 @@ public class Constants {
 
         String ERROR_UNKNOWN = "Error not hold : unknown error";
 
+        String BAD_CREDENTIALS = "Identifiant ou mot de passe incorrect";
+
         String MESSAGE_CONNECT_EXCEPTION = "Failed to connect to " + BASE_URL;
     }
 }

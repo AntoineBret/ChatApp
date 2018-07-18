@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.chatapp.ipme.chatapp.adapter.HomeViewPagerAdapter;
+import com.chatapp.ipme.chatapp.session.SessionKeys;
+import com.chatapp.ipme.chatapp.session.SessionManager;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -22,6 +24,11 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        new SessionManager.Builder()
+                .setContext(getApplicationContext())
+                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
+                .build();
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);

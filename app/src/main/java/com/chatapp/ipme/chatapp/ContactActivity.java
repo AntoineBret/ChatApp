@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import com.chatapp.ipme.chatapp.session.SessionKeys;
+import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.contact.ContactFragment;
 
 public class ContactActivity extends AppCompatActivity {
@@ -12,6 +14,11 @@ public class ContactActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
+
+        new SessionManager.Builder()
+                .setContext(getApplicationContext())
+                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
+                .build();
 
         if(savedInstanceState == null){
             Fragment f = ContactFragment.newInstance();

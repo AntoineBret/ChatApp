@@ -1,5 +1,6 @@
 package com.chatapp.ipme.chatapp.remote;
 
+import com.chatapp.ipme.chatapp.model.RoomResponse;
 import com.chatapp.ipme.chatapp.utils.Constants;
 import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.model.User;
@@ -33,10 +34,10 @@ public interface ApiEndPointInterface {
 
     //get all rooms of connected user
     @GET("/api/user/rooms")
-    Observable<List<Room>> getRooms();
+    Observable<Response<RoomResponse>> getRooms();
 
     //create rooms with one user
     @POST("/api/rooms")
-    Observable<Room> createNewRoom(@Body HashMap<String, String> map);
+    Observable<Room> createNewRoom(@Body HashMap<String, Object> map);
 
 }

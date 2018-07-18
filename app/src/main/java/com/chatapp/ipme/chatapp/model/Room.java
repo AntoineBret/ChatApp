@@ -1,17 +1,23 @@
 package com.chatapp.ipme.chatapp.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Room {
 
     public Room() {
     }
 
+    @SerializedName("name")
+    @Expose
     private String name;
-    private String users;
+
+    @SerializedName("id")
+    @Expose
     private Integer id;
 
     public Room(String name, String users, Integer id) {
         this.name = name;
-        this.users = users;
         this.id = id;
     }
 
@@ -21,15 +27,6 @@ public class Room {
 
     public Room setName(String name) {
         this.name = name;
-        return this;
-    }
-
-    public String getUsers() {
-        return users;
-    }
-
-    public Room setUsers(String users) {
-        this.users = users;
         return this;
     }
 

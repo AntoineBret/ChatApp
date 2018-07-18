@@ -25,6 +25,14 @@ public class ConnectToServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connecttoservice);
 
+        new SessionManager.Builder()
+                .setContext(getApplicationContext())
+                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
+                .build();
+
+        //todo : remove this shame fix
+        SessionManager.removeKeys();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

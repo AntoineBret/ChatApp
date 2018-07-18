@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
+import com.chatapp.ipme.chatapp.session.SessionKeys;
+import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.settings.SettingsFragment;
 
 public class ParameterActivity extends AppCompatActivity {
@@ -15,6 +17,11 @@ public class ParameterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameter);
+
+        new SessionManager.Builder()
+                .setContext(getApplicationContext())
+                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
+                .build();
 
         frameLayout = findViewById(R.id.parameter_frame_container);
 

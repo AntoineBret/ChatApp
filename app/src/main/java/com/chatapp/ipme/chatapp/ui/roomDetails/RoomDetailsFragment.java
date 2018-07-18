@@ -24,7 +24,6 @@ public class RoomDetailsFragment extends Fragment {
     private RecyclerView recyclerView;
     private RoomDetailsAdapter adapter;
     private List<Room> roomList = new ArrayList<>();
-    private ApiEndPointInterface apiInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

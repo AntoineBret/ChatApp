@@ -9,10 +9,14 @@ import android.widget.FrameLayout;
 import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
+import com.chatapp.ipme.chatapp.session.SessionKeys;
 import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,25 +25,32 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RoomActivity extends AppCompatActivity {
 
-    private HashMap<String, String> createRoomMap = new HashMap<>();
+    private HashMap<String, Object> createUsersMap = new HashMap<>();
     private SessionManager session;
     private FrameLayout frameLayout;
     private ApiEndPointInterface apiInterface;
     private Toolbar toolbar;
-    private String interlocutorUsername;
-    private String interlocutorID;
+    private String interlocutorName;
+    private int interlocutorID;
+    private int userID;
+    private List<Map<String, Integer>> postUsersID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
 
+        new SessionManager.Builder()
+                .setContext(getApplicationContext())
+                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
+                .build();
+
         frameLayout = findViewById(R.id.room_frame_container);
 
         initializeDataBeforeCreateRoom();
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(interlocutorUsername);
+        toolbar.setTitle(interlocutorName);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
 
@@ -47,41 +58,37 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     private void initializeDataBeforeCreateRoom() {
-        //get interlocutor data
-
-        //get interlocutor username
+        //get interlocutor name + id from previous ContactAdapter to RoomActivity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            interlocutorUsername = extras.getString("user_name");
-//            interlocutorID = extras.getString("user_id");
+            interlocutorName = extras.getString("user_name"); // = Room name
+            interlocutorID = extras.getInt("user_id");
         }
 
-        //get data of user currently log
+        //get ID of user currently log with session manager
+        userID = SessionManager.getInt(SessionKeys.KEY_ID.getKey(), 0);
+        //aggregation of UserId + InterlocutorId
+        postUsersID = new ArrayList<>();
 
+        for (int i = 0; i < 2/* sizeMax*/; i++) {
+            postUsersID.add(new HashMap<>());
+        }
 
-        //get ID of user currently connected
-//        if (createLoginSession.KEY_ID != null) {
-//            Map<String, String> user = session.getUserDetails();
-//            String id = user.get(createLoginSession.KEY_ID);
-//        }else{
-//            //todo récupérer l'ID avec une methode get
-//        }
+        postUsersID.get(0).put("id", userID);
+        postUsersID.get(1).put("id", interlocutorID);
+
+        //Map for subdata "users"
+        createUsersMap.put("name", interlocutorName);
+        createUsersMap.put("sizeMax", 2);
+        createUsersMap.put("users", postUsersID);
     }
 
     private void createRoom() {
-        //todo : check if " " value of hashmap are correct for the api call
-        //room name
-        createRoomMap.put("name", interlocutorUsername);
-        //interlocutor name
-        createRoomMap.put("users1", interlocutorUsername);
-        //currently logged user
-//        createRoomMap.put("users2",interlocutorID);
-
         apiInterface = new ApiClient(this)
                 .getClient()
                 .create(ApiEndPointInterface.class);
 
-        apiInterface.createNewRoom(createRoomMap)
+        apiInterface.createNewRoom(createUsersMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Room>() {
@@ -92,8 +99,8 @@ public class RoomActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Room room) {
-                       //todo send room ID after created, with Bundle argument to roomDetails
-                       Integer roomID = room.getId();
+                        //todo send room ID after created, with Bundle argument to roomDetails
+                        Integer roomID = room.getId();
 
                         Bundle bundle = new Bundle();
                         bundle.putInt("room_id", roomID);
@@ -102,7 +109,7 @@ public class RoomActivity extends AppCompatActivity {
 
                         getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.contact_frame_container, roomDetails)
+                                .replace(R.id.room_frame_container, roomDetails)
                                 .addToBackStack(null)
                                 .commit();
                     }

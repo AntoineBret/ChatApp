@@ -41,16 +41,6 @@ public class ProfileFragment extends Fragment {
     private String password;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        new SessionManager.Builder()
-                .setContext(getContext())
-                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
-                .build();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 

@@ -18,12 +18,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     private Context context;
     public List<User> userList;
-    private LayoutInflater inflater = null;
 
     public ContactAdapter(Context context, List<User> userList) {
         this.context = context;
         this.userList = userList;
-        inflater = LayoutInflater.from(context);
     }
 
     public void setData(List<User> userList) {
@@ -40,18 +38,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ContactAdapter.ViewHolder holder, final int i) {
-        holder.setIsRecyclable(false);
         User user = userList.get(i);
-        holder
-                .username
-                .setText(user.getUsername());
+        holder.username.setText(user.getUsername());
 
         holder.username.setOnClickListener(v -> {
             String displayUsername = (user.getUsername());
+            Integer displayID = (user.getID());
 
             Intent roomIntent = new Intent(context, RoomActivity.class);
             //send selected "username" to next fragment
             roomIntent.putExtra("user_name", displayUsername);
+            roomIntent.putExtra("user_id", displayID);
             context.startActivity(roomIntent);
         });
     }
@@ -67,6 +64,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         public ViewHolder(View view) {
             super(view);
+
             username = (TextView) view.findViewById(R.id.user_title);
         }
     }

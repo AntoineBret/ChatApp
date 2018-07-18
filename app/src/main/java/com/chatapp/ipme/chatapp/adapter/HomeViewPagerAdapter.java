@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.ui.room.RoomListFragment;
+import com.chatapp.ipme.chatapp.ui.roomList.RoomListFragment;
 import com.chatapp.ipme.chatapp.ui.status.StatusFragment;
 
 public class HomeViewPagerAdapter extends FragmentStatePagerAdapter {

@@ -10,39 +10,41 @@ import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Room;
-import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDetailsFragment extends Fragment {
 
-    public static RoomDetailsFragment newInstance() {
-        return new RoomDetailsFragment();
-    }
+  public static RoomDetailsFragment newInstance() {
+    return new RoomDetailsFragment();
+  }
 
-    private RecyclerView recyclerView;
-    private RoomDetailsAdapter adapter;
-    private List<Room> roomList = new ArrayList<>();
+  private RecyclerView recyclerView;
+  private RoomDetailsAdapter adapter;
+  private List<Room> roomList = new ArrayList<>();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_roomdetails, container, false);
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View rootView = inflater.inflate(R.layout.fragment_roomdetails, container, false);
 
-        //recover room ID for send data
-        Integer roomID = getArguments().getInt("room_id");
+    //recover room ID for send data
+    //
+    Integer roomID = getArguments().getInt("room_id");
 
-        recyclerView = rootView.findViewById(R.id.roomdetails_recyclerView);
-        recyclerView.setHasFixedSize(true);
+    recyclerView = rootView.findViewById(R.id.roomdetails_recyclerView);
+    recyclerView.setHasFixedSize(true);
 
-        roomList = new ArrayList<>();
-        adapter = new RoomDetailsAdapter(getContext(), roomList);
+    roomList = new ArrayList<>();
+    adapter = new RoomDetailsAdapter(getContext(), roomList);
 
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
+    RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+    recyclerView.setLayoutManager(manager);
+    recyclerView.setAdapter(adapter);
 
-        return rootView;
-    }
+    return rootView;
+  }
+
+
 }
 

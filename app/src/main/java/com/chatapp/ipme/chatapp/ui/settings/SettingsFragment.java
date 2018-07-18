@@ -64,15 +64,15 @@ public class SettingsFragment extends Fragment {
 
     getUserLogDetails();
 
-      displayUserDetails = rootView.findViewById(R.id.rl_container_userProfile);
-      displayUserDetails.setOnClickListener(view -> {
-          Fragment f = ProfileFragment.newInstance();
-          getFragmentManager()
-                  .beginTransaction()
-                  .replace(R.id.parameter_frame_container, f)
-                  .disallowAddToBackStack()
-                  .commit();
-      });
+    displayUserDetails = rootView.findViewById(R.id.rl_container_userProfile);
+    displayUserDetails.setOnClickListener(view -> {
+      Fragment f = ProfileFragment.newInstance();
+      getFragmentManager()
+        .beginTransaction()
+        .replace(R.id.parameter_frame_container, f)
+        .addToBackStack(null)
+        .commit();
+    });
 
     settingsList = new ArrayList<>();
 

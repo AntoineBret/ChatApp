@@ -32,77 +32,78 @@ import retrofit2.Response;
 
 public class RoomListFragment extends Fragment {
 
-  public static RoomListFragment newInstance() {
-    return new RoomListFragment();
-  }
+    public static RoomListFragment newInstance() {
+        return new RoomListFragment();
+    }
 
-  private FloatingActionButton floatingActionButton;
-  private RecyclerView recyclerView;
-  private RoomListAdapter adapter;
-  private List<Room> roomList;
-  private ApiEndPointInterface apiInterface;
-  private String usernameLogged;
+    private FloatingActionButton floatingActionButton;
+    private RecyclerView recyclerView;
+    private RoomListAdapter adapter;
+    private List<Room> roomList;
+    private Room room;
+    private ApiEndPointInterface apiInterface;
+    private String usernameLogged;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_room_list, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_room_list, container, false);
 
-    RoomListViewModel model = ViewModelProviders.of(this).get(RoomListViewModel.class);
-    model.getRooms().observe(this, rooms -> {
-    });
+        RoomListViewModel model = ViewModelProviders.of(this).get(RoomListViewModel.class);
+        model.getRooms().observe(this, rooms -> {
+        });
 
-    recyclerView = rootView.findViewById(R.id.room_list_recyclerView);
-    recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-    recyclerView.setHasFixedSize(true);
+        recyclerView = rootView.findViewById(R.id.room_list_recyclerView);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.setHasFixedSize(true);
 
-    roomList = new ArrayList<>();
-    adapter = new RoomListAdapter(getContext(), roomList);
+        roomList = new ArrayList<>();
+        adapter = new RoomListAdapter(getContext(), roomList);
 
-    RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-    recyclerView.setLayoutManager(manager);
-    recyclerView.setAdapter(adapter);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
 
-    initializeRoomListData();
+        initializeRoomListData();
 
-    floatingActionButton = rootView.findViewById(R.id.contactsFab);
-    floatingActionButton.setOnClickListener(view -> {
-      Intent intent = new Intent(getContext(), ContactActivity.class);
-      startActivity(intent);
-    });
+        floatingActionButton = rootView.findViewById(R.id.contactsFab);
+        floatingActionButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ContactActivity.class);
+            startActivity(intent);
+        });
 
-    return rootView;
-  }
+        return rootView;
+    }
 
-  private void initializeRoomListData() {
-    apiInterface = new ApiClient(getContext())
-      .getClient()
-      .create(ApiEndPointInterface.class);
+    private void initializeRoomListData() {
+        apiInterface = new ApiClient(getContext())
+                .getClient()
+                .create(ApiEndPointInterface.class);
 
-    apiInterface.getRooms()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new ErrorManager<Response<Room>>() {
-        @Override
-        public void onSubscribe(Disposable d) {
+        apiInterface.getRooms()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ErrorManager<Response<Room>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
 
-        }
+                    @Override
+                    public void onNext(Response<Room> roomResponseResponse) {
+                        adapter.setData(roomList);
 
-        @Override
-        public void onNext(Response<Room> roomResponseResponse) {
-          adapter.setData(roomList);
+                        for (User user : (Iterable<User>) roomResponseResponse.body().getUsers()) {
+                            usernameLogged = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), "");
+                            if (!usernameLogged.equals(user.getUsername())) {
+                                room.setName(user.getUsername());
+                                roomList.add(room);
+                            }
+                        }
+                    }
 
-          for (User user : (Iterable<User>) roomResponseResponse.body().getUsers()) {
-            usernameLogged = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), "");
-            if (!usernameLogged.equals(user.getUsername())) {
-              //do something
-            }
-          }
-        }
+                    @Override
+                    public void onComplete() {
 
-        @Override
-        public void onComplete() {
-
-        }
-      });
-  }
+                    }
+                });
+    }
 }

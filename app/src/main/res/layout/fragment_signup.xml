@@ -108,11 +108,26 @@
 
         <!-- Birthdate date -->
         <EditText
-            android:id="@+id/birthdayDateLastNameCreate"
+            android:id="@+id/inputBirthdayCreate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/birthdayDateLastNameCreateHint"
+            android:hint="@string/inputBirthdayDateCreateHint"
             android:inputType="date"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:textColor="@color/custom"
+            android:textSize="15dp" />
+
+        <!-- Email -->
+        <EditText
+            android:id="@+id/inputEmailCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inputEmailCreateHint"
+            android:inputType="textEmailAddress"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"

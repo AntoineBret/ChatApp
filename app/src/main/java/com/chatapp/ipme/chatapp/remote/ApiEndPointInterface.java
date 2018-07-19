@@ -17,26 +17,26 @@ import retrofit2.http.POST;
 
 public interface ApiEndPointInterface {
 
-  //log to service
-  @POST("/login")
-  @Headers({Constants.CONTENT_TYPE})
-  Observable<Response<UserResponse>> loginUser(@Body HashMap<String, String> map);
+    //log to service
+    @POST("/login")
+    @Headers({Constants.CONTENT_TYPE})
+    Observable<Response<UserResponse>> loginUser(@Body HashMap<String, String> map);
 
-  //register to service
-  @POST("/register")
-  @Headers({Constants.CONTENT_TYPE})
-  Observable<Response<UserResponse>> signupUser(@Body HashMap<String, String> map);
+    //register to service
+    @POST("/register")
+    @Headers({Constants.CONTENT_TYPE})
+    Observable<Response<UserResponse>> signupUser(@Body HashMap<String, String> map);
 
-  //get all users register on service
-  @GET("/api/users/")
-  Observable<List<User>> getContacts();
+    //get all users register on service
+    @GET("/api/users/")
+    Observable<List<User>> getContacts();
 
-  //create rooms with one user
-  @POST("/api/rooms")
-  Observable<Room> createNewRoom(@Body HashMap<String, Object> map);
+    //create rooms with one user
+    @POST("/api/rooms")
+    Observable<Room> createNewRoom(@Body HashMap<String, Object> map);
 
-  //get all rooms of connected user
-  @GET("/api/user/rooms")
-  Observable<Response<Room>> getRooms();
+    //get all rooms of connected user
+    @GET("/api/user/rooms")
+    Observable<Response<List<Room>>> getRooms();
 
 }

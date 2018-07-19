@@ -28,7 +28,9 @@
     <!-- Lastname -->
     <string name="inputLastNameCreateHint">Entrez votre nom</string>
     <!-- Birthdate date -->
-    <string name="birthdayDateLastNameCreateHint">Entrez votre date de naissance</string>
+    <string name="inputBirthdayDateCreateHint">Entrez votre date de naissance</string>
+    <!-- Email -->
+    <string name="inputEmailCreateHint">Entrez votre email</string>
     <!-- ButtonSignin -->
     <string name="buttonCreate">Sign in</string>
     <!-- Desc -->

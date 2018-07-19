@@ -111,6 +111,7 @@ public class ContactFragment extends android.support.v4.app.Fragment {
 
                     @Override
                     public void onNext(List<User> userList) {
+                        //todo : remove logged user to the displayed list
                         adapter.setData(userList);
                     }
 

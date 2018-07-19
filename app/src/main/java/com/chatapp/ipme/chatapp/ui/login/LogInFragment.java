@@ -61,6 +61,7 @@ public class LogInFragment extends Fragment implements SessionCreator {
     private String username;
     private String firstname;
     private String lastname;
+    private String birthday;
     private String email;
 
     //Connect with existing account
@@ -116,9 +117,10 @@ public class LogInFragment extends Fragment implements SessionCreator {
                             username = userResponseResponse.body().getUser().getUsername();
                             firstname = userResponseResponse.body().getUser().getFirstname();
                             lastname = userResponseResponse.body().getUser().getLastname();
+                            birthday = userResponseResponse.body().getUser().getBirthday();
                             email = userResponseResponse.body().getUser().getEmail();
 
-                            createSessionData(token, id, username, firstname, lastname, email);
+                            createSessionData(token, id, username, firstname, lastname, birthday, email);
 
                             Intent intent = new Intent(getContext(), HomeActivity.class);
                             startActivity(intent);

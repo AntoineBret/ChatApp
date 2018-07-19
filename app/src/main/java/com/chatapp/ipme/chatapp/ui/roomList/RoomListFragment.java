@@ -82,20 +82,22 @@ public class RoomListFragment extends Fragment {
         apiInterface.getRooms()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ErrorManager<Response<Room>>() {
+                .subscribe(new ErrorManager<Response<List<Room>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Response<Room> roomResponseResponse) {
+                    public void onNext(Response<List<Room>> response) {
                         adapter.setData(roomList);
 
-                        for (User user : (Iterable<User>) roomResponseResponse.body().getUsers()) {
-                            usernameLogged = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), "");
-                            if (!usernameLogged.equals(user.getUsername())) {
-                                room.setName(user.getUsername());
-                                roomList.add(room);
+                        for (Room room : response.body()) {
+                            for (User user : (List<User>) room.getUsers()) {
+                                usernameLogged = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), "");
+                                if (!usernameLogged.equals(user.getUsername())) {
+                                    room.setName(user.getUsername());
+                                    roomList.add(room);
+                                }
                             }
                         }
                     }

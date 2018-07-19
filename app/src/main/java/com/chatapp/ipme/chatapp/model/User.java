@@ -28,16 +28,21 @@ public class User {
   @Expose
   private String lastname;
 
+  @SerializedName("birthdayDate")
+  @Expose
+  private String birthday;
+
   @SerializedName("email")
   @Expose
   private String email;
 
-  public User(Integer ID, String username, String password, String firstname, String lastname, String email) {
+  public User(Integer ID, String username, String password, String firstname, String lastname, String birthday, String email) {
     this.ID = ID;
     this.username = username;
     this.password = password;
     this.firstname = firstname;
     this.lastname = lastname;
+    this.birthday = birthday;
     this.email = email;
   }
 
@@ -79,6 +84,15 @@ public class User {
 
   public void setLastname(String lastname) {
     this.lastname = lastname;
+  }
+
+  public String getBirthday() {
+    return birthday;
+  }
+
+  public User setBirthday(String birthday) {
+    this.birthday = birthday;
+    return this;
   }
 
   public String getEmail() {

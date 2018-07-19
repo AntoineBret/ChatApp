@@ -19,13 +19,12 @@ import com.chatapp.ipme.chatapp.model.UserResponse;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.session.SessionCreator;
-import com.chatapp.ipme.chatapp.session.SessionKeys;
-import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.net.ConnectException;
+import java.util.Date;
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -60,6 +59,7 @@ public class SignUpFragment extends Fragment implements SessionCreator {
     private EditText inputFirstNameCreate;
     private EditText inputLastNameCreate;
     private EditText inputBirthdayDateCreate;
+    private EditText inputEmailCreate;
 
     //Convert from EditText to String
     private String signUpLog;
@@ -68,6 +68,7 @@ public class SignUpFragment extends Fragment implements SessionCreator {
     private String signUpFirstName;
     private String signUpLastName;
     private String signUpBirthdayDate;
+    private String signUpEmail;
 
     //Get response from api
     private String token;
@@ -75,6 +76,7 @@ public class SignUpFragment extends Fragment implements SessionCreator {
     private String username;
     private String firstname;
     private String lastname;
+    private String birthday;
     private String email;
 
     @Override
@@ -96,7 +98,8 @@ public class SignUpFragment extends Fragment implements SessionCreator {
         inputConfirmPasswordCreate = rootView.findViewById(R.id.inputConfirmPasswordCreate);
         inputFirstNameCreate = rootView.findViewById(R.id.inputFirstNameCreate);
         inputLastNameCreate = rootView.findViewById(R.id.inputLastNameCreate);
-        inputBirthdayDateCreate = rootView.findViewById(R.id.birthdayDateLastNameCreate);
+        inputBirthdayDateCreate = rootView.findViewById(R.id.inputBirthdayCreate);
+        inputEmailCreate = rootView.findViewById(R.id.inputEmailCreate);
 
         buttonCreate.setOnClickListener(view -> createAccount());
         tvAlreadyAccount.setOnClickListener(v -> {
@@ -141,18 +144,19 @@ public class SignUpFragment extends Fragment implements SessionCreator {
                         public void onNext(Response<UserResponse> userResponseResponse) {
 
                             if (userResponseResponse.body() != null) {
-                            token = userResponseResponse.body().getToken();
-                            id = userResponseResponse.body().getUser().getID();
-                            username = userResponseResponse.body().getUser().getUsername();
-                            firstname = userResponseResponse.body().getUser().getFirstname();
-                            lastname = userResponseResponse.body().getUser().getLastname();
-                            email = userResponseResponse.body().getUser().getEmail();
+                                token = userResponseResponse.body().getToken();
+                                id = userResponseResponse.body().getUser().getID();
+                                username = userResponseResponse.body().getUser().getUsername();
+                                firstname = userResponseResponse.body().getUser().getFirstname();
+                                lastname = userResponseResponse.body().getUser().getLastname();
+                                birthday = userResponseResponse.body().getUser().getBirthday();
+                                email = userResponseResponse.body().getUser().getEmail();
 
-                            createSessionData(token, id, username, firstname, lastname, email);
+                                createSessionData(token, id, username, firstname, lastname, birthday, email);
 
-                            Intent intent = new Intent(getContext(), HomeActivity.class);
-                            startActivity(intent);
-                            }else{
+                                Intent intent = new Intent(getContext(), HomeActivity.class);
+                                startActivity(intent);
+                            } else {
                                 Toast.makeText(getContext(), BAD_CREDENTIALS, Toast.LENGTH_LONG).show();
                             }
                         }
@@ -180,11 +184,13 @@ public class SignUpFragment extends Fragment implements SessionCreator {
         signUpFirstName = inputFirstNameCreate.getText().toString();
         signUpLastName = inputLastNameCreate.getText().toString();
         signUpBirthdayDate = inputBirthdayDateCreate.getText().toString();
+        signUpEmail = inputEmailCreate.getText().toString();
 
         createAccountMap.put("username", signUpLog);
         createAccountMap.put("password", signUpPassword);
         createAccountMap.put("firstName", signUpFirstName);
         createAccountMap.put("lastName", signUpLastName);
         createAccountMap.put("birthdayDate", signUpBirthdayDate);
+        createAccountMap.put("email", signUpEmail);
     }
 }

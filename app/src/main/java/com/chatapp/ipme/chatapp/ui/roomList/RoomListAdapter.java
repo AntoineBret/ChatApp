@@ -1,18 +1,16 @@
 package com.chatapp.ipme.chatapp.ui.roomList;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chatapp.ipme.chatapp.ChatServiceActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Room;
-import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
 
 import java.util.List;
 
@@ -44,17 +42,10 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
     holder.room_title.setText(room.getName());
 
     holder.room_title.setOnClickListener(v -> {
-      Integer roomID = room.getId();
-
-      Bundle bundle = new Bundle();
-      bundle.putInt("room_id", roomID);
-      Fragment roomDetails = RoomDetailsFragment.newInstance();
-      roomDetails.setArguments(bundle);
-
-      ((AppCompatActivity) context).getSupportFragmentManager()
-        .beginTransaction()
-        .replace(R.id.login_frame_container, roomDetails)
-        .commit();
+      Intent chatServiceIntent = new Intent(context, ChatServiceActivity.class);
+      chatServiceIntent.putExtra("room_id", room.getId());
+      chatServiceIntent.putExtra("interlocutor_name", room.getName());
+      context.startActivity(chatServiceIntent);
     });
   }
 

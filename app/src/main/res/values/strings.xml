@@ -51,6 +51,7 @@
     <!-- Parameter Activity -->
     <string name="parameter_toolbar">Paramètres</string>
     <string name="profile_toolbar">Profil</string>
+  <string name="loreum_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin metus at ipsum elementum, tristique tincidunt urna aliquam.</string>
 
 
 </resources>

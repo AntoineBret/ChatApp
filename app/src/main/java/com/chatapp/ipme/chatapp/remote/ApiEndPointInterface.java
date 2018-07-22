@@ -29,7 +29,7 @@ public interface ApiEndPointInterface {
 
     //get all users register on service
     @GET("/api/users/")
-    Observable<List<User>> getContacts();
+    Observable<Response<List<User>>> getContacts();
 
     //create rooms with one user
     @POST("/api/rooms")

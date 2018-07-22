@@ -91,7 +91,7 @@ public class RoomListFragment extends Fragment {
                     public void onNext(Response<List<Room>> response) {
                         adapter.setData(roomList);
 
-                        for (Room room : response.body()) {
+                      for (Room room : response.body()) {
                             for (User user : (List<User>) room.getUsers()) {
                                 usernameLogged = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), "");
                                 if (!usernameLogged.equals(user.getUsername())) {

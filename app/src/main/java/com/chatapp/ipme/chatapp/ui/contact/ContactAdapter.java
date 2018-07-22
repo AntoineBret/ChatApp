@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chatapp.ipme.chatapp.CreateRoomActivity;
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.RoomActivity;
 import com.chatapp.ipme.chatapp.model.User;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             String displayUsername = (user.getUsername());
             Integer displayID = (user.getID());
 
-            Intent roomIntent = new Intent(context, RoomActivity.class);
+            Intent roomIntent = new Intent(context, CreateRoomActivity.class);
             //send selected "username" to next fragment
             roomIntent.putExtra("user_name", displayUsername);
             roomIntent.putExtra("user_id", displayID);

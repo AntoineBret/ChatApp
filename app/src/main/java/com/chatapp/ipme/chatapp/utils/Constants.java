@@ -4,6 +4,7 @@ import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
 
 public class Constants {
     public static final String CONTENT_TYPE = "Content-Type: application/json;charset=UTF-8";
+    public static final Integer INDIVIDUAL_ROOM_SIZE = 2;
 
     public interface httpcodes{
         int STATUS_OK = 200;

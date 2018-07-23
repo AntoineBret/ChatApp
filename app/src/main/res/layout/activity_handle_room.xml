@@ -5,8 +5,15 @@
     android:fitsSystemWindows="true"
     android:gravity="center"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
     <FrameLayout
-        android:id="@+id/room_frame_container"
+        android:id="@+id/handle_room_frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

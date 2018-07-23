@@ -23,7 +23,6 @@
     <activity android:name=".HomeActivity" />
     <activity android:name=".ContactActivity" />
     <activity android:name=".ParameterActivity" />
-    <activity android:name=".CreateRoomActivity" />
-    <activity android:name=".ChatServiceActivity"/>
+    <activity android:name=".HandleRoomActivity" />
   </application>
 </manifest>

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chatapp.ipme.chatapp.ChatServiceActivity;
+import com.chatapp.ipme.chatapp.HandleRoomActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Room;
 
@@ -42,10 +42,10 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
     holder.room_title.setText(room.getName());
 
     holder.room_title.setOnClickListener(v -> {
-      Intent chatServiceIntent = new Intent(context, ChatServiceActivity.class);
-      chatServiceIntent.putExtra("room_id", room.getId());
-      chatServiceIntent.putExtra("interlocutor_name", room.getName());
-      context.startActivity(chatServiceIntent);
+      Intent intent = new Intent(context, HandleRoomActivity.class);
+        intent.putExtra("room_id", room.getId());
+        intent.putExtra("interlocutor_name", room.getName());
+      context.startActivity(intent);
     });
   }
 

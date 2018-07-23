@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chatapp.ipme.chatapp.CreateRoomActivity;
+import com.chatapp.ipme.chatapp.HandleRoomActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.User;
 
@@ -42,13 +42,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.username.setText(user.getUsername());
 
         holder.username.setOnClickListener(v -> {
-            String displayUsername = (user.getUsername());
-            Integer displayID = (user.getID());
+            String displayInterlocutorUsername = (user.getUsername());
+            Integer displayInterlocutorID = (user.getID());
 
-            Intent roomIntent = new Intent(context, CreateRoomActivity.class);
+            Intent roomIntent = new Intent(context, HandleRoomActivity.class);
             //send selected "username" to next fragment
-            roomIntent.putExtra("user_name", displayUsername);
-            roomIntent.putExtra("user_id", displayID);
+            roomIntent.putExtra("interlocutor_name", displayInterlocutorUsername);
+            roomIntent.putExtra("interlocutor_id", displayInterlocutorID);
             context.startActivity(roomIntent);
         });
     }

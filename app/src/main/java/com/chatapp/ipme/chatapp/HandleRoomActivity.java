@@ -69,6 +69,7 @@ public class HandleRoomActivity extends AppCompatActivity {
     }
 
     private void getDataFromExtras() {
+        //From ContactAdapter if room doesn't exist, or RoomListAdapter if room exist
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             roomID = extras.getInt("room_id");

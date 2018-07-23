@@ -1,46 +1,65 @@
 package com.chatapp.ipme.chatapp.model;
 
-import org.json.JSONObject;
-
-import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Message {
 
-    private Integer id;
-    private String pseudo;
-    private List<Object> messages = null;
-    private Integer createdAt;
-
-    public Integer getId() {
-        return id;
+    public Message() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @SerializedName("id")
+    @Expose
+    private Room roomID;
+
+    @SerializedName("content")
+    @Expose
+    private String messageContent;
+
+    @SerializedName("user")
+    @Expose
+    private User user;
+
+    public Message(Room roomID, String messageContent, User user) {
+        this.roomID = roomID;
+        this.messageContent = messageContent;
+        this.user = user;
     }
 
-    public String getPseudo() {
-        return pseudo;
+    public Room getRoomID() {
+        return roomID;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public Message setRoomID(Room roomID) {
+        this.roomID = roomID;
+        return this;
     }
 
-    public List<Object> getMessages() {
-        return messages;
+    public String getMessageContent() {
+        return messageContent;
     }
 
-    public void setMessages(List<Object> messages) {
-        this.messages = messages;
+    public Message setMessageContent(String messageContent) {
+        this.messageContent = messageContent;
+        return this;
     }
 
-    public Integer getCreatedAt() {
-        return createdAt;
+    public User getUser() {
+        return user;
     }
 
-    public void setCreatedAt(Integer createdAt) {
-        this.createdAt = createdAt;
+    public Message setUser(User user) {
+        this.user = user;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "roomID=" + roomID +
+                ", messageContent='" + messageContent + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
 

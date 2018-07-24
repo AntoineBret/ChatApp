@@ -1,14 +1,16 @@
 package com.chatapp.ipme.chatapp.ui.roomDetails;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Message;
@@ -48,7 +50,9 @@ public class RoomDetailsFragment extends Fragment {
     //Vue
     private EditText messageInput;
     private String messageBody;
-    private Button buttonSend;
+    private FloatingActionButton buttonSend;
+    private ImageButton action_attachment;
+    private ImageButton action_photo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +61,9 @@ public class RoomDetailsFragment extends Fragment {
         getRoomDetailsData();
 
         messageInput = rootView.findViewById(R.id.edittext_messageInput);
-        buttonSend = rootView.findViewById(R.id.button_MessageSend);
+        action_attachment = rootView.findViewById(R.id.action_attachment);
+        action_photo = rootView.findViewById(R.id.action_photo);
+        buttonSend = rootView.findViewById(R.id.action_message_send);
 
         recyclerView = rootView.findViewById(R.id.roomdetails_recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -70,6 +76,14 @@ public class RoomDetailsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         receiveInterlocutorMessage();
+
+        action_attachment.setOnClickListener(view -> {
+            //todo : join attachment to message
+        });
+
+        action_photo.setOnClickListener(view -> {
+            //todo : take photo and join to message
+        });
 
         messageBody = messageInput.getText().toString();
         buttonSend.setOnClickListener(view -> {

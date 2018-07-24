@@ -24,5 +24,6 @@
     <activity android:name=".ContactActivity" />
     <activity android:name=".ParameterActivity" />
     <activity android:name=".HandleRoomActivity" />
+
   </application>
 </manifest>

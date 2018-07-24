@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
+import com.chatapp.ipme.chatapp.session.Chatapp;
 import com.chatapp.ipme.chatapp.session.SessionKeys;
 import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
@@ -73,8 +74,8 @@ public class HandleRoomActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             roomID = extras.getInt("room_id");
-            userName = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), null);
-            userID = SessionManager.getInt(SessionKeys.KEY_ID.getKey(), 0);
+            userName = Chatapp.getCurrentUserName();
+            userID = Chatapp.getCurrentUserID();
             interlocutorName = extras.getString("interlocutor_name");
             interlocutorID = extras.getInt("interlocutor_id");
         }

@@ -1,5 +1,6 @@
 package com.chatapp.ipme.chatapp.remote;
 
+import com.chatapp.ipme.chatapp.session.Chatapp;
 import com.chatapp.ipme.chatapp.session.SessionKeys;
 import com.chatapp.ipme.chatapp.session.SessionManager;
 
@@ -24,7 +25,7 @@ public class HeaderInterceptor implements Interceptor {
         Request.Builder requestBuilder = request.newBuilder()
                 .addHeader("Content-Type", "application/json");
 
-        Object token = SessionManager.getString(SessionKeys.KEY_TOKEN.getKey(), null);
+        Object token = Chatapp.getCurrentToken();
 
         if (token != null) {
             requestBuilder.addHeader("Authorization", "Bearer " + token);

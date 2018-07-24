@@ -18,8 +18,7 @@ import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
-import com.chatapp.ipme.chatapp.session.SessionKeys;
-import com.chatapp.ipme.chatapp.session.SessionManager;
+import com.chatapp.ipme.chatapp.session.Chatapp;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.util.ArrayList;
@@ -93,7 +92,7 @@ public class RoomListFragment extends Fragment {
 
                       for (Room room : response.body()) {
                             for (User user : (List<User>) room.getUsers()) {
-                                usernameLogged = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), "");
+                                usernameLogged = Chatapp.getCurrentUserName();
                                 if (!usernameLogged.equals(user.getUsername())) {
                                     room.setName(user.getUsername());
                                     roomList.add(room);

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.chatapp.ipme.chatapp.session.Chatapp;
 import com.chatapp.ipme.chatapp.session.SessionKeys;
 import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.firstConnection.FirstConnectionFragment;
@@ -25,10 +26,8 @@ public class ConnectToServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connecttoservice);
 
-        new SessionManager.Builder()
-                .setContext(getApplicationContext())
-                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
-                .build();
+        //Initialize session builder
+        Chatapp.setBuilder(getApplicationContext());
 
         //todo : remove this shame fix
         SessionManager.removeKeys();

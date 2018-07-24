@@ -1,7 +1,5 @@
 package com.chatapp.ipme.chatapp.session;
 
-import java.util.Date;
-
 public interface SessionCreator {
   default void createSessionData(String token, Integer id, String username, String firstname, String lastname, String birthday, String email) {
     SessionManager.putString(SessionKeys.KEY_TOKEN.getKey(), token);

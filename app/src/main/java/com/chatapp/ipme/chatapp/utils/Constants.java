@@ -3,9 +3,18 @@ package com.chatapp.ipme.chatapp.utils;
 import static com.chatapp.ipme.chatapp.api.BaseUrl.BASE_URL;
 
 public class Constants {
+
+    //Set content_type for json request header
     public static final String CONTENT_TYPE = "Content-Type: application/json;charset=UTF-8";
+
+    //Set individual room size
     public static final Integer INDIVIDUAL_ROOM_SIZE = 2;
 
+    //Set view type for RoomDetailsAdapter
+    public static final int VIEW_TYPE_MESSAGE_SENT = 1;
+    public static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
+
+    //Http codes list
     public interface httpcodes{
         int STATUS_OK = 200;
         String MESSAGE_STATUS_OK = "Query successfully processed : 200";

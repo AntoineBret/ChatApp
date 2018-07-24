@@ -1,7 +1,6 @@
 package com.chatapp.ipme.chatapp.ui.login;
 
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,8 +19,6 @@ import com.chatapp.ipme.chatapp.model.UserResponse;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.session.SessionCreator;
-import com.chatapp.ipme.chatapp.session.SessionKeys;
-import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.signUp.SignUpFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;

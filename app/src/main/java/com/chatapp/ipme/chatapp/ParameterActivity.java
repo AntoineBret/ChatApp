@@ -18,11 +18,6 @@ public class ParameterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parameter);
 
-        new SessionManager.Builder()
-                .setContext(getApplicationContext())
-                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
-                .build();
-
         frameLayout = findViewById(R.id.parameter_frame_container);
 
         if (savedInstanceState == null) {

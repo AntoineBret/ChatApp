@@ -19,6 +19,7 @@ import com.chatapp.ipme.chatapp.ConnectToServiceActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
 import com.chatapp.ipme.chatapp.model.Settings;
+import com.chatapp.ipme.chatapp.session.Chatapp;
 import com.chatapp.ipme.chatapp.session.SessionKeys;
 import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.profile.ProfileFragment;
@@ -39,16 +40,6 @@ public class SettingsFragment extends Fragment {
 
   public static SettingsFragment newInstance() {
     return new SettingsFragment();
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    new SessionManager.Builder()
-      .setContext(getContext())
-      .setPrefsName(SessionKeys.PREFS_NAME.getKey())
-      .build();
   }
 
   @Override
@@ -117,7 +108,7 @@ public class SettingsFragment extends Fragment {
 
   private void getUserLogDetails() {
 
-    Object name = SessionManager.getString(SessionKeys.KEY_USERNAME.getKey(), "");
+    Object name = Chatapp.getCurrentUserName();
     if (name == null) {
       displayUsername.setText("Aucun utilisateur log");
     } else

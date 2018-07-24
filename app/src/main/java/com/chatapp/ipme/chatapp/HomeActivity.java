@@ -1,5 +1,6 @@
 package com.chatapp.ipme.chatapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -24,11 +25,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        new SessionManager.Builder()
-                .setContext(getApplicationContext())
-                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
-                .build();
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);

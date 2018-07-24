@@ -15,8 +15,7 @@ import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
-import com.chatapp.ipme.chatapp.session.SessionKeys;
-import com.chatapp.ipme.chatapp.session.SessionManager;
+import com.chatapp.ipme.chatapp.session.Chatapp;
 import com.chatapp.ipme.chatapp.ui.newContact.NewContactFragment;
 import com.chatapp.ipme.chatapp.ui.newGroup.NewGroupFragment;
 
@@ -117,7 +116,7 @@ public class ContactFragment extends android.support.v4.app.Fragment {
           adapter.setData(userList);
 
           for (User user : response.body()) {
-              usernameLoggedID = SessionManager.getInt(SessionKeys.KEY_ID.getKey(), 0);
+              usernameLoggedID = Chatapp.getCurrentUserID();
               if (!usernameLoggedID.equals(user.getID())) {
                 user.setID(user.getID());
                 userList.add(user);

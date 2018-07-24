@@ -15,11 +15,6 @@ public class ContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
-        new SessionManager.Builder()
-                .setContext(getApplicationContext())
-                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
-                .build();
-
         if(savedInstanceState == null){
             Fragment f = ContactFragment.newInstance();
             getSupportFragmentManager()

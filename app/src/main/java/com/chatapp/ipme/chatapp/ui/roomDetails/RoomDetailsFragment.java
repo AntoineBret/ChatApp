@@ -36,7 +36,7 @@ public class RoomDetailsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RoomDetailsAdapter adapter;
-    private List<Room> roomList = new ArrayList<>();
+    private List<Message> messageList = new ArrayList<>();
     private ApiEndPointInterface apiInterface;
     private HashMap<String, String> messageMap = new HashMap<>();
 
@@ -68,8 +68,8 @@ public class RoomDetailsFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.roomdetails_recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        roomList = new ArrayList<>();
-        adapter = new RoomDetailsAdapter(getContext(), roomList);
+        messageList = new ArrayList<>();
+        adapter = new RoomDetailsAdapter(getContext(), messageList);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
@@ -86,9 +86,7 @@ public class RoomDetailsFragment extends Fragment {
         });
 
         messageBody = messageInput.getText().toString();
-        buttonSend.setOnClickListener(view -> {
-            sendMessageToService();
-        });
+        buttonSend.setOnClickListener(view -> sendMessageToService());
 
         return rootView;
     }

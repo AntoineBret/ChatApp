@@ -7,48 +7,85 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chatapp.ipme.chatapp.R;
-import com.chatapp.ipme.chatapp.model.Room;
+import com.chatapp.ipme.chatapp.model.Message;
+import com.chatapp.ipme.chatapp.session.Chatapp;
 
 import java.util.List;
 
-public class RoomDetailsAdapter extends RecyclerView.Adapter<RoomDetailsAdapter.ViewHolder> {
+import static com.chatapp.ipme.chatapp.utils.Constants.VIEW_TYPE_MESSAGE_RECEIVED;
+import static com.chatapp.ipme.chatapp.utils.Constants.VIEW_TYPE_MESSAGE_SENT;
+
+public class RoomDetailsAdapter extends RecyclerView.Adapter {
 
     private Context context;
-    public List<Room> roomList;
+    public List<Message> messageList;
     private LayoutInflater inflater = null;
 
 
-    public RoomDetailsAdapter(Context context, List<Room> roomList) {
+    public RoomDetailsAdapter(Context context, List<Message> messageList) {
         this.context = context;
-        this.roomList = roomList;
+        this.messageList = messageList;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public RoomDetailsAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        this.context = viewGroup.getContext();
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_roomdetails, viewGroup, false);
-        return new RoomDetailsAdapter.ViewHolder(view);
+    public int getItemViewType(int position) {
+        Message message = messageList.get(position);
+
+        if (message.getUser().getID().equals(Chatapp.getCurrentUserID())) {
+            return VIEW_TYPE_MESSAGE_SENT;
+        } else {
+            return VIEW_TYPE_MESSAGE_RECEIVED;
+        }
     }
 
     @Override
-    public void onBindViewHolder(RoomDetailsAdapter.ViewHolder holder, final int i) {
-        holder.setIsRecyclable(false);
-        final Room room = roomList.get(i);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
 
+        if (viewType == VIEW_TYPE_MESSAGE_SENT) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.user_thread, parent, false);
+            return new UserThreadHolder(view);
+        } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.interlocutor_thread, parent, false);
+            return new InterlocutorThreadHolder(view);
+        }
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Message message = messageList.get(position);
+
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_MESSAGE_SENT:
+                ((UserThreadHolder) holder).bind(message);
+                break;
+            case VIEW_TYPE_MESSAGE_RECEIVED:
+                ((InterlocutorThreadHolder) holder).bind(message);
+        }
+    }
+
+    private class UserThreadHolder extends RecyclerView.ViewHolder {
+        public UserThreadHolder(View view) {
+            super(view);
+        }
+        void bind(Message message) {
+        }
+    }
+
+    private class InterlocutorThreadHolder extends RecyclerView.ViewHolder {
+        public InterlocutorThreadHolder(View view) {
+            super(view);
+        }
+        void bind(Message message) {
+        }
     }
 
     @Override
     public int getItemCount() {
-        return roomList.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ViewHolder(View view) {
-
-            super(view);
-
-        }
+        return messageList.size();
     }
 }

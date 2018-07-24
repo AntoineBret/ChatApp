@@ -29,6 +29,11 @@ public class RoomDetailsAdapter extends RecyclerView.Adapter {
         inflater = LayoutInflater.from(context);
     }
 
+    public void setData(List<Message> messageList) {
+        this.messageList = messageList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);

@@ -12,9 +12,11 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface ApiEndPointInterface {
 
@@ -31,6 +33,14 @@ public interface ApiEndPointInterface {
     //get all users register on service
     @GET("/api/users/")
     Observable<Response<List<User>>> getContacts();
+
+    //Modify currently logged user data
+    @PUT("/api/users/{id}")
+    Observable<Response<User>> modifyUser();
+
+    //Delete currently logged user account
+    @DELETE("/api/users/{id}")
+    Observable<User> deletUser();
 
     //create rooms with one user
     @POST("/api/rooms")

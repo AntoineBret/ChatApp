@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Profile;
 import com.chatapp.ipme.chatapp.model.User;
@@ -41,6 +43,7 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
         holder.profile_item.setText(profile.getProfileItem());
         holder.profile_data.setText(profile.getProfileData());
+        Glide.with(context).load(profile.getProfileThumbnail()).into(holder.modify_icon);
 
     }
 
@@ -53,12 +56,14 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
         public TextView profile_item;
         public TextView profile_data;
+        public ImageView modify_icon;
 
         public ViewHolder(View view) {
             super(view);
 
             profile_item = view.findViewById(R.id.profile_item);
             profile_data = view.findViewById(R.id.profile_data);
+            modify_icon = view.findViewById(R.id.modify_icon);
         }
     }
 }

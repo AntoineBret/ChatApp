@@ -72,11 +72,19 @@ public class ProfileFragment extends Fragment {
         email = Chatapp.getCurrentUserEmail();
         birthdayDate = Chatapp.getCurrentUserBirthday();
 
-        profileList.add(new Profile("Username", username));
-        profileList.add(new Profile("Firstname", firstname));
-        profileList.add(new Profile("Lastname", lastname));
-        profileList.add(new Profile("Email", email));
-        profileList.add(new Profile("Birthday", birthdayDate));
+        int[] covers = new int[]{
+                R.drawable.ic_action_modify,
+                R.drawable.ic_action_modify,
+                R.drawable.ic_action_modify,
+                R.drawable.ic_action_modify,
+                R.drawable.ic_action_modify,
+        };
+
+        profileList.add(new Profile("Username", username, covers[0]));
+        profileList.add(new Profile("Firstname", firstname, covers[1]));
+        profileList.add(new Profile("Lastname", lastname, covers[2]));
+        profileList.add(new Profile("Email", email, covers[3]));
+        profileList.add(new Profile("Birthday", birthdayDate, covers[4]));
 
         adapter.setData(profileList);
     }

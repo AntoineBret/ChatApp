@@ -35,6 +35,7 @@ public class RoomDetailsFragment extends Fragment {
     private RecyclerView recyclerView;
     private RoomDetailsAdapter adapter;
     private List<Message> messageList = new ArrayList<>();
+    private Message message;
     private ApiEndPointInterface apiInterface;
     private HashMap<String, String> messageMap = new HashMap<>();
 
@@ -105,7 +106,9 @@ public class RoomDetailsFragment extends Fragment {
 
                     @Override
                     public void onNext(Response<Message> messageResponse) {
-
+                        adapter.setData(messageList);
+                        //get response body & set data to messageList for adapter
+                        messageList.add(message);
                     }
 
                     @Override
@@ -135,7 +138,9 @@ public class RoomDetailsFragment extends Fragment {
 
                     @Override
                     public void onNext(Response<Message> messageResponse) {
-
+                        adapter.setData(messageList);
+                        //get response body & set data to messageList for adapter
+                        messageList.add(message);
                     }
 
                     @Override

@@ -10,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Message;
-import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
@@ -85,7 +83,6 @@ public class RoomDetailsFragment extends Fragment {
             //todo : take photo and join to message
         });
 
-        messageBody = messageInput.getText().toString();
         buttonSend.setOnClickListener(view -> sendMessageToService());
 
         return rootView;
@@ -120,6 +117,9 @@ public class RoomDetailsFragment extends Fragment {
 
     private void sendMessageToService() {
         //send message
+        messageBody = messageInput.getText().toString();
+        messageMap.put(messageBody, userName);
+
         apiInterface = new ApiClient(getContext())
                 .getClient()
                 .create(ApiEndPointInterface.class);

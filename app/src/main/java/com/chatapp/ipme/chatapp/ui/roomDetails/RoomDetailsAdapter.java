@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Message;
@@ -69,18 +70,38 @@ public class RoomDetailsAdapter extends RecyclerView.Adapter {
     }
 
     private class UserThreadHolder extends RecyclerView.ViewHolder {
+
+        private TextView userMessageText;
+        private TextView userDateText;
+
         public UserThreadHolder(View view) {
             super(view);
+
+            userMessageText = itemView.findViewById(R.id.tv_user_message);
+            userDateText = itemView.findViewById(R.id.tv_user_date);
         }
+
         void bind(Message message) {
+            userMessageText.setText(message.getMessageContent());
+            userDateText.setText(message.getMessageContent());
         }
     }
 
     private class InterlocutorThreadHolder extends RecyclerView.ViewHolder {
+
+        private TextView interlocutorMessageText;
+        private TextView interlocutorDateText;
+
         public InterlocutorThreadHolder(View view) {
             super(view);
+
+            interlocutorMessageText = itemView.findViewById(R.id.tv_interlocutor_message);
+            interlocutorDateText = itemView.findViewById(R.id.tv_interlocutor_date);
         }
+
         void bind(Message message) {
+            interlocutorMessageText.setText(message.getMessageContent());
+            interlocutorDateText.setText(message.getMessageContent());
         }
     }
 

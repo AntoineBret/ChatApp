@@ -1,6 +1,5 @@
 package com.chatapp.ipme.chatapp;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.chatapp.ipme.chatapp.adapter.EditTextDatePicker;
 import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
@@ -54,6 +54,12 @@ public class EditDataActivity extends AppCompatActivity implements SessionCreato
     toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
     newValueEdittext = findViewById(R.id.newValueEdittext);
+
+    //if user want to edit birthday, pop a date picker
+    if(item_to_edit.equals("Birthday")){
+      newValueEdittext.setFocusable(false);
+      new EditTextDatePicker(this, 0x7f08008d);
+    }
 
     if (item_to_edit.equals("Username")) {
       toolbar.setTitle("Saisissez votre pseudo");
@@ -128,6 +134,7 @@ public class EditDataActivity extends AppCompatActivity implements SessionCreato
 
           editSessionData();
 
+          //go back to home activity
           onBackPressed();
         }
 

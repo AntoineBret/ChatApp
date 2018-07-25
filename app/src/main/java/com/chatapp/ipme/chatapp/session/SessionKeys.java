@@ -3,7 +3,6 @@ package com.chatapp.ipme.chatapp.session;
 public enum SessionKeys {
 
     PREFS_NAME("User"),
-
     KEY_TOKEN("TokenKey"),
     KEY_ID("IdKey"),
     KEY_USERNAME("UsernameKey"),

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">ChatApp</string>
 
+    <!-- TEST -->
+    <string name="loreum_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin metus at ipsum elementum, tristique tincidunt urna aliquam.</string>
+
     //Menu settings
     <string name="settings">Paramètres</string>
 
@@ -15,7 +18,6 @@
     <string name="passwordDescribe">Password</string>
     <string name="buttonSignin">Login</string>
     <string name="loginDesc">S\'identifier</string>
-
 
     //signin_cardview.xml
     <!-- Username -->
@@ -51,7 +53,6 @@
     <!-- Parameter Activity -->
     <string name="parameter_toolbar">Paramètres</string>
     <string name="profile_toolbar">Profil</string>
-  <string name="loreum_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin metus at ipsum elementum, tristique tincidunt urna aliquam.</string>
 
 
 </resources>

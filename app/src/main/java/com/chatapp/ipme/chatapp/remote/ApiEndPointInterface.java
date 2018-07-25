@@ -18,7 +18,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
-public interface ApiEndPointInterface {
+    public interface ApiEndPointInterface {
 
     //log to service
     @POST("/login")
@@ -35,8 +35,8 @@ public interface ApiEndPointInterface {
     Observable<Response<List<User>>> getContacts();
 
     //Modify currently logged user data
-    @PUT("/api/users/{id}")
-    Observable<Response<User>> modifyUser();
+    @PUT("/api/users/38")
+    Observable<Response<User>> editUser(@Body HashMap<String, Object> map);
 
     //Delete currently logged user account
     @DELETE("/api/users/{id}")

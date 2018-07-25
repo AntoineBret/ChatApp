@@ -1,6 +1,7 @@
 package com.chatapp.ipme.chatapp.ui.profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chatapp.ipme.chatapp.EditDataActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Profile;
-import com.chatapp.ipme.chatapp.model.User;
 
 import java.util.List;
 
@@ -43,7 +44,15 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
         holder.profile_item.setText(profile.getProfileItem());
         holder.profile_data.setText(profile.getProfileData());
-        Glide.with(context).load(profile.getProfileThumbnail()).into(holder.modify_icon);
+        Glide.with(context).load(profile.getProfileThumbnail()).into(holder.edit_icon);
+
+        String item_to_edit = (profile.getProfileItem());
+
+        holder.edit_icon.setOnClickListener(view -> {
+            Intent intent = new Intent(context, EditDataActivity.class);
+            intent.putExtra("profile_item", item_to_edit);
+            context.startActivity(intent);
+        });
 
     }
 
@@ -56,14 +65,14 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
         public TextView profile_item;
         public TextView profile_data;
-        public ImageView modify_icon;
+        public ImageView edit_icon;
 
         public ViewHolder(View view) {
             super(view);
 
             profile_item = view.findViewById(R.id.profile_item);
             profile_data = view.findViewById(R.id.profile_data);
-            modify_icon = view.findViewById(R.id.modify_icon);
+            edit_icon = view.findViewById(R.id.modify_icon);
         }
     }
 }

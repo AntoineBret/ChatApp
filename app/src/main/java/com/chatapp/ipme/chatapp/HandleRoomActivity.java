@@ -31,7 +31,6 @@ import static com.chatapp.ipme.chatapp.utils.Constants.INDIVIDUAL_ROOM_SIZE;
 public class HandleRoomActivity extends AppCompatActivity {
 
     private HashMap<String, Object> createUsersMap = new HashMap<>();
-    private SessionManager session;
     private FrameLayout frameLayout;
     private ApiEndPointInterface apiInterface;
     private Toolbar toolbar;
@@ -48,11 +47,6 @@ public class HandleRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handle_room);
-
-        new SessionManager.Builder()
-                .setContext(getApplicationContext())
-                .setPrefsName(SessionKeys.PREFS_NAME.getKey())
-                .build();
 
         getDataFromExtras();
 

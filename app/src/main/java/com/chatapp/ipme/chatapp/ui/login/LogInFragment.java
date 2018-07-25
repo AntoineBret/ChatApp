@@ -20,7 +20,6 @@ import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.session.SessionCreator;
 import com.chatapp.ipme.chatapp.ui.signUp.SignUpFragment;
-import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.net.ConnectException;
@@ -43,7 +42,6 @@ public class LogInFragment extends Fragment implements SessionCreator {
     //Create HashMap as body for @POST("/login")
     private HashMap<String, String> loginAccountMap = new HashMap<>();
 
-    private AlertDialogManager alert = new AlertDialogManager();
     private ApiEndPointInterface apiInterface;
     private ViewModel viewModel;
 
@@ -56,6 +54,7 @@ public class LogInFragment extends Fragment implements SessionCreator {
     private String token;
     private Integer id;
     private String username;
+    private String password;
     private String firstname;
     private String lastname;
     private String birthday;
@@ -72,9 +71,7 @@ public class LogInFragment extends Fragment implements SessionCreator {
         inputLog = rootView.findViewById(R.id.inputLog);
         inputPassword = rootView.findViewById(R.id.inputPassword);
 
-        buttonLogIn.setOnClickListener(view -> {
-            connectAccount();
-        });
+        buttonLogIn.setOnClickListener(view -> connectAccount());
 
         tvNoAccount.setOnClickListener(v -> {
             Fragment f = SignUpFragment.newInstance();
@@ -116,12 +113,12 @@ public class LogInFragment extends Fragment implements SessionCreator {
                             lastname = userResponseResponse.body().getUser().getLastname();
                             birthday = userResponseResponse.body().getUser().getBirthday();
                             email = userResponseResponse.body().getUser().getEmail();
-
-                            createSessionData(token, id, username, firstname, lastname, birthday, email);
+                            password = inputPassword.getText().toString();
+                            createSessionData(token, id, username, password, firstname, lastname, birthday, email);
 
                             Intent intent = new Intent(getContext(), HomeActivity.class);
                             startActivity(intent);
-                        }else{
+                        } else {
                             Toast.makeText(getContext(), BAD_CREDENTIALS, Toast.LENGTH_LONG).show();
                         }
                     }

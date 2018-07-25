@@ -31,6 +31,11 @@ public class Chatapp {
         return currentUserUsername;
     }
 
+    public static String getCurrentPassword() {
+        String currentUserPassword = SessionManager.getString(SessionKeys.KEY_PASSWORD.getKey(), null);
+        return currentUserPassword;
+    }
+
     public static String getCurrentUserFirstname() {
         String currentUserFirstname = SessionManager.getString(SessionKeys.KEY_FIRSTNAME.getKey(), null);
         return currentUserFirstname;

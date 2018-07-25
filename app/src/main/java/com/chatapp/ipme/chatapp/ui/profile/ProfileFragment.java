@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
     private String lastname;
     private String email;
     private String birthdayDate;
-    private String password;;
+    private String password;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

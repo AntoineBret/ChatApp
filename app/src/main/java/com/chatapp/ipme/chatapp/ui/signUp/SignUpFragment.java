@@ -152,7 +152,7 @@ public class SignUpFragment extends Fragment implements SessionCreator {
                                 birthday = userResponseResponse.body().getUser().getBirthday();
                                 email = userResponseResponse.body().getUser().getEmail();
 
-                                createSessionData(token, id, username, firstname, lastname, birthday, email);
+                                createSessionData(token, id, username, signUpPassword, firstname, lastname, birthday, email);
 
                                 Intent intent = new Intent(getContext(), HomeActivity.class);
                                 startActivity(intent);

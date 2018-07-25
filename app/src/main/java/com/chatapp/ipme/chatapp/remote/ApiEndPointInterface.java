@@ -35,7 +35,7 @@ import retrofit2.http.PUT;
     Observable<Response<List<User>>> getContacts();
 
     //Modify currently logged user data
-    @PUT("/api/users/38")
+    @PUT("/api/users/1")
     Observable<Response<User>> editUser(@Body HashMap<String, Object> map);
 
     //Delete currently logged user account

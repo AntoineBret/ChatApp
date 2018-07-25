@@ -16,6 +16,7 @@ import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -126,9 +127,6 @@ public class EditDataActivity extends AppCompatActivity implements SessionCreato
                         email = userResponseResponse.body().getEmail();
 
                         editSessionData();
-
-                        //todo refresh setting fragment UI after chage for display new data
-//                        refreshUI();
 
                         onBackPressed();
                     }

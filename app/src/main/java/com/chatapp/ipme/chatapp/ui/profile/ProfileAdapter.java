@@ -53,6 +53,8 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
       Intent intent = new Intent(context, EditDataActivity.class);
       intent.putExtra("profile_item", item_to_edit);
       context.startActivity(intent);
+
+      // onDestroy activity for refresh data
       ((Activity)context).finish();
 
     });

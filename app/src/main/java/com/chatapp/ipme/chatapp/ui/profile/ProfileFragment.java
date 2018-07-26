@@ -1,8 +1,6 @@
 package com.chatapp.ipme.chatapp.ui.profile;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -77,19 +75,11 @@ public class ProfileFragment extends Fragment {
     email = Chatapp.getCurrentUserEmail();
     birthdayDate = Chatapp.getCurrentUserBirthday();
 
-    int[] covers = new int[]{
-      R.drawable.ic_action_modify,
-      R.drawable.ic_action_modify,
-      R.drawable.ic_action_modify,
-      R.drawable.ic_action_modify,
-      R.drawable.ic_action_modify,
-    };
-
-    profileList.add(new Profile("Username", username, covers[0]));
-    profileList.add(new Profile("Firstname", firstname, covers[1]));
-    profileList.add(new Profile("Lastname", lastname, covers[2]));
-    profileList.add(new Profile("Email", email, covers[3]));
-    profileList.add(new Profile("Birthday", birthdayDate, covers[4]));
+    profileList.add(new Profile("Username", username));
+    profileList.add(new Profile("Firstname", firstname));
+    profileList.add(new Profile("Lastname", lastname));
+    profileList.add(new Profile("Email", email));
+    profileList.add(new Profile("Birthday", birthdayDate));
 
     adapter.setData(profileList);
   }

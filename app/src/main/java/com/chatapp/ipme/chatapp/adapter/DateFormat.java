@@ -7,10 +7,10 @@ import java.util.Locale;
 
 public class DateFormat {
 
-    public static final String SERVER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-    public static final String LOCAL_FORMAT = "yyyy-MM-dd";
+    public static final String SERVER_FORMAT = "dd-MM-yyyy"; //input format
+    public static final String LOCAL_FORMAT = "dd-MM-yyyy"; //output format
 
-    private static String getDateFormatted(String dateString) {
+    public static String getDateFormatted(String dateString) {
         String dateLocalString = "";
 
         SimpleDateFormat dfServer = new SimpleDateFormat(SERVER_FORMAT, Locale.getDefault());
@@ -22,7 +22,6 @@ public class DateFormat {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return dateLocalString;
     }
 }

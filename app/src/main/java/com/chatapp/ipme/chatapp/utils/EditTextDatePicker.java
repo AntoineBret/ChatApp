@@ -10,6 +10,8 @@ import android.widget.EditText;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import static com.chatapp.ipme.chatapp.adapter.DateFormat.getDateFormatted;
+
 public class EditTextDatePicker implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     EditText editText;
@@ -49,10 +51,15 @@ public class EditTextDatePicker implements View.OnClickListener, DatePickerDialo
     // updates the date in the birth date EditText
     private void updateDisplay() {
 
-        editText.setText(new StringBuilder()
-                // Month is 0 based so add 1
-//                .append(day).append("/").append(month + 1).append("/").append(birthYear).append(" "));
-                  .append(day).append(month + 1).append(birthYear));
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder
+                .append(day)
+                .append("-")
+                .append(month + 1)  // Month is 0 based so add 1
+                .append("-")
+                .append(birthYear);
 
+        editText.setText(getDateFormatted(strBuilder.toString()));
+//        editText.setText(strBuilder.toString());
     }
 }

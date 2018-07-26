@@ -21,6 +21,7 @@ import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.session.SessionCreator;
 import com.chatapp.ipme.chatapp.ui.login.LogInFragment;
 import com.chatapp.ipme.chatapp.utils.AlertDialogManager;
+import com.chatapp.ipme.chatapp.utils.EditTextDatePicker;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
 import java.net.ConnectException;
@@ -98,8 +99,11 @@ public class SignUpFragment extends Fragment implements SessionCreator {
         inputConfirmPasswordCreate = rootView.findViewById(R.id.inputConfirmPasswordCreate);
         inputFirstNameCreate = rootView.findViewById(R.id.inputFirstNameCreate);
         inputLastNameCreate = rootView.findViewById(R.id.inputLastNameCreate);
-        inputBirthdayDateCreate = rootView.findViewById(R.id.inputBirthdayCreate);
         inputEmailCreate = rootView.findViewById(R.id.inputEmailCreate);
+
+        inputBirthdayDateCreate = rootView.findViewById(R.id.inputBirthdayCreate);
+        inputBirthdayDateCreate.setFocusable(false);
+        new EditTextDatePicker(getContext(), inputBirthdayDateCreate);
 
         buttonCreate.setOnClickListener(view -> createAccount());
         tvAlreadyAccount.setOnClickListener(v -> {

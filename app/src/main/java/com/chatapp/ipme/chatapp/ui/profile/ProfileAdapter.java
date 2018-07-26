@@ -13,8 +13,10 @@ import android.widget.ViewSwitcher;
 import com.bumptech.glide.Glide;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Profile;
+import com.chatapp.ipme.chatapp.session.Chatapp;
 import com.chatapp.ipme.chatapp.utils.EditTextDatePicker;
 
+import java.util.HashMap;
 import java.util.List;
 
 class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
@@ -22,6 +24,9 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
     private Context context;
     public List<Profile> profileList;
     private int i = 0;
+    public static HashMap<String, Object> newUserDataMap = new HashMap<>();
+    private String profileItemValue;
+    private String profileDataNewValue;
 
     public ProfileAdapter(Context context, List<Profile> profileList) {
         this.context = context;
@@ -43,9 +48,11 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ProfileAdapter.ViewHolder holder, int position) {
         Profile profile = profileList.get(position);
+        profileItemValue = profile.getProfileItem();
+        String profileDataValue = profile.getProfileData();
 
-        holder.profile_item.setText(profile.getProfileItem());
-        holder.profile_data_tv.setText(profile.getProfileData());
+        holder.profile_item.setText(profileItemValue);
+        holder.profile_data_tv.setText(profileDataValue);
 
         //initialize icon edit at first time
         if (holder.edit_icon.getDrawable() == null) {
@@ -53,11 +60,10 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
         }
 
         //replace classic edittext to date picker if user want to change his birthday date
-        if (profile.getProfileItem().equals("Birthday")) {
+        if (profileItemValue.equals("Birthday")) {
             //dismiss keyboard for display date picker properly
             holder.edit_data_edittext.setFocusable(false);
             new EditTextDatePicker(context, holder.edit_data_edittext);
-          
         }
 
         holder.edit_icon.setOnClickListener(view -> {
@@ -75,16 +81,29 @@ class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
                 holder.switcher.showPrevious();
                 Glide.with(context).load(R.drawable.ic_action_edit).into(holder.edit_icon);
                 //get new data & display them to user only if something has changed
-                String new_value = holder.edit_data_edittext.getText().toString();
-                if (!new_value.equals(profile.getProfileData()) && !new_value.equals("")) {
-                    holder.profile_data_tv.setText(new_value);
+                profileDataNewValue = holder.edit_data_edittext.getText().toString();
+                if (!profileDataNewValue.equals(profileDataValue) && !profileDataNewValue.equals("")) {
+                    holder.profile_data_tv.setText(profileDataNewValue);
                 }
+                //prepare data before sending to the api
+                prepareNewData();
+
+                ProfileFragment.sendNewUserData();
                 //return to default state
                 i = 0;
-
-                //send data to back end for update
-            }
+                }
         });
+    }
+
+    private void prepareNewData() {
+        //backend need id + username + password for authorize data edit ><
+        // todo : change backend logic
+        newUserDataMap.put("id", Chatapp.getCurrentUserID());
+        newUserDataMap.put("username", Chatapp.getCurrentUserName());
+        newUserDataMap.put("password", Chatapp.getCurrentPassword());
+        //Send new data for change to backend
+        newUserDataMap.put((profileItemValue.toLowerCase()), profileDataNewValue);
+        //hashmap is now configured to be recover in the fragment of the adapter
     }
 
     @Override

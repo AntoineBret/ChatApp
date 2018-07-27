@@ -2,6 +2,7 @@ package com.chatapp.ipme.chatapp.ui.roomDetails;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,10 @@ public class RoomDetailsAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
 
-        if (message.getUser().getID().equals(Chatapp.getCurrentUserID())) {
+        Integer serverUserID = message.getUser().getID();
+        Integer currentUserID = Chatapp.getCurrentUserID();
+
+        if (serverUserID.equals(currentUserID)) {
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
             return VIEW_TYPE_MESSAGE_RECEIVED;

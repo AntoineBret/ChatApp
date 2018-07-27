@@ -5,15 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.model.Room;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
 import com.chatapp.ipme.chatapp.session.Chatapp;
-import com.chatapp.ipme.chatapp.session.SessionKeys;
-import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.roomDetails.RoomDetailsFragment;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 
@@ -25,12 +23,17 @@ import java.util.Map;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 import static com.chatapp.ipme.chatapp.utils.Constants.INDIVIDUAL_ROOM_SIZE;
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_OK;
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_UNAUTHORIZED;
 
 public class HandleRoomActivity extends AppCompatActivity {
 
     private HashMap<String, Object> createUsersMap = new HashMap<>();
+    private HashMap<String, Object> joinUsersMap = new HashMap<>();
+
     private FrameLayout frameLayout;
     private ApiEndPointInterface apiInterface;
     private Toolbar toolbar;
@@ -76,7 +79,7 @@ public class HandleRoomActivity extends AppCompatActivity {
     }
 
     private void createRoom() {
-        handleDataBeforeApiCall();
+        handleDataBeforeCreateRoom();
         apiInterface = new ApiClient(this)
                 .getClient()
                 .create(ApiEndPointInterface.class);
@@ -84,15 +87,19 @@ public class HandleRoomActivity extends AppCompatActivity {
         apiInterface.createNewRoom(createUsersMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ErrorManager<Room>() {
+                .subscribe(new ErrorManager<Response<Room>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(Room room) {
-                        roomID = room.getId();
-                        displayRoom();
+                    public void onNext(Response<Room> roomResponse) {
+                        if ((roomResponse.code() == STATUS_OK) && (roomResponse.body() != null)) {
+                            roomID = roomResponse.body().getId();
+                            displayRoom();
+                        } else if (roomResponse.code() == STATUS_UNAUTHORIZED) {
+                            Toast.makeText(getApplicationContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
@@ -101,7 +108,7 @@ public class HandleRoomActivity extends AppCompatActivity {
                 });
     }
 
-    private void handleDataBeforeApiCall() {
+    private void handleDataBeforeCreateRoom() {
         //aggregation of UserId + InterlocutorId
         postUsersID = new ArrayList<>();
         for (int i = 0; i < INDIVIDUAL_ROOM_SIZE; i++) {

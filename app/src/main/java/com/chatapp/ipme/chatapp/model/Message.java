@@ -8,30 +8,41 @@ public class Message {
     public Message() {
     }
 
+    @SerializedName("user")
+    @Expose
+    private User user;
+
     @SerializedName("id")
     @Expose
-    private Room roomID;
+    private Integer messageID;
 
     @SerializedName("content")
     @Expose
     private String messageContent;
 
-    @SerializedName("user")
+    @SerializedName("room")
     @Expose
-    private User user;
+    private Room room;
 
-    public Message(Room roomID, String messageContent, User user) {
-        this.roomID = roomID;
+    public Message(Integer ID, String username, String password, String firstname, String lastname, String birthday, String email) {
+        user.getID();
+        user.getUsername();
+        user.getPassword();
+        user.getFirstname();
+        user.getLastname();
+        user.getBirthday();
+        user.getEmail();
+        this.messageID = messageID;
         this.messageContent = messageContent;
-        this.user = user;
+        this.room = room;
     }
 
-    public Room getRoomID() {
-        return roomID;
+    public Integer getMessageID() {
+        return messageID;
     }
 
-    public Message setRoomID(Room roomID) {
-        this.roomID = roomID;
+    public Message setMessageID(Integer messageID) {
+        this.messageID = messageID;
         return this;
     }
 
@@ -53,13 +64,13 @@ public class Message {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "roomID=" + roomID +
-                ", messageContent='" + messageContent + '\'' +
-                ", user=" + user +
-                '}';
+    public Room getRoom() {
+        return room;
+    }
+
+    public Message setRoom(Room room) {
+        this.room = room;
+        return this;
     }
 }
 

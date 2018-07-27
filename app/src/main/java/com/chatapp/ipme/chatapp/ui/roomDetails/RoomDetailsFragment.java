@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.BAD_CREDENTIALS;
 import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_OK;
 import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_UNAUTHORIZED;
 
@@ -40,7 +40,6 @@ public class RoomDetailsFragment extends Fragment {
     private RecyclerView recyclerView;
     private RoomDetailsAdapter adapter;
     private List<Message> messageList = new ArrayList<>();
-    private Message message;
     private ApiEndPointInterface apiInterface;
     private HashMap<String, String> messageMap = new HashMap<>();
 
@@ -50,6 +49,7 @@ public class RoomDetailsFragment extends Fragment {
     private Integer userID;
     private String interlocutorName;
     private Integer interlocutorID;
+    private String content;
 
     //Vue
     private EditText messageInput;
@@ -100,21 +100,24 @@ public class RoomDetailsFragment extends Fragment {
                 .getClient()
                 .create(ApiEndPointInterface.class);
 
-        apiInterface.getMessages()
+        apiInterface.getRoomMessages()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ErrorManager<Response<Message>>() {
+                .subscribe(new ErrorManager<Response<List<Message>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Response<Message> messageResponse) {
+                    public void onNext(Response<List<Message>> messageResponse) {
                         if ((messageResponse.code() == STATUS_OK) && (messageResponse.body() != null)) {
                             adapter.setData(messageList);
-                            //get response body & set data to messageList for adapter
-                            messageList.add(message);
+                            for (Message message : messageResponse.body()) {
+                                content = message.getMessageContent();
+                                message.setMessageContent(content);
+                                messageList.add(message);
+                            }
                         } else if (messageResponse.code() == STATUS_UNAUTHORIZED) {
                             Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
                         }
@@ -149,8 +152,6 @@ public class RoomDetailsFragment extends Fragment {
                     public void onNext(Response<Message> messageResponse) {
                         if ((messageResponse.code() == STATUS_OK) && (messageResponse.body() != null)) {
                             adapter.setData(messageList);
-                            //get response body & set data to messageList for adapter
-                            messageList.add(message);
                         } else if (messageResponse.code() == STATUS_UNAUTHORIZED) {
                             Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
                         }

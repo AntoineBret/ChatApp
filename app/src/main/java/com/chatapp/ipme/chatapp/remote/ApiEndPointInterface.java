@@ -46,7 +46,7 @@ public interface ApiEndPointInterface {
 
     //create rooms with one user
     @POST("/api/rooms")
-    Observable<Room> createNewRoom(@Body HashMap<String, Object> map);
+    Observable<Response<Room>> createNewRoom(@Body HashMap<String, Object> map);
 
     //get all rooms of connected user
     @GET("/api/user/rooms")
@@ -57,7 +57,7 @@ public interface ApiEndPointInterface {
     Observable<Response<Message>> sendMessages(@Body HashMap<String, String> map);
 
     //get message
-    @GET("/api/messages")
-    Observable<Response<Message>> getMessages();
+    @GET("/api/rooms/21/messages")
+    Observable<Response<List<Message>>> getRoomMessages();
 
 }

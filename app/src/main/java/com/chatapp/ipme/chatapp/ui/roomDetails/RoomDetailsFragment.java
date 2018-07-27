@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Message;
@@ -25,6 +26,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
+
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.BAD_CREDENTIALS;
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_OK;
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_UNAUTHORIZED;
 
 public class RoomDetailsFragment extends Fragment {
 
@@ -106,9 +111,13 @@ public class RoomDetailsFragment extends Fragment {
 
                     @Override
                     public void onNext(Response<Message> messageResponse) {
-                        adapter.setData(messageList);
-                        //get response body & set data to messageList for adapter
-                        messageList.add(message);
+                        if ((messageResponse.code() == STATUS_OK) && (messageResponse.body() != null)) {
+                            adapter.setData(messageList);
+                            //get response body & set data to messageList for adapter
+                            messageList.add(message);
+                        } else if (messageResponse.code() == STATUS_UNAUTHORIZED) {
+                            Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
@@ -138,9 +147,13 @@ public class RoomDetailsFragment extends Fragment {
 
                     @Override
                     public void onNext(Response<Message> messageResponse) {
-                        adapter.setData(messageList);
-                        //get response body & set data to messageList for adapter
-                        messageList.add(message);
+                        if ((messageResponse.code() == STATUS_OK) && (messageResponse.body() != null)) {
+                            adapter.setData(messageList);
+                            //get response body & set data to messageList for adapter
+                            messageList.add(message);
+                        } else if (messageResponse.code() == STATUS_UNAUTHORIZED) {
+                            Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override

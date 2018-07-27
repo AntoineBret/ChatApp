@@ -32,6 +32,8 @@ import retrofit2.Response;
 
 import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.BAD_CREDENTIALS;
 import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.MESSAGE_CONNECT_EXCEPTION;
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_OK;
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_UNAUTHORIZED;
 
 public class LogInFragment extends Fragment implements SessionCreator {
 
@@ -104,8 +106,7 @@ public class LogInFragment extends Fragment implements SessionCreator {
 
                     @Override
                     public void onNext(Response<UserResponse> userResponseResponse) {
-
-                        if (userResponseResponse.body() != null) {
+                        if ((userResponseResponse.code() == STATUS_OK) && (userResponseResponse.body() != null)) {
                             token = userResponseResponse.body().getToken();
                             id = userResponseResponse.body().getUser().getID();
                             username = userResponseResponse.body().getUser().getUsername();
@@ -118,7 +119,7 @@ public class LogInFragment extends Fragment implements SessionCreator {
 
                             Intent intent = new Intent(getContext(), HomeActivity.class);
                             startActivity(intent);
-                        } else {
+                        } else if (userResponseResponse.code() == STATUS_UNAUTHORIZED) {
                             Toast.makeText(getContext(), BAD_CREDENTIALS, Toast.LENGTH_LONG).show();
                         }
                     }

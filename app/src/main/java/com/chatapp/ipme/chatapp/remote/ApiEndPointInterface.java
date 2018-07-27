@@ -8,6 +8,7 @@ import com.chatapp.ipme.chatapp.utils.Constants;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
@@ -36,8 +37,8 @@ public interface ApiEndPointInterface {
 
     //Modify currently logged user data
     //todo : make dynamic endpoint
-    @PUT("/api/users/1")
-    Observable<Response<User>> editUser(@Body HashMap<String, Object> map);
+    @PUT("/api/users/38")
+    Observable<Response<User>> editUser(@Body Map<String, Object> map);
 
     //Delete currently logged user account
     @DELETE("/api/users/{id}")

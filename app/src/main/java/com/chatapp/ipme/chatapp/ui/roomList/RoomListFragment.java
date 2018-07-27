@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.chatapp.ipme.chatapp.ContactActivity;
 import com.chatapp.ipme.chatapp.R;
@@ -28,6 +29,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
+
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_OK;
+import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_UNAUTHORIZED;
 
 public class RoomListFragment extends Fragment {
 
@@ -88,17 +92,22 @@ public class RoomListFragment extends Fragment {
 
                     @Override
                     public void onNext(Response<List<Room>> response) {
-                        adapter.setData(roomList);
+                        if ((response.code() == STATUS_OK) && (response.body() != null)) {
+                            adapter.setData(roomList);
 
-                      for (Room room : response.body()) {
-                            for (User user : (List<User>) room.getUsers()) {
-                                usernameLogged = Chatapp.getCurrentUserName();
-                                if (!usernameLogged.equals(user.getUsername())) {
-                                    room.setName(user.getUsername());
-                                    roomList.add(room);
+                            for (Room room : response.body()) {
+                                for (User user : (List<User>) room.getUsers()) {
+                                    usernameLogged = Chatapp.getCurrentUserName();
+                                    if (!usernameLogged.equals(user.getUsername())) {
+                                        room.setName(user.getUsername());
+                                        roomList.add(room);
+                                    }
                                 }
                             }
+                        } else if (response.code() == STATUS_UNAUTHORIZED) {
+                            Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
                         }
+
                     }
 
                     @Override

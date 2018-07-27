@@ -8,7 +8,7 @@ import java.util.Locale;
 public class DateFormat {
 
     public static final String SERVER_FORMAT = "dd-MM-yyyy"; //input format
-    public static final String LOCAL_FORMAT = "dd-MM-yyyy"; //output format
+    public static final String LOCAL_FORMAT = "yyyy-MM-dd"; //output format
 
     public static String getDateFormatted(String dateString) {
         String dateLocalString = "";

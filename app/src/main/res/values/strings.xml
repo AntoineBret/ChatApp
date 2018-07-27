@@ -1,58 +1,61 @@
 <resources>
-    <string name="app_name">ChatApp</string>
+  <string name="app_name">ChatApp</string>
 
-    <!-- TEST -->
-    <string name="loreum_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin metus at ipsum elementum, tristique tincidunt urna aliquam.</string>
+  <!-- TEST -->
+  <string name="loreum_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin metus at ipsum elementum, tristique tincidunt urna aliquam.</string>
 
-    //Menu settings
-    <string name="settings">Paramètres</string>
+  //Menu settings
+  <string name="settings">Paramètres</string>
 
-    //welcome_cardview.xml
-    <string name="welcome">Bienvenue sur Chatapp</string>
-    <string name="termsOfServiceDesc">Appuyez sur "Accepter et continuer" pour accepter les conditions d\'utilisation et la politique de confidentialité de Chatapp.</string>
-    <string name="agree">Accepter et continuer</string>
+  //welcome_cardview.xml
+  <string name="welcome">Bienvenue sur Chatapp</string>
+  <string name="termsOfServiceDesc">Appuyez sur "Accepter et continuer" pour accepter les conditions d\'utilisation et la politique de confidentialité de Chatapp.</string>
+  <string name="agree">Accepter et continuer</string>
 
-    //login_cardview.xml
-    <string name="noAccount">Pas encore de compte ?</string>
-    <string name="logDescribe">Log</string>
-    <string name="passwordDescribe">Password</string>
-    <string name="buttonSignin">Login</string>
-    <string name="loginDesc">S\'identifier</string>
+  //login_cardview.xml
+  <string name="noAccount">Pas encore de compte ?</string>
+  <string name="logDescribe">Log</string>
+  <string name="passwordDescribe">Password</string>
+  <string name="buttonSignin">Login</string>
+  <string name="loginDesc">S\'identifier</string>
 
-    //signin_cardview.xml
-    <!-- Username -->
-    <string name="inputUsernameCreateHint">Entrez votre pseudo</string>
-    <!-- Password -->
-    <string name="inputPasswordCreateHint">Entrez votre mot de passe</string>
-    <string name="inputConfirmPasswordCreateHint">Confirmez votre mot de passe</string>
-    <!-- Firstname -->
-    <string name="inputFirstNameCreateHnt">Entrez votre prénom</string>
-    <!-- Lastname -->
-    <string name="inputLastNameCreateHint">Entrez votre nom</string>
-    <!-- Birthdate date -->
-    <string name="inputBirthdayDateCreateHint">Entrez votre date de naissance</string>
-    <!-- Email -->
-    <string name="inputEmailCreateHint">Entrez votre email</string>
-    <!-- ButtonSignin -->
-    <string name="buttonCreate">Sign in</string>
-    <!-- Desc -->
-    <string name="alreadyAccount">Déjà un compte ?</string>
-    <string name="signinDesc">Créer un compte</string>
+  //signin_cardview.xml
+  <!-- Username -->
+  <string name="inputUsernameCreateHint">Entrez votre pseudo</string>
+  <!-- Password -->
+  <string name="inputPasswordCreateHint">Entrez votre mot de passe</string>
+  <string name="inputConfirmPasswordCreateHint">Confirmez votre mot de passe</string>
+  <!-- Firstname -->
+  <string name="inputFirstNameCreateHnt">Entrez votre prénom</string>
+  <!-- Lastname -->
+  <string name="inputLastNameCreateHint">Entrez votre nom</string>
+  <!-- Birthdate date -->
+  <string name="inputBirthdayDateCreateHint">Entrez votre date de naissance</string>
+  <!-- Email -->
+  <string name="inputEmailCreateHint">Entrez votre email</string>
+  <!-- ButtonSignin -->
+  <string name="buttonCreate">Sign in</string>
+  <!-- Desc -->
+  <string name="alreadyAccount">Déjà un compte ?</string>
+  <string name="signinDesc">Créer un compte</string>
 
-    <!-- HomeViewPager -->
-    <string name="room_fragment_title">Discussions</string>
-    <string name="status_fragment_title">Statut</string>
+  <!-- HomeViewPager -->
+  <string name="room_fragment_title">Discussions</string>
+  <string name="status_fragment_title">Statut</string>
 
-    <!-- Contact Activity -->
-    <string name="contact_toolbar">Contact</string>
+  <!-- Contact Activity -->
+  <string name="contact_toolbar">Contact</string>
 
-    <!-- Contact Fragment -->
-    <string name="newGroupTitle">Nouveau groupe</string>
-    <string name="newContactTitle">Nouveau contact</string>
+  <!-- Contact Fragment -->
+  <string name="newGroupTitle">Nouveau groupe</string>
+  <string name="newContactTitle">Nouveau contact</string>
 
-    <!-- Parameter Activity -->
-    <string name="parameter_toolbar">Paramètres</string>
-    <string name="profile_toolbar">Profil</string>
+  <!-- Parameter Activity -->
+  <string name="parameter_toolbar">Paramètres</string>
+  <string name="profile_toolbar">Profil</string>
 
+  <!-- Profile Fragment -->
+  <string name="update_data_succes">Vos données ont été mises à jour avec succès</string>
+  <string name="update_data_error">Une erreur est survenue lors de la mise à jour de vos données</string>
 
 </resources>

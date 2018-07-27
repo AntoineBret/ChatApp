@@ -3,6 +3,8 @@ package com.chatapp.ipme.chatapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Message {
 
     public Message() {
@@ -20,6 +22,10 @@ public class Message {
     @Expose
     private String messageContent;
 
+    @SerializedName("createdAt")
+    @Expose
+    private Long createdAt;
+
     @SerializedName("room")
     @Expose
     private Room room;
@@ -32,6 +38,7 @@ public class Message {
         user.getLastname();
         user.getBirthday();
         user.getEmail();
+        this.createdAt = createdAt;
         this.messageID = messageID;
         this.messageContent = messageContent;
         this.room = room;
@@ -70,6 +77,15 @@ public class Message {
 
     public Message setRoom(Room room) {
         this.room = room;
+        return this;
+    }
+
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+
+    public Message setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 }

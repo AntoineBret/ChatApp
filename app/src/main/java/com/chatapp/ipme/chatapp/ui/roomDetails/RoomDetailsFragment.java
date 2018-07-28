@@ -1,37 +1,26 @@
 package com.chatapp.ipme.chatapp.ui.roomDetails;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chatapp.ipme.chatapp.HomeActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Message;
 import com.chatapp.ipme.chatapp.remote.ApiClient;
 import com.chatapp.ipme.chatapp.remote.ApiEndPointInterface;
+import com.chatapp.ipme.chatapp.ui.bottomSheet.SheetFragment;
 import com.chatapp.ipme.chatapp.utils.ErrorManager;
 import com.flipboard.bottomsheet.BottomSheetLayout;
-import com.flipboard.bottomsheet.commons.IntentPickerSheetView;
-import com.flipboard.bottomsheet.commons.MenuSheetView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -100,26 +89,9 @@ public class RoomDetailsFragment extends Fragment {
 
     button_send.setOnClickListener(view ->
       sendMessageToService());
-    button_attachment.setOnClickListener(v -> {
-      showMenuSheet(MenuSheetView.MenuType.GRID);
-    });
+    button_attachment.setOnClickListener(v ->
+      new SheetFragment().show(getFragmentManager(), R.id.bottomsheet));
     return rootView;
-  }
-
-  private void showMenuSheet(final MenuSheetView.MenuType menuType) {
-    MenuSheetView menuSheetView =
-      new MenuSheetView(getContext(), menuType, "Create...", item -> {
-        Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
-        if (bottomSheetLayout.isSheetShowing()) {
-          bottomSheetLayout.dismissSheet();
-        }
-        if (item.getItemId() == R.id.reopen) {
-          showMenuSheet(menuType == MenuSheetView.MenuType.LIST ? MenuSheetView.MenuType.GRID : MenuSheetView.MenuType.LIST);
-        }
-        return true;
-      });
-    menuSheetView.inflateMenu(R.menu.menu_sheet_attachment);
-    bottomSheetLayout.showWithSheetView(menuSheetView);
   }
 
   private void receiveInterlocutorMessage() {

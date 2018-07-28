@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chatapp.ipme.chatapp.ConnectToServiceActivity;
+import com.chatapp.ipme.chatapp.ParameterActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.adapter.RecyclerItemClickListener;
 import com.chatapp.ipme.chatapp.model.Settings;
 import com.chatapp.ipme.chatapp.session.Chatapp;
-import com.chatapp.ipme.chatapp.session.SessionKeys;
 import com.chatapp.ipme.chatapp.session.SessionManager;
 import com.chatapp.ipme.chatapp.ui.profile.ProfileFragment;
 
@@ -29,7 +28,6 @@ import java.util.List;
 
 public class SettingsFragment extends Fragment {
 
-  private Toolbar toolbar;
   private RecyclerView recyclerView;
   private SettingsAdapter adapter;
   private List<Settings> settingsList;
@@ -46,9 +44,7 @@ public class SettingsFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-    toolbar = rootView.findViewById(R.id.toolbar);
-    toolbar.setTitle(R.string.parameter_toolbar);
-    toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+    ((ParameterActivity) getActivity()).getSupportActionBar().setTitle(R.string.parameter_toolbar);
 
     displayThumbnail = rootView.findViewById(R.id.settingsThumbnail);
     displayUsername = rootView.findViewById(R.id.settingsUsername);

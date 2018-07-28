@@ -7,12 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chatapp.ipme.chatapp.ParameterActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Profile;
 import com.chatapp.ipme.chatapp.model.User;
@@ -40,7 +40,6 @@ public class ProfileFragment extends Fragment {
         return new ProfileFragment();
     }
 
-    private Toolbar toolbar;
     private RecyclerView recyclerView;
     private ProfileAdapter adapter;
     private List<Profile> profileList;
@@ -68,9 +67,7 @@ public class ProfileFragment extends Fragment {
         model.getProfile().observe(this, profile -> {
         });
 
-        toolbar = rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.profile_toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+      ((ParameterActivity) getActivity()).getSupportActionBar().setTitle(R.string.profile_toolbar);
 
         recyclerView = rootView.findViewById(R.id.profile_recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));

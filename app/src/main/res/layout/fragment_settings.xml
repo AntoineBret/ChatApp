@@ -8,12 +8,6 @@
     android:orientation="vertical"
     tools:context="com.chatapp.ipme.chatapp.ParameterActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
-
     <RelativeLayout
         android:id="@+id/rl_container_userProfile"
         android:layout_width="match_parent"

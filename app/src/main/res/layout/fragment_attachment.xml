@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:columnCount="2"
+    android:rowCount="4">
+
+    <ImageView
+        android:id="@+id/takePicture_Thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/imageview_attachment"
+        android:layout_gravity="fill_horizontal"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/takePicture_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill_horizontal"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/pickPhoto_Thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/imageview_attachment"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/pickPhoto_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/pickVideo_Thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/imageview_attachment"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/pickVideo_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black" />
+
+</GridLayout>

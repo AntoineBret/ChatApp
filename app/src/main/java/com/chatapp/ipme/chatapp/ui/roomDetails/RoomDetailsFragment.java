@@ -34,148 +34,149 @@ import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_UNAUTHOR
 
 public class RoomDetailsFragment extends Fragment {
 
-  public static RoomDetailsFragment newInstance() {
-    return new RoomDetailsFragment();
-  }
+    public static RoomDetailsFragment newInstance() {
+        return new RoomDetailsFragment();
+    }
 
-  private RecyclerView recyclerView;
-  private RoomDetailsAdapter adapter;
-  private List<Message> messageList = new ArrayList<>();
-  private ApiEndPointInterface apiInterface;
-  private HashMap<String, String> messageMap = new HashMap<>();
+    private RecyclerView recyclerView;
+    private RoomDetailsAdapter adapter;
+    private List<Message> messageList = new ArrayList<>();
+    private ApiEndPointInterface apiInterface;
+    private HashMap<String, String> messageMap = new HashMap<>();
 
-  //getRoomDetailsData
-  private Integer roomID;
-  private String userName;
-  private Integer userID;
-  private String interlocutorName;
-  private Integer interlocutorID;
-  private String content;
-
-  //Vue
-  private EditText messageInput;
-  private String messageBody;
-  private FloatingActionButton button_attachment;
-  private ImageButton button_send;
-
-  protected BottomSheetLayout bottomSheetLayout;
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_roomdetails, container, false);
-
-    getRoomDetailsData();
+    //getRoomDetailsData
+    private Integer roomID;
+    private String userName;
+    private Integer userID;
+    private String interlocutorName;
+    private Integer interlocutorID;
+    private String content;
 
     //Vue
-    messageInput = rootView.findViewById(R.id.edittext_messageInput);
-    button_attachment = rootView.findViewById(R.id.action_attachment);
-    button_send = rootView.findViewById(R.id.action_message_send);
+    private EditText messageInput;
+    private String messageBody;
+    private FloatingActionButton button_attachment;
+    private ImageButton button_send;
 
-    //bottom_sheet component
-    bottomSheetLayout = rootView.findViewById(R.id.bottomsheet);
-    bottomSheetLayout.setPeekOnDismiss(true);
+    protected BottomSheetLayout bottomSheetLayout;
 
-    recyclerView = rootView.findViewById(R.id.roomdetails_recyclerView);
-    recyclerView.setHasFixedSize(true);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_roomdetails, container, false);
 
-    messageList = new ArrayList<>();
-    adapter = new RoomDetailsAdapter(getContext(), messageList);
+        getRoomDetailsData();
 
-    RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
-    recyclerView.setLayoutManager(manager);
-    recyclerView.setAdapter(adapter);
+        //Vue
+        messageInput = rootView.findViewById(R.id.edittext_messageInput);
+        button_attachment = rootView.findViewById(R.id.action_attachment);
+        button_send = rootView.findViewById(R.id.action_message_send);
 
-    receiveInterlocutorMessage();
+        //bottom_sheet component
+        bottomSheetLayout = rootView.findViewById(R.id.bottomsheet);
+        bottomSheetLayout.setPeekOnDismiss(true);
 
-    button_send.setOnClickListener(view ->
-      sendMessageToService());
-    button_attachment.setOnClickListener(v ->
-      new AttachmentFragment().show(getFragmentManager(), R.id.bottomsheet));
-    return rootView;
-  }
+        recyclerView = rootView.findViewById(R.id.roomdetails_recyclerView);
+        recyclerView.setHasFixedSize(true);
 
-  private void receiveInterlocutorMessage() {
-    //get message
-    apiInterface = new ApiClient(getContext())
-      .getClient()
-      .create(ApiEndPointInterface.class);
+        messageList = new ArrayList<>();
+        adapter = new RoomDetailsAdapter(getContext(), messageList);
 
-    apiInterface.getRoomMessages()
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new ErrorManager<Response<List<Message>>>() {
-        @Override
-        public void onSubscribe(Disposable d) {
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
 
-        }
+        receiveInterlocutorMessage();
 
-        @Override
-        public void onNext(Response<List<Message>> messageResponse) {
-          if ((messageResponse.code() == STATUS_OK) && (messageResponse.body() != null)) {
-            adapter.setData(messageList);
-            for (Message message : messageResponse.body()) {
-              content = message.getMessageContent();
-              message.setMessageContent(content);
-              messageList.add(message);
-            }
-          } else if (messageResponse.code() == STATUS_UNAUTHORIZED) {
-            Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
-          }
-          //focus recyclerview on latest item
-          if (recyclerView.getAdapter().getItemCount() != 0) {
-            recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
-          }
-        }
+        button_send.setOnClickListener(view ->
+                sendMessageToService());
+        button_attachment.setOnClickListener(view ->
+                new AttachmentFragment().show(getFragmentManager(), R.id.bottomsheet));
 
-        @Override
-        public void onComplete() {
-
-        }
-      });
-  }
-
-  private void sendMessageToService() {
-    //send message
-    messageBody = messageInput.getText().toString();
-    messageMap.put(messageBody, userName);
-
-    apiInterface = new ApiClient(getContext())
-      .getClient()
-      .create(ApiEndPointInterface.class);
-
-    apiInterface.sendMessages(messageMap)
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(new ErrorManager<Response<Message>>() {
-        @Override
-        public void onSubscribe(Disposable d) {
-
-        }
-
-        @Override
-        public void onNext(Response<Message> messageResponse) {
-          if ((messageResponse.code() == STATUS_OK) && (messageResponse.body() != null)) {
-            adapter.setData(messageList);
-          } else if (messageResponse.code() == STATUS_UNAUTHORIZED) {
-            Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
-          }
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
-      });
-  }
-
-  private void getRoomDetailsData() {
-    Bundle bundle = this.getArguments();
-    if (bundle != null) {
-      roomID = bundle.getInt("room_id");
-      userName = bundle.getString("user_name");
-      userID = bundle.getInt("user_id");
-      interlocutorName = bundle.getString("interlocutor_name");
-      interlocutorID = bundle.getInt("interlocutor_id");
+        return rootView;
     }
-  }
+
+    private void receiveInterlocutorMessage() {
+        //get message
+        apiInterface = new ApiClient(getContext())
+                .getClient()
+                .create(ApiEndPointInterface.class);
+
+        apiInterface.getRoomMessages()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ErrorManager<Response<List<Message>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Response<List<Message>> messageResponse) {
+                        if ((messageResponse.code() == STATUS_OK) && (messageResponse.body() != null)) {
+                            adapter.setData(messageList);
+                            for (Message message : messageResponse.body()) {
+                                content = message.getMessageContent();
+                                message.setMessageContent(content);
+                                messageList.add(message);
+                            }
+                        } else if (messageResponse.code() == STATUS_UNAUTHORIZED) {
+                            Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
+                        }
+                        //focus recyclerview on latest item
+                        if (recyclerView.getAdapter().getItemCount() != 0) {
+                            recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void sendMessageToService() {
+        //send message
+        messageBody = messageInput.getText().toString();
+        messageMap.put(messageBody, userName);
+
+        apiInterface = new ApiClient(getContext())
+                .getClient()
+                .create(ApiEndPointInterface.class);
+
+        apiInterface.sendMessages(messageMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ErrorManager<Response<Message>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Response<Message> messageResponse) {
+                        if ((messageResponse.code() == STATUS_OK) && (messageResponse.body() != null)) {
+                            adapter.setData(messageList);
+                        } else if (messageResponse.code() == STATUS_UNAUTHORIZED) {
+                            Toast.makeText(getContext(), R.string.update_data_error, Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void getRoomDetailsData() {
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            roomID = bundle.getInt("room_id");
+            userName = bundle.getString("user_name");
+            userID = bundle.getInt("user_id");
+            interlocutorName = bundle.getString("interlocutor_name");
+            interlocutorID = bundle.getInt("interlocutor_id");
+        }
+    }
 }

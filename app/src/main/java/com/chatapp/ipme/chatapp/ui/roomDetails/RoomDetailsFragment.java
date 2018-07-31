@@ -42,7 +42,9 @@ public class RoomDetailsFragment extends Fragment {
     private RoomDetailsAdapter adapter;
     private List<Message> messageList = new ArrayList<>();
     private ApiEndPointInterface apiInterface;
-    private HashMap<String, String> messageMap = new HashMap<>();
+    private HashMap<String, Object> messageMap = new HashMap<>();
+    private HashMap<String, Integer> roomMap = new HashMap<>();
+    private HashMap<String, Integer> userMap = new HashMap<>();
 
     //getRoomDetailsData
     private Integer roomID;
@@ -137,8 +139,7 @@ public class RoomDetailsFragment extends Fragment {
 
     private void sendMessageToService() {
         //send message
-        messageBody = messageInput.getText().toString();
-        messageMap.put(messageBody, userName);
+        preparePostMessage();
 
         apiInterface = new ApiClient(getContext())
                 .getClient()
@@ -167,6 +168,17 @@ public class RoomDetailsFragment extends Fragment {
 
                     }
                 });
+    }
+
+    private void preparePostMessage() {
+
+        roomMap.put("id", roomID);
+        userMap.put("id", userID);
+
+        messageBody = messageInput.getText().toString();
+        messageMap.put("content", messageBody);
+        messageMap.put("room", roomMap);
+        messageMap.put("user", userMap);
     }
 
     private void getRoomDetailsData() {

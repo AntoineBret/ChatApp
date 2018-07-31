@@ -54,7 +54,7 @@ public interface ApiEndPointInterface {
 
     //send message
     @POST("/api/messages")
-    Observable<Response<Message>> sendMessages(@Body HashMap<String, String> map);
+    Observable<Response<Message>> sendMessages(@Body HashMap<String, Object> map);
 
     //get message
     @GET("/api/rooms/21/messages")

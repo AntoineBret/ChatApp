@@ -1,5 +1,7 @@
 package com.chatapp.ipme.chatapp.session;
 
+import android.widget.ImageView;
+
 public interface SessionCreator {
   default void createSessionData(String token, Integer id, String username, String password, String firstname, String lastname, String birthday, String email) {
     SessionManager.putString(SessionKeys.KEY_TOKEN.getKey(), token);
@@ -34,5 +36,9 @@ public interface SessionCreator {
 
   static void editEmail(String email) {
     SessionManager.putString(SessionKeys.KEY_EMAIL.getKey(), email);
+  }
+
+  static void editThumbnail(Integer thumbnail) {
+    SessionManager.putInt(SessionKeys.KEY_THUMBNAIL.getKey(), thumbnail);
   }
 }

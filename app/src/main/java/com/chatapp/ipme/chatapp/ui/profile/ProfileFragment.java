@@ -2,6 +2,7 @@ package com.chatapp.ipme.chatapp.ui.profile;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -10,8 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chatapp.ipme.chatapp.ParameterActivity;
 import com.chatapp.ipme.chatapp.R;
 import com.chatapp.ipme.chatapp.model.Profile;
@@ -29,8 +34,10 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Response;
 
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_OK;
 import static com.chatapp.ipme.chatapp.utils.Constants.httpcodes.STATUS_UNAUTHORIZED;
 
@@ -41,6 +48,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private RecyclerView recyclerView;
+    private ImageView user_thumbnail;
     private ProfileAdapter adapter;
     private List<Profile> profileList;
     private static Context context;
@@ -51,6 +59,7 @@ public class ProfileFragment extends Fragment {
     private String current_lastname = Chatapp.getCurrentUserLastname();
     private String current_email = Chatapp.getCurrentUserEmail();
     private String current_birthday = Chatapp.getCurrentUserBirthday();
+    private Integer current_thumbnail = Chatapp.getCurrentUserThumbnail();
 
     //Updated
     private String updated_username;
@@ -58,6 +67,7 @@ public class ProfileFragment extends Fragment {
     private String updated_lastname;
     private String updated_birthday;
     private String updated_email;
+    private Integer updated_thumbnail;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,7 +77,14 @@ public class ProfileFragment extends Fragment {
         model.getProfile().observe(this, profile -> {
         });
 
-      ((ParameterActivity) getActivity()).getSupportActionBar().setTitle(R.string.profile_toolbar);
+        ((ParameterActivity) getActivity()).getSupportActionBar().setTitle(R.string.profile_toolbar);
+
+        user_thumbnail = rootView.findViewById(R.id.user_thumbnail);
+        Glide
+                .with(this)
+                .load(getResources().getDrawable(R.drawable.test))
+                .apply(new RequestOptions().circleCrop())
+                .into(user_thumbnail);
 
         recyclerView = rootView.findViewById(R.id.profile_recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));

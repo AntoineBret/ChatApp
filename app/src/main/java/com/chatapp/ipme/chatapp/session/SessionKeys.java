@@ -10,7 +10,8 @@ public enum SessionKeys {
     KEY_LASTNAME("LastnameKey"),
     KEY_EMAIL("EmailKey"),
     KEY_PASSWORD("PasswordKey"),
-    KEY_BIRTHDAY("BirthdayKey");
+    KEY_BIRTHDAY("BirthdayKey"),
+    KEY_THUMBNAIL("ThumbnailKey");
 
     private String key;
 

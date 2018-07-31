@@ -2,6 +2,7 @@ package com.chatapp.ipme.chatapp.remote;
 
 import com.chatapp.ipme.chatapp.model.Message;
 import com.chatapp.ipme.chatapp.model.Room;
+import com.chatapp.ipme.chatapp.model.Thumbnail;
 import com.chatapp.ipme.chatapp.model.User;
 import com.chatapp.ipme.chatapp.model.UserResponse;
 import com.chatapp.ipme.chatapp.utils.Constants;
@@ -60,4 +61,11 @@ public interface ApiEndPointInterface {
     @GET("/api/rooms/21/messages")
     Observable<Response<List<Message>>> getRoomMessages();
 
+    //post thumbnails
+    @POST("/public/upload")
+    Observable<Response<List<Thumbnail>>> sendThumbnail();
+
+    //get thumbnails
+    @GET("/public/thumbnails/{filename}")
+    Observable<Response<List<Thumbnail>>> getThumbnail();
 }

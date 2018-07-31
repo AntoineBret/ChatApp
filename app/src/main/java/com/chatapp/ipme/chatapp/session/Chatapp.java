@@ -1,6 +1,7 @@
 package com.chatapp.ipme.chatapp.session;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 public class Chatapp {
     
@@ -59,5 +60,10 @@ public class Chatapp {
     public static String getCurrentToken() {
         String currentUserToken = SessionManager.getString(SessionKeys.KEY_TOKEN.getKey(), null);
         return currentUserToken;
+    }
+
+    public static Integer getCurrentUserThumbnail() {
+        Integer currentUserThumbnail = SessionManager.getInt(SessionKeys.KEY_THUMBNAIL.getKey(), 0);
+        return currentUserThumbnail;
     }
 }

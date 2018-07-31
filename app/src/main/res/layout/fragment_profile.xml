@@ -8,6 +8,20 @@
     android:orientation="vertical"
     tools:context="com.chatapp.ipme.chatapp.HomeActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/user_thumbnail"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/profile_recyclerView"
         android:layout_width="match_parent"

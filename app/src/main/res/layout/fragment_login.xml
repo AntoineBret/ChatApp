@@ -1,120 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal|center_vertical"
-    android:layout_marginBottom="50dp"
-    android:layout_marginLeft="30dp"
-    android:layout_marginRight="30dp"
-    android:layout_marginTop="50dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="10dp"
-    app:cardUseCompatPadding="true">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_gravity="center_horizontal|center_vertical"
+  android:layout_marginLeft="30dp"
+  android:layout_marginTop="50dp"
+  android:layout_marginRight="30dp"
+  android:layout_marginBottom="50dp"
+  app:cardBackgroundColor="@color/white"
+  app:cardCornerRadius="10dp"
+  app:cardElevation="10dp"
+  app:cardUseCompatPadding="true">
 
   <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/loginDesc"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical">
+      android:gravity="center"
+      android:paddingLeft="10dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:text="@string/loginDesc"
+      android:textColor="@color/custom"
+      android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/loginDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/loginDesc"
-        android:textColor="@color/custom"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/tvLogDescribe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/logDescribe"
-        android:textColor="@color/custom"
-        android:textSize="20dp" />
+      android:id="@+id/tvLogDescribe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="10dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:text="@string/logDescribe"
+      android:textColor="@color/custom"
+      android:textSize="20dp" />
 
     <EditText
-        android:id="@+id/inputLog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your log"
-        android:inputType="text"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:singleLine="true"
-        android:textColor="@color/custom"
-        android:textSize="15dp" />
+      android:id="@+id/inputLog"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Enter your log"
+      android:inputType="text"
+      android:paddingLeft="10dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:singleLine="true"
+      android:textColor="@color/custom"
+      android:textSize="15dp" />
 
     <TextView
-        android:id="@+id/tvPasswordDescribe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/passwordDescribe"
-        android:textColor="@color/custom"
-        android:textSize="20dp" />
+      android:id="@+id/tvPasswordDescribe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="10dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:text="@string/passwordDescribe"
+      android:textColor="@color/custom"
+      android:textSize="20dp" />
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" >
 
     <EditText
-        android:id="@+id/inputPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your password"
-        android:inputType="textPassword"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:singleLine="true"
-        android:textColor="@color/custom"
-        android:textSize="15dp" />
+      android:id="@+id/inputPassword"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:drawablePadding="5dp"
+      android:hint="Enter your password"
+      android:paddingLeft="10dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:singleLine="true"
+      android:textColor="@color/custom"
+      android:textSize="15dp" />
+
+      <ImageView
+        android:id="@+id/showPassword"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignRight="@+id/inputPassword"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:padding="5dp"/>
+
+    </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
       <Button
-          android:id="@+id/buttonLog"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_centerInParent="true"
-          android:layout_margin="20dp"
-          android:background="@drawable/button_roundcorner_shape"
-          android:paddingBottom="10dp"
-          android:paddingLeft="10dp"
-          android:paddingRight="10dp"
-          android:paddingTop="10dp"
-          android:text="@string/buttonSignin"
-          android:textColor="@color/white" />
+        android:id="@+id/buttonLog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_roundcorner_shape"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/buttonSignin"
+        android:textColor="@color/white" />
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tvNoAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/noAccount"
-        android:textColor="@color/custom"
-        android:textSize="12dp" />
+      android:id="@+id/tvNoAccount"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:paddingLeft="10dp"
+      android:paddingTop="10dp"
+      android:paddingRight="10dp"
+      android:paddingBottom="10dp"
+      android:text="@string/noAccount"
+      android:textColor="@color/custom"
+      android:textSize="12dp" />
 
   </LinearLayout>
 

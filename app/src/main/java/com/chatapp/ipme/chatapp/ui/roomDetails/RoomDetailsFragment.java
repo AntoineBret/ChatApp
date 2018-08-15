@@ -103,7 +103,7 @@ public class RoomDetailsFragment extends Fragment {
                 .getClient()
                 .create(ApiEndPointInterface.class);
 
-        apiInterface.getRoomMessages()
+        apiInterface.getRoomMessages(roomID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ErrorManager<Response<List<Message>>>() {

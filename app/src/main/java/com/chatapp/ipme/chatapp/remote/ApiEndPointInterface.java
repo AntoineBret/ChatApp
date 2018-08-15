@@ -19,6 +19,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface ApiEndPointInterface {
 
@@ -38,8 +39,8 @@ public interface ApiEndPointInterface {
 
     //Modify currently logged user data
     //todo : make dynamic endpoint
-    @PUT("/api/users/38")
-    Observable<Response<User>> editUser(@Body Map<String, Object> map);
+    @PUT("/api/users/{user_ID}")
+    Observable<Response<User>> editUser(@Body Map<String, Object> map, @Path("user_ID")Integer user_ID);
 
     //Delete currently logged user account
     @DELETE("/api/users/{id}")
@@ -57,9 +58,9 @@ public interface ApiEndPointInterface {
     @POST("/api/messages")
     Observable<Response<Message>> sendMessages(@Body HashMap<String, Object> map);
 
-    //get message
-    @GET("/api/rooms/21/messages")
-    Observable<Response<List<Message>>> getRoomMessages();
+    //get message of room_ID with dynamic path
+    @GET("/api/rooms/{room_ID}/messages")
+    Observable<Response<List<Message>>> getRoomMessages(@Path("room_ID")Integer room_ID);
 
     //post thumbnails
     @POST("/public/upload")

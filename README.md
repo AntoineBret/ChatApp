@@ -1,7 +1,3 @@
-[![Build Status](https://api.travis-ci.org/AntoineBret/ChatApp-Android.svg)](https://api.travis-ci.org/AntoineBret/ChatApp-Android)
-[![Codecov](https://codecov.io/AntoineBret/ChatApp-Android/coverage.svg)](https://codecov.io/AntoineBret/ChatApp-Android/coverage)
-
-
 # ChatApp
 
 ###### An example how to implement a chat project with the MVVM pattern.

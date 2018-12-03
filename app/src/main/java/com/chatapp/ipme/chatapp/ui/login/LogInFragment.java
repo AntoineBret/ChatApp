@@ -79,10 +79,10 @@ public class LogInFragment extends Fragment implements SessionCreator {
 
     ImageView showPassword = rootView.findViewById(R.id.showPassword);
     //setDefault drawable
-    showPassword.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_show));
+    showPassword.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_validate));
     showPassword.setOnClickListener(v -> {
       if (i == 0 /* first click  = change icon + show password*/) {
-        showPassword.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_hide));
+        showPassword.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_validate));
           Toast.makeText(getContext(), "show password !", Toast.LENGTH_LONG).show();
 //            inputPassword.setTransformationMethod(new PasswordTransformationMethod());
         i++;

@@ -5,15 +5,13 @@ android:
   components:
     # Update Android SDK Tools
     - tools
-    - platform-tools
-    - tools
+
     - build-tools-28.0.3
     - android-27
 
     # Support library
     - extra-android-support
     - extra-android-m2repository
-    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
 
 before_cache:
   # Do not cache a few Gradle files/directories (see https://docs.travis-ci.com/user/languages/java/#Caching)
@@ -53,18 +51,11 @@ before_script:
   - chmod +x gradlew
 
 script:
- - if [ ${TEST} == "unit" ]; then
-    ./gradlew --stacktrace testDebug jacocoTestReport;
-    fi
-  - if [ ${TEST} == "android" ]; then
-    echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI;
-    emulator -avd test -no-skin -no-audio -no-window &
-    android-wait-for-emulator;
-    sleep 10;
-    adb shell svc power stayon true;
-    sleep 5;
-    adb shell input keyevent 82;
-    ./gradlew --stacktrace connectedFdroidDebugAndroidTest -i;
-    fi
-after_success:
+  - chmod +x ./gradlew build connectedCheck
+  - ./gradlew clean assembleDebug assembleRelease testDebug createDebugUnitTestCoverageReport
+  # Renaming folder and files of reports so codecov.io can find it
+  - mv app/build/reports/jacoco/createDebugUnitTestCoverageReport app/build/reports/jacoco/jacocoTestDebugUnitTestReport
+  - mv app/build/reports/jacoco/jacocoTestDebugUnitTestReport/createDebugUnitTestCoverageReport.xml app/build/reports/jacoco/jacocoTestDebugUnitTestReport/jacocoTestDebugUnitTestReport.xml
+  # Codecov.io
   - bash <(curl -s https://codecov.io/bash)
+

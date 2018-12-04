@@ -52,7 +52,7 @@ before_script:
 
 script:
   - chmod +x ./gradlew build connectedCheck
-  - ./gradlew clean assembleDebug assembleRelease testDebug createDebugUnitTestCoverageReport
+  - ./gradlew clean assemble assembleDebug assembleRelease testDebug createDebugUnitTestCoverageReport
   # Renaming folder and files of reports so codecov.io can find it
   - mv app/build/reports/jacoco/createDebugUnitTestCoverageReport app/build/reports/jacoco/jacocoTestDebugUnitTestReport
   - mv app/build/reports/jacoco/jacocoTestDebugUnitTestReport/createDebugUnitTestCoverageReport.xml app/build/reports/jacoco/jacocoTestDebugUnitTestReport/jacocoTestDebugUnitTestReport.xml

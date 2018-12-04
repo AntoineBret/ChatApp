@@ -54,6 +54,7 @@ script:
   - ./gradlew clean assembleDebug assembleRelease createFreeDebugUnitTestCoverageReport
   # Renaming folder and files of reports so codecov.io can find it
   - mv app/build/reports/jacoco/createFreeDebugUnitTestCoverageReport app/build/reports/jacoco/jacocoTestDebugUnitTestReport
-  - mv app/build/reports/jacoco/jacocoTestFreeDebugUnitTestReport/jacocoTestFreeDebugUnitTestReport.xml app/build/reports/jacoco/jacocoTestFreeDebugUnitTestReport/jacocoTestDebugUnitTestReport.xml
+  - mv app/build/reports/jacoco/jacocoTestDebugUnitTestReport/createFreeDebugUnitTestCoverageReport.xml app/build/reports/jacoco/jacocoTestFreeDebugUnitTestReport/jacocoTestDebugUnitTestReport.xml
+
   # Codecov.io
   - bash <(curl -s https://codecov.io/bash)
